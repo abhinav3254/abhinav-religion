@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Abhinav — The Religion of Humanity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:      #1a1714;
+      --parchment:#f5f0e8;
+      --gold:     #c9a84c;
+      --gold-dim: #8c6d2f;
+      --ember:    #7c3a2a;
+      --fog:      #e8e2d6;
+      --white:    #fdfaf4;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--parchment);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(245,240,232,0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 300; letter-spacing: 0.12em;
+      color: var(--gold-dim); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none; opacity: 0.65;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 60%, rgba(201,168,76,0.10) 0%, transparent 70%),
+        var(--parchment);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(201,168,76,0.07) 60px),
+        repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(201,168,76,0.07) 60px);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 2rem; opacity: 0.85;
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 14vw, 12rem);
+      font-weight: 300; line-height: 0.88;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .hero-name em {
+      font-style: italic; color: var(--gold); display: inline;
+    }
+    .hero-tagline {
+      margin-top: 2.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      font-weight: 300; font-style: italic;
+      color: var(--ember); max-width: 520px; line-height: 1.5;
+    }
+    .hero-divider {
+      width: 60px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 2.5rem auto;
+    }
+    .hero-sub {
+      font-size: 0.9rem; color: var(--ink); opacity: 0.55;
+      max-width: 400px; line-height: 1.7;
+    }
+    .hero-cta {
+      margin-top: 3rem;
+      display: inline-block;
+      padding: 0.85rem 2.6rem;
+      border: 1px solid var(--gold);
+      color: var(--gold-dim);
+      font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.25s;
+    }
+    .hero-cta:hover {
+      background: var(--gold); color: var(--white);
+    }
+
+    /* ── FLAME SYMBOL ── */
+    .flame-wrap {
+      width: 56px; height: 56px; margin: 3.5rem auto 0;
+      animation: floatFlame 4s ease-in-out infinite;
+    }
+    @keyframes floatFlame {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 7rem 2rem; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem; display: block;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 300; line-height: 1.15;
+      color: var(--ink); margin-bottom: 1.5rem;
+    }
+    .section-body {
+      font-size: 1.05rem; color: var(--ink); opacity: 0.7;
+      line-height: 1.8; max-width: 640px;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--white); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+      align-items: center;
+    }
+    .about-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.9rem; font-weight: 300; font-style: italic;
+      color: var(--ember); line-height: 1.4; border-left: 2px solid var(--gold);
+      padding-left: 1.5rem;
+    }
+
+    /* ── PILLARS ── */
+    #pillars { background: var(--parchment); }
+    .pillars-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem; margin-top: 4rem;
+    }
+    .pillar {
+      padding: 2.5rem 2rem;
+      background: var(--white);
+      border-top: 2px solid var(--gold);
+      transition: transform 0.2s;
+    }
+    .pillar:hover { transform: translateY(-4px); }
+    .pillar-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem; font-weight: 300; color: var(--gold); opacity: 0.3;
+      line-height: 1; margin-bottom: 1rem;
+    }
+    .pillar-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 400; color: var(--ink);
+      margin-bottom: 0.8rem;
+    }
+    .pillar-text { font-size: 0.9rem; opacity: 0.65; line-height: 1.7; }
+
+    /* ── TEACHINGS ── */
+    #teachings { background: var(--ink); color: var(--parchment); }
+    #teachings .section-title { color: var(--parchment); }
+    #teachings .section-body { color: var(--parchment); opacity: 0.6; }
+    #teachings .section-label { color: var(--gold); }
+    .teaching-list { margin-top: 4rem; }
+    .teaching-item {
+      display: flex; gap: 2rem; align-items: flex-start;
+      padding: 2rem 0; border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .teaching-item:first-child { border-top: 1px solid rgba(201,168,76,0.15); }
+    .teaching-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 0.2rem; }
+    .teaching-head {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; color: var(--gold); margin-bottom: 0.4rem;
+    }
+    .teaching-desc { font-size: 0.9rem; opacity: 0.55; line-height: 1.7; color: var(--parchment); }
+
+    /* ── JOIN ── */
+    #join {
+      background:
+        radial-gradient(ellipse 60% 80% at 50% 100%, rgba(201,168,76,0.12) 0%, transparent 70%),
+        var(--white);
+      text-align: center;
+    }
+    #join .section-title { margin: 0 auto 1rem; }
+    #join .section-body { margin: 0 auto 2.5rem; }
+    .join-form {
+      display: flex; gap: 1rem; justify-content: center;
+      flex-wrap: wrap; margin-top: 2rem;
+    }
+    .join-form input {
+      padding: 0.85rem 1.4rem;
+      border: 1px solid rgba(201,168,76,0.4);
+      background: var(--parchment); color: var(--ink);
+      font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+      outline: none; width: 260px;
+      transition: border-color 0.2s;
+    }
+    .join-form input:focus { border-color: var(--gold); }
+    .join-form button {
+      padding: 0.85rem 2rem;
+      background: var(--gold); color: var(--white);
+      border: none; cursor: pointer;
+      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s;
+    }
+    .join-form button:hover { background: var(--gold-dim); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink); color: var(--parchment);
+      text-align: center; padding: 3rem 2rem;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 300; letter-spacing: 0.1em;
+      color: var(--gold); margin-bottom: 1rem;
+    }
+    .footer-text { font-size: 0.8rem; opacity: 0.35; letter-spacing: 0.05em; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.7rem; letter-spacing: 0.08em; }
+
+      section { padding: 4rem 1.5rem; }
+      .container { max-width: 100%; }
+
+      .hero { padding: 7rem 1.5rem 3rem; }
+      .hero-eyebrow { font-size: 0.65rem; letter-spacing: 0.18em; }
+      .hero-tagline { font-size: 1rem; }
+      .hero-sub { font-size: 0.85rem; }
+
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .about-quote { font-size: 1.4rem; }
+
+      .pillars-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .pillar { padding: 2rem 1.5rem; }
+
+      .teaching-item { gap: 1.2rem; }
+      .teaching-icon { font-size: 1.2rem; }
+
+      .join-form { flex-direction: column; align-items: center; }
+      .join-form input { width: 100%; max-width: 320px; }
+      .join-form button { width: 100%; max-width: 320px; }
+    }
+
+    @media (max-width: 480px) {
+      nav { padding: 0.9rem 1rem; }
+      .nav-logo { font-size: 1.3rem; }
+      .nav-links { gap: 0.7rem; }
+      .nav-links a { font-size: 0.62rem; }
+
+      .hero-cta { padding: 0.75rem 1.8rem; font-size: 0.68rem; }
+      .section-title { font-size: 1.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">Abhinav</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#pillars">Pillars</a></li>
+      <li><a href="#teachings">Teachings</a></li>
+      <li><a href="#join">Join</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">A Religion of Humanity</p>
+    <h1 class="hero-name">
+      Abhi<em>nav</em>
+    </h1>
+    <p class="hero-tagline">Where every human life is sacred, and humanity itself is the highest calling.</p>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">Not gods above. Not rituals of stone. Only the living breath of people, bound together in compassion.</p>
+    <a class="hero-cta" href="#about">Begin the Path</a>
+
+    <!-- Flame SVG -->
+    <div class="flame-wrap">
+      <svg viewBox="0 0 56 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M28 76C28 76 6 56 6 36C6 20 16 8 28 4C28 4 22 18 28 26C34 34 44 28 44 28C44 28 50 42 40 56C36 62 28 76 28 76Z" fill="#c9a84c" opacity="0.85"/>
+        <path d="M28 76C28 76 16 58 18 44C20 32 28 28 28 28C28 28 24 38 30 44C36 50 38 58 28 76Z" fill="#7c3a2a" opacity="0.6"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div>
+          <span class="section-label">The Way of Abhinav</span>
+          <h2 class="section-title">Born from the light within every person</h2>
+          <p class="section-body">
+            Abhinav — meaning "ever-new" in Sanskrit — is a path for those who find divinity not in sky and scripture, but in the eyes of another human being. We hold that to uplift one life is to perform the holiest act. To love across difference is the deepest prayer. To build a better world is the truest worship.
+          </p>
+        </div>
+        <blockquote class="about-quote">
+          "The divine is not distant. It breathes in the person beside you."
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- PILLARS -->
+  <section id="pillars">
+    <div class="container">
+      <span class="section-label">The Foundation</span>
+      <h2 class="section-title">Three Pillars of the Human Path</h2>
+      <div class="pillars-grid">
+        <div class="pillar">
+          <div class="pillar-num">I</div>
+          <h3 class="pillar-title">Seva — Selfless Service</h3>
+          <p class="pillar-text">No prayer rises higher than a hand extended to another. Service to humanity is not charity — it is devotion made visible.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">II</div>
+          <h3 class="pillar-title">Satya — Radical Truth</h3>
+          <p class="pillar-text">Honesty with oneself and others is the foundation of a dignified life. Truth spoken in love is our sacred language.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">III</div>
+          <h3 class="pillar-title">Karuna — Boundless Compassion</h3>
+          <p class="pillar-text">Compassion is not weakness — it is the highest intelligence. To feel with another is to touch something eternal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEACHINGS -->
+  <section id="teachings">
+    <div class="container">
+      <span class="section-label">The Scroll of Abhinav</span>
+      <h2 class="section-title">What We Believe</h2>
+      <p class="section-body">A living collection of principles passed not from priest to follower, but from human to human, across every generation.</p>
+      <div class="teaching-list">
+        <div class="teaching-item">
+          <div class="teaching-icon">🌱</div>
+          <div>
+            <div class="teaching-head">Every life holds inherent worth</div>
+            <p class="teaching-desc">No birth, no background, no failure removes the sacred value of a human life. We treat every person as we would wish to be treated in our most vulnerable moment.</p>
+          </div>
+        </div>
+        <div class="teaching-item">
+          <div class="teaching-icon">🔥</div>
+          <div>
+            <div class="teaching-head">Suffering is the call to action</div>
+            <p class="teaching-desc">When we witness pain, we do not pray for it to end — we become the answer. The follower of Abhinav moves toward suffering, not away from it.</p>
+          </div>
+        </div>
+        <div class="teaching-item">
+          <div class="teaching-icon">🌊</div>
+          <div>
+            <div class="teaching-head">We are one river, many currents</div>
+            <p class="teaching-desc">Difference in language, culture, and belief is the richness of our shared humanity — not a fracture in it. Unity does not require sameness.</p>
+          </div>
+        </div>
+        <div class="teaching-item">
+          <div class="teaching-icon">✨</div>
+          <div>
+            <div class="teaching-head">The present moment is holy</div>
+            <p class="teaching-desc">There is no afterlife to defer our goodness to. This breath, this day, this chance to be kind — these are the only sanctuaries that matter.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOIN -->
+  <section id="join">
+    <div class="container">
+      <span class="section-label">Take the First Step</span>
+      <h2 class="section-title">Walk with Us</h2>
+      <p class="section-body">There is no membership card, no initiation rite. Only a choice made each morning to live by the light of our shared humanity. Enter your name and let us walk together.</p>
+      <div class="join-form">
+        <input type="text" placeholder="Your name" />
+        <input type="email" placeholder="Your email" />
+        <button type="button">Begin the Path</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Abhinav</div>
+    <p class="footer-text">A Religion of Humanity · Ever-New · Ever-Human</p>
+  </footer>
+
+</body>
+</html>
