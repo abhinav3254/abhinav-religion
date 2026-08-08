@@ -82,8 +82,14 @@
       font-family: 'Cinzel', serif;
       font-size: 1rem;
       font-weight: 700;
-      color: var(--gold);
+      color: var(--snow);
       letter-spacing: 0.04em;
+    }
+    .nav-brand-text .nav-abhinav {
+      color: var(--gold);
+      font-size: 1.18rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
     }
     .nav-brand-sub {
       font-size: 0.62rem;
@@ -629,7 +635,7 @@
   <div class="nav-brand">
     <span style="font-size:1.4rem;">🏔</span>
     <div>
-      <span class="nav-brand-text">Abhinav Trip Planner</span>
+      <span class="nav-brand-text"><span class="nav-abhinav">Abhinav</span> Trip Planner</span>
       <span class="nav-brand-sub">Nepal 2025</span>
     </div>
   </div>
@@ -709,7 +715,7 @@
 
   <!-- Hero text -->
   <div id="hero-content">
-    <div class="hero-brand">✦ Abhinav Trip Planner · Nepal Edition ✦</div>
+    <div class="hero-brand">✦ <span style="color:#fff;font-size:0.82rem;font-weight:700;letter-spacing:0.28em;">ABHINAV</span> Trip Planner · Nepal Edition ✦</div>
     <h1 class="hero-title">
       Where Mountains<br>Touch <span class="highlight">Heaven</span>
     </h1>
@@ -726,7 +732,7 @@
       </div>
       <div class="stat-divider"></div>
       <div class="h-stat">
-        <div class="h-stat-num">6</div>
+        <div class="h-stat-num">7</div>
         <div class="h-stat-label">Destinations</div>
       </div>
       <div class="stat-divider"></div>
@@ -747,7 +753,7 @@
 <section id="places" class="section-wrap">
   <div class="will-reveal">
     <p class="eyebrow">Where We Go</p>
-    <h2 class="sec-title">6 Must-Visit<br>Destinations</h2>
+    <h2 class="sec-title">7 Must-Visit<br>Destinations</h2>
     <div class="gold-bar"></div>
   </div>
 
@@ -848,7 +854,7 @@
       <div class="act-row">
         <div class="act-time">12:00</div>
         <div class="act-dot-col"><div class="act-dot"></div><div class="act-line"></div></div>
-        <div class="act-info"><div class="act-name">Phewa Lake Boating</div><div class="act-desc">Row to Tal Barahi island temple. Annapurna reflects in still water.</div></div>
+        <div class="act-info"><div class="act-name">Phewa Lake Boating</div><div class="act-desc">Row to Tal Barahi island temple. The Annapurna massif (8,091 m) reflects perfectly in the still water on clear mornings.</div></div>
       </div>
       <div class="act-row">
         <div class="act-time">15:30</div>
@@ -1034,10 +1040,10 @@
 
 <!-- ═══ FOOTER ═══ -->
 <footer>
-  <div class="footer-logo">🏔 Abhinav Trip Planner</div>
+  <div class="footer-logo">🏔 <span style="font-size:1.4rem;color:#fff;">ABHINAV</span> <span style="color:var(--gold);">Trip Planner</span></div>
   <div class="footer-sub">
-    Nepal 2025 &nbsp;·&nbsp; 4 friends &nbsp;·&nbsp; 3 extraordinary days<br>
-    All Wikipedia images are public domain &nbsp;·&nbsp; Replace URLs in the IMAGES JSON at top of file
+    Nepal 2025 &nbsp;·&nbsp; 4 friends &nbsp;·&nbsp; 3 extraordinary days &nbsp;·&nbsp; 7 destinations<br>
+    All images public domain (Wikimedia Commons) &nbsp;·&nbsp; Replace URLs in the IMAGES JSON in the JS block
   </div>
 </footer>
 
@@ -1046,11 +1052,13 @@
 // ║  IMAGES CONFIG — Replace any URL here           ║
 // ║  IDs are used throughout the page               ║
 // ╚══════════════════════════════════════════════════╝
+
 const IMAGES = {
   hero_bg:       "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg/1600px-Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg",
   pashupatinath: "https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGFzaHVwYXRpbmF0aCUyMHRlbXBsZSUyQyUyMGthdGhtYW5kdSUyQyUyMG5lcGFsfGVufDB8fDB8fHww",
   boudhanath:    "https://plus.unsplash.com/premium_photo-1697730384116-b434d9626b23?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fEJvdWRoYW5hdGglMjBTdHVwYXxlbnwwfHwwfHx8MA%3D%3D",
   swayambhunath: "https://images.unsplash.com/photo-1731491435516-566d6d1e3141?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8S2F0aG1hbmR1JTIwVmFsbGV5fGVufDB8fDB8fHww",
+  annapurna:      "https://images.unsplash.com/photo-1578589591337-864142c03335?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YW5uYXB1cm5hJTIwbW91bnRhaW58ZW58MHx8MHx8fDA%3D",
   phewa_lake:    "https://images.unsplash.com/photo-1610997686651-98492fd08108?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8UGhld2ElMjBMYWtlfGVufDB8fDB8fHww",
   nagarkot:      "https://media.istockphoto.com/id/532647807/photo/himalayan-village-with-snow-mountain-backdrop.webp?a=1&b=1&s=612x612&w=0&k=20&c=vcIti3vZDobUAqbOWAB7TH4-h3eOB4WNZfGnGVy23HA=",
   bhaktapur:     "https://media.istockphoto.com/id/1585398450/photo/temple-of-durbar-square-at-patan-near-kathmandu-in-nepal.webp?a=1&b=1&s=612x612&w=0&k=20&c=-yQcfb0_PgM9N_AuyKD7O_r8UjSv8H6O0I298GLJ-Zk=",
@@ -1063,12 +1071,13 @@ const IMAGES = {
 
 // ── Inject place cards ──
 const placesData = [
-  { key:'pashupatinath', badge:'Sacred Temple',  name:'Pashupatinath Temple', loc:'Kathmandu',       desc:'One of the most sacred Hindu temples in the world. Ghats alive with rituals, sadhus, and timeless ceremony on the Bagmati River. UNESCO World Heritage.',             chips:['Spiritual','UNESCO','Evening Aarti'] },
-  { key:'boudhanath',    badge:'Buddhist Icon',   name:'Boudhanath Stupa',    loc:'Kathmandu',       desc:"Asia's largest stupa draped in prayer flags. Walk the kora at dusk as butter-lamp smoke drifts skyward and monks chant in surrounding monasteries.",    chips:['Buddhist','Architecture','UNESCO'] },
-  { key:'swayambhunath', badge:'Monkey Temple',   name:'Swayambhunath',       loc:'Kathmandu Valley',desc:'Perched atop a hill 2,000 years old. The all-seeing Buddha eyes watch over the valley. Sunrise here is absolutely otherworldly — and so are the monkeys.', chips:['Panoramic','Sunrise','Monkeys'] },
-  { key:'phewa_lake',    badge:'Lake City',       name:'Phewa Lake, Pokhara', loc:'Pokhara',         desc:'Row a wooden boat with Annapurna reflected in still water. The Tal Barahi island temple sits in the middle — the perfect Himalayan postcard.',           chips:['Boating','Annapurna View','Serene'] },
-  { key:'nagarkot',      badge:'Sunrise Point',   name:'Nagarkot Viewpoint',  loc:'Bhaktapur District',desc:'Wake at 5 AM and watch the Himalayas — including Everest on clear days — turn flamingo-pink. The most dramatic dawn in South Asia. Book ahead.',      chips:['Everest View','Sunrise','Hiking'] },
-  { key:'bhaktapur',     badge:'Ancient City',    name:'Bhaktapur Durbar Square', loc:'Bhaktapur',   desc:'Medieval Newari architecture at its finest. Terracotta pagodas, carved wooden windows, potters at work. Try Juju Dhau fresh from a clay pot.',          chips:['Architecture','Culture','Street Food'] },
+  { key:'pashupatinath', badge:'Sacred Temple',  name:'Pashupatinath Temple',     loc:'Kathmandu',          desc:'One of the most sacred Hindu temples in the world. Ghats alive with rituals, sadhus, and timeless ceremony on the Bagmati River. UNESCO World Heritage.',            chips:['Spiritual','UNESCO','Evening Aarti'] },
+  { key:'boudhanath',    badge:'Buddhist Icon',   name:'Boudhanath Stupa',         loc:'Kathmandu',          desc:"Asia's largest stupa draped in prayer flags. Walk the kora at dusk as butter-lamp smoke drifts skyward and monks chant in surrounding monasteries.",   chips:['Buddhist','Architecture','UNESCO'] },
+  { key:'swayambhunath', badge:'Monkey Temple',   name:'Swayambhunath',            loc:'Kathmandu Valley',   desc:'Perched atop a hill 2,000 years old. The all-seeing Buddha eyes watch over the valley. Sunrise here is absolutely otherworldly — and so are the monkeys.',chips:['Panoramic','Sunrise','Monkeys'] },
+  { key:'annapurna',     badge:'Sacred Massif',   name:'Annapurna Sanctuary',      loc:'Gandaki Province',   desc:'The world\'s 10th highest peak towers at 8,091 m. The Annapurna Circuit is legendary — dramatic gorges, rhododendron forests, teahouses and Himalayan grandeur you cannot imagine until you stand inside it.',chips:['Trekking','8000m Peak','Rhododendrons'] },
+  { key:'phewa_lake',    badge:'Lake City',       name:'Phewa Lake, Pokhara',      loc:'Pokhara',            desc:'Row a wooden boat with Annapurna reflected in still water. The Tal Barahi island temple sits in the middle — the perfect Himalayan postcard.',          chips:['Boating','Annapurna View','Serene'] },
+  { key:'nagarkot',      badge:'Sunrise Point',   name:'Nagarkot Viewpoint',       loc:'Bhaktapur District', desc:'Wake at 5 AM and watch the Himalayas — including Everest on clear days — turn flamingo-pink. The most dramatic dawn in South Asia. Book ahead.',     chips:['Everest View','Sunrise','Hiking'] },
+  { key:'bhaktapur',     badge:'Ancient City',    name:'Bhaktapur Durbar Square',  loc:'Bhaktapur',          desc:'Medieval Newari architecture at its finest. Terracotta pagodas, carved wooden windows, potters at work. Try Juju Dhau fresh from a clay pot.',         chips:['Architecture','Culture','Street Food'] },
 ];
 
 const placesGrid = document.querySelector('.places-grid');
@@ -1090,7 +1099,7 @@ placesData.forEach(p => {
 // ── Inject gallery ──
 const gallery = document.querySelector('.gallery-mosaic');
 const galleryKeys = ['gallery_1','gallery_2','gallery_3','gallery_4','gallery_5'];
-const galleryAlts = ['Mount Everest','Swayambhunath','Bhaktapur','Boudhanath','Phewa Lake'];
+const galleryAlts = ['Mount Everest','Annapurna Sanctuary','Bhaktapur Durbar','Boudhanath Stupa','Phewa Lake'];
 galleryKeys.forEach((k,i) => {
   gallery.insertAdjacentHTML('beforeend',
     `<img class="${i===0?'g0':''}" src="${IMAGES[k]}" alt="${galleryAlts[i]}" loading="lazy"/>`
