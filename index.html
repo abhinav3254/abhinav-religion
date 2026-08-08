@@ -1,421 +1,1242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Abhinav — The Religion of Humanity</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <title>Abhinav Trip Planner — Nepal 2025</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    /* ─────────────────────────────────────────
+       IMAGE CONFIG — Replace URLs here
+    ───────────────────────────────────────── */
+    /*
+    IMAGES JSON — swap any URL below, IDs are referenced in JS
+    {
+      "hero_bg"        : "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg/1600px-Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg",
+      "pashupatinath"  : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Pashupatinath_Temple.jpg/1280px-Pashupatinath_Temple.jpg",
+      "boudhanath"     : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Boudhanath_stupa_Kathmandu.jpg/1280px-Boudhanath_stupa_Kathmandu.jpg",
+      "swayambhunath"  : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Swayambhunath_stupa%2C_Kathmandu.jpg/1280px-Swayambhunath_stupa%2C_Kathmandu.jpg",
+      "phewa_lake"     : "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Phewa_Lake_Pokhara_Nepal.jpg/1280px-Phewa_Lake_Pokhara_Nepal.jpg",
+      "nagarkot"       : "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/View_from_Nagarkot.jpg/1280px-View_from_Nagarkot.jpg",
+      "bhaktapur"      : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/55-window-palace-bhaktapur.jpg/1280px-55-window-palace-bhaktapur.jpg",
+      "gallery_1"      : "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg/1280px-Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg",
+      "gallery_2"      : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Swayambhunath_stupa%2C_Kathmandu.jpg/640px-Swayambhunath_stupa%2C_Kathmandu.jpg",
+      "gallery_3"      : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/55-window-palace-bhaktapur.jpg/640px-55-window-palace-bhaktapur.jpg",
+      "gallery_4"      : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Boudhanath_stupa_Kathmandu.jpg/640px-Boudhanath_stupa_Kathmandu.jpg",
+      "gallery_5"      : "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Phewa_Lake_Pokhara_Nepal.jpg/640px-Phewa_Lake_Pokhara_Nepal.jpg"
+    }
+    */
 
     :root {
-      --ink:      #1a1714;
-      --parchment:#f5f0e8;
-      --gold:     #c9a84c;
-      --gold-dim: #8c6d2f;
-      --ember:    #7c3a2a;
-      --fog:      #e8e2d6;
-      --white:    #fdfaf4;
+      --bg:        #090d1a;
+      --bg2:       #0e1424;
+      --bg3:       #0a1020;
+      --surface:   #141b2d;
+      --border:    rgba(255,255,255,0.07);
+      --gold:      #f5a623;
+      --gold-dim:  #b87a16;
+      --amber:     #ff8c42;
+      --crimson:   #c0392b;
+      --teal:      #2ec4b6;
+      --snow:      #e8edf5;
+      --muted:     rgba(232,237,245,0.45);
+      --sun-core:  #fff7c0;
+      --sun-mid:   #ffb347;
+      --sun-outer: #ff6b35;
     }
 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--parchment);
-      color: var(--ink);
-      line-height: 1.6;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--snow);
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
+    .cinzel { font-family: 'Cinzel', serif; }
 
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+
+    /* ─────────── NAV ─────────── */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      padding: 16px 32px;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 1.2rem 4rem;
-      background: rgba(245,240,232,0.85);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(201,168,76,0.2);
+      transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s;
     }
-    .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem; font-weight: 300; letter-spacing: 0.12em;
-      color: var(--gold-dim); text-decoration: none;
+    #navbar.solid {
+      background: rgba(9,13,26,0.92);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 var(--border);
     }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; }
+    .nav-brand-text {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+    }
+    .nav-brand-sub {
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      line-height: 1;
+    }
+    .nav-links { display: flex; gap: 28px; }
     .nav-links a {
-      font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--ink); text-decoration: none; opacity: 0.65;
-      transition: opacity 0.2s;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
     }
-    .nav-links a:hover { opacity: 1; }
+    .nav-links a:hover { color: var(--gold); }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--snow); border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .mobile-menu {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(9,13,26,0.98); z-index: 190;
+      flex-direction: column; align-items: center; justify-content: center; gap: 36px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--snow);
+      text-decoration: none; letter-spacing: 0.12em;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+    .menu-close {
+      position: absolute; top: 20px; right: 28px;
+      font-size: 1.6rem; cursor: pointer; color: var(--muted);
+    }
 
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 8rem 2rem 4rem;
-      background:
-        radial-gradient(ellipse 70% 55% at 50% 60%, rgba(201,168,76,0.10) 0%, transparent 70%),
-        var(--parchment);
-      position: relative; overflow: hidden;
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      #navbar { padding: 14px 20px; }
     }
-    .hero::before {
-      content: '';
+
+    /* ─────────── HERO SCENE ─────────── */
+    #hero {
+      position: relative;
+      width: 100%; height: 100svh; min-height: 560px;
+      overflow: hidden;
+      display: flex; align-items: flex-end; justify-content: center;
+      padding-bottom: 10vh;
+    }
+
+    /* Sky layers */
+    #sky-night {
       position: absolute; inset: 0;
+      background: linear-gradient(180deg, #020510 0%, #0a1535 40%, #0f2050 65%, #1a3060 100%);
+      z-index: 1;
+    }
+    #sky-dawn {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg,
+        #020510 0%,
+        #0a0820 25%,
+        #2d1b00 50%,
+        #8b3a00 68%,
+        #e06000 80%,
+        #ff9040 88%,
+        #ffc870 94%,
+        #ffe8a0 100%
+      );
+      opacity: 0; z-index: 2;
+    }
+    #sky-day {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg,
+        #080d24 0%, #0f1f5c 30%, #1a3a8f 55%, #2a5fc2 75%, #6faad8 90%, #b8d8f0 100%
+      );
+      opacity: 0; z-index: 3;
+    }
+
+    /* Stars */
+    #stars {
+      position: absolute; inset: 0; z-index: 4;
       background-image:
-        repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(201,168,76,0.07) 60px),
-        repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(201,168,76,0.07) 60px);
+        radial-gradient(1.5px 1.5px at 10% 8%,  #fff 0%, transparent 100%),
+        radial-gradient(1px   1px   at 25% 15%, #fff 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 40% 5%,  #fff 0%, transparent 100%),
+        radial-gradient(1px   1px   at 55% 12%, #fff 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 70% 7%,  #fff 0%, transparent 100%),
+        radial-gradient(1px   1px   at 85% 18%, #fff 0%, transparent 100%),
+        radial-gradient(1px   1px   at 15% 25%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 32% 20%, #fff 0%, transparent 100%),
+        radial-gradient(1px   1px   at 62% 22%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px   1px   at 78% 30%, #fff 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 90% 10%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1px   1px   at 5%  35%, #fff 0%, transparent 100%),
+        radial-gradient(1px   1px   at 47% 32%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 93% 26%, #fff 0%, transparent 100%);
+    }
+
+    /* Sun */
+    #sun {
+      position: absolute;
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      left: 50%; bottom: -120px;
+      transform: translateX(-50%);
+      z-index: 5;
+      background: radial-gradient(circle at 40% 40%,
+        var(--sun-core) 0%,
+        var(--sun-mid) 40%,
+        var(--sun-outer) 75%,
+        transparent 100%
+      );
+      box-shadow:
+        0 0 40px 20px rgba(255,160,50,0.5),
+        0 0 100px 40px rgba(255,100,20,0.3),
+        0 0 200px 80px rgba(255,80,0,0.15);
+      will-change: transform, opacity;
+    }
+    #sun-rays {
+      position: absolute; inset: -60px;
+      border-radius: 50%;
+      background: radial-gradient(circle,
+        rgba(255,200,100,0.18) 0%,
+        rgba(255,140,50,0.08) 45%,
+        transparent 70%
+      );
+      opacity: 0;
+      will-change: opacity;
+    }
+    #horizon-glow {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 35%;
+      background: linear-gradient(to top,
+        rgba(255,120,30,0.0) 0%,
+        transparent 100%
+      );
+      z-index: 6; opacity: 0;
+      will-change: opacity;
+    }
+
+    /* Mountains SVG */
+    #mountains {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 8;
+      width: 100%;
+    }
+    #mountains svg { width: 100%; height: auto; display: block; }
+
+    /* Alpenglow overlay on mountain peaks */
+    #alpenglow {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      z-index: 9;
+      width: 100%; pointer-events: none; opacity: 0;
+    }
+    #alpenglow svg { width: 100%; height: auto; display: block; }
+
+    /* Prayer flags rope */
+    #flags-container {
+      position: absolute; top: 0; left: 0; right: 0;
+      z-index: 10; height: 80px; overflow: hidden;
       pointer-events: none;
     }
-    .hero-eyebrow {
-      font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 2rem; opacity: 0.85;
+    .flag-rope {
+      position: absolute;
+      top: 0; left: -5%; right: -5%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, rgba(150,120,80,0.6) 10%, rgba(150,120,80,0.6) 90%, transparent 100%);
     }
-    .hero-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3.5rem, 14vw, 12rem);
-      font-weight: 300; line-height: 0.88;
-      letter-spacing: -0.01em;
-      color: var(--ink);
-      white-space: nowrap;
+    .flag-el {
+      position: absolute;
+      top: 2px;
+      width: 28px; height: 36px;
+      clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+      opacity: 0.85;
+      transform-origin: top center;
+      animation: flagWave 2.5s ease-in-out infinite;
     }
-    .hero-name em {
-      font-style: italic; color: var(--gold); display: inline;
+    @keyframes flagWave {
+      0%,100% { transform: rotate(-4deg) skewX(1deg); }
+      35%      { transform: rotate(5deg)  skewX(-2deg); }
+      65%      { transform: rotate(-2deg) skewX(2deg); }
     }
-    .hero-tagline {
-      margin-top: 2.5rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-      font-weight: 300; font-style: italic;
-      color: var(--ember); max-width: 520px; line-height: 1.5;
+
+    /* Hero text */
+    #hero-content {
+      position: relative; z-index: 15;
+      text-align: center; padding: 0 20px;
+      max-width: 800px; width: 100%;
     }
-    .hero-divider {
-      width: 60px; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      margin: 2.5rem auto;
+    .hero-brand {
+      font-size: 0.68rem; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 16px;
+      opacity: 0;
     }
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.2rem, 7vw, 5rem);
+      font-weight: 900; line-height: 1.05;
+      color: #fff;
+      text-shadow: 0 2px 40px rgba(0,0,0,0.8);
+      opacity: 0;
+    }
+    .hero-title .highlight { color: var(--gold); }
     .hero-sub {
-      font-size: 0.9rem; color: var(--ink); opacity: 0.55;
-      max-width: 400px; line-height: 1.7;
+      margin-top: 18px;
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      color: rgba(255,255,255,0.65);
+      font-weight: 300; letter-spacing: 0.1em;
+      opacity: 0;
     }
-    .hero-cta {
-      margin-top: 3rem;
-      display: inline-block;
-      padding: 0.85rem 2.6rem;
-      border: 1px solid var(--gold);
-      color: var(--gold-dim);
-      font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
-      text-decoration: none; transition: all 0.25s;
+    .hero-stats {
+      display: flex; justify-content: center;
+      gap: clamp(16px, 5vw, 52px);
+      margin-top: 36px;
+      padding: 20px clamp(16px, 4vw, 40px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      background: rgba(9,13,26,0.5);
+      backdrop-filter: blur(10px);
+      opacity: 0;
     }
-    .hero-cta:hover {
-      background: var(--gold); color: var(--white);
+    .h-stat { text-align: center; }
+    .h-stat-num {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700; color: var(--gold); line-height: 1;
+    }
+    .h-stat-label {
+      font-size: 0.62rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--muted);
+      margin-top: 5px;
+    }
+    .stat-divider { width: 1px; background: var(--border); }
+
+    .scroll-hint {
+      position: absolute; bottom: 24px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 15; display: flex; flex-direction: column;
+      align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.3); font-size: 0.6rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      opacity: 0;
+    }
+    .scroll-line {
+      width: 1px; height: 44px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: pulseDown 1.8s ease-in-out infinite;
+    }
+    @keyframes pulseDown {
+      0%,100% { opacity: 0; transform: scaleY(0.5) translateY(-8px); }
+      50%      { opacity: 1; transform: scaleY(1)   translateY(0); }
     }
 
-    /* ── FLAME SYMBOL ── */
-    .flame-wrap {
-      width: 56px; height: 56px; margin: 3.5rem auto 0;
-      animation: floatFlame 4s ease-in-out infinite;
+    /* ─────────── SHARED SECTION STYLES ─────────── */
+    .section-wrap { padding: clamp(60px,10vw,96px) clamp(20px,5vw,80px); }
+    .eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem; letter-spacing: 0.38em;
+      text-transform: uppercase; color: var(--gold);
     }
-    @keyframes floatFlame {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-8px); }
+    .sec-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 700; color: var(--snow);
+      margin-top: 8px; line-height: 1.15;
+    }
+    .gold-bar { width: 40px; height: 3px; background: var(--gold); margin-top: 16px; border-radius: 2px; }
+
+    /* ─────────── PLACES ─────────── */
+    #places { background: var(--bg2); }
+    .places-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .place-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.35s cubic-bezier(.22,.68,0,1.2), box-shadow 0.35s;
+      will-change: transform;
+    }
+    .place-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(245,166,35,0.15);
+    }
+    .place-card img {
+      width: 100%; height: 210px; object-fit: cover; display: block;
+      transition: transform 0.5s ease;
+    }
+    .place-card:hover img { transform: scale(1.05); }
+    .place-badge {
+      position: absolute; top: 14px; left: 14px;
+      background: var(--crimson);
+      font-family: 'Cinzel', serif; font-size: 0.58rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: #fff; padding: 4px 10px; border-radius: 2px;
+    }
+    .place-body { padding: 20px 22px 24px; }
+    .place-name {
+      font-family: 'Cinzel', serif; font-size: 1.05rem;
+      font-weight: 700; color: var(--snow);
+    }
+    .place-loc {
+      font-size: 0.68rem; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--teal);
+      margin-top: 4px;
+    }
+    .place-desc {
+      margin-top: 10px; font-size: 0.83rem;
+      color: var(--muted); line-height: 1.65;
+    }
+    .place-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+    .chip {
+      font-size: 0.65rem; padding: 3px 9px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 2px; color: rgba(232,237,245,0.6);
+      letter-spacing: 0.06em;
     }
 
-    /* ── SECTION BASE ── */
-    section { padding: 7rem 2rem; }
-    .container { max-width: 900px; margin: 0 auto; }
-    .section-label {
-      font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 1rem; display: block;
+    /* ─────────── ITINERARY ─────────── */
+    #itinerary { background: var(--bg3); }
+    .itin-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+      gap: 20px; margin-top: 48px;
     }
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      font-weight: 300; line-height: 1.15;
-      color: var(--ink); margin-bottom: 1.5rem;
+    .day-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 28px 24px;
+      position: relative; overflow: hidden;
     }
-    .section-body {
-      font-size: 1.05rem; color: var(--ink); opacity: 0.7;
-      line-height: 1.8; max-width: 640px;
+    .day-card::before {
+      content: attr(data-day);
+      position: absolute; top: -10px; right: -6px;
+      font-family: 'Cinzel', serif;
+      font-size: 6rem; font-weight: 900;
+      color: rgba(255,255,255,0.03);
+      line-height: 1; pointer-events: none; user-select: none;
+    }
+    .day-header {
+      font-family: 'Cinzel', serif; font-size: 0.95rem;
+      font-weight: 600; color: var(--snow);
+      padding-left: 14px;
+      border-left: 3px solid var(--gold);
+      margin-bottom: 22px;
+    }
+    .day-header small {
+      display: block; font-family: 'Inter', sans-serif;
+      font-size: 0.65rem; font-weight: 400;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 3px;
+    }
+    .act-row {
+      display: flex; gap: 14px; padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .act-row:last-child { border-bottom: none; }
+    .act-time {
+      font-family: 'Cinzel', serif; font-size: 0.7rem;
+      color: var(--gold); min-width: 46px;
+      padding-top: 2px; letter-spacing: 0.06em;
+    }
+    .act-dot-col { display: flex; flex-direction: column; align-items: center; gap: 0; }
+    .act-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); margin-top: 4px; flex-shrink: 0; }
+    .act-line { width: 1px; flex: 1; background: rgba(255,255,255,0.06); margin-top: 4px; }
+    .act-info {}
+    .act-name { font-weight: 600; font-size: 0.88rem; color: var(--snow); }
+    .act-desc { font-size: 0.77rem; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+
+    /* ─────────── BUDGET ─────────── */
+    #budget { background: var(--bg2); }
+    .budget-intro {
+      font-size: 0.88rem; color: var(--muted);
+      line-height: 1.7; max-width: 620px; margin-top: 16px;
+    }
+    .budget-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+      gap: 16px; margin-top: 40px;
+    }
+    .budget-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px; padding: 22px 22px 20px;
+      border-top: 3px solid var(--gold);
+      transition: border-color 0.3s;
+    }
+    .budget-card:hover { border-top-color: var(--amber); }
+    .budget-cat {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    }
+    .budget-icon { font-size: 1.3rem; }
+    .budget-cat-name {
+      font-family: 'Cinzel', serif; font-size: 0.85rem;
+      font-weight: 600; color: var(--snow);
+    }
+    .budget-row {
+      display: flex; justify-content: space-between;
+      align-items: baseline;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.8rem;
+    }
+    .budget-row:last-child { border-bottom: none; }
+    .budget-item { color: var(--muted); }
+    .budget-amt { color: var(--snow); font-weight: 600; font-variant-numeric: tabular-nums; }
+    .budget-amt.per-person { color: var(--gold); }
+    .budget-total-bar {
+      margin-top: 40px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px; padding: 28px 28px;
+      display: flex; flex-wrap: wrap;
+      align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .bt-label {
+      font-size: 0.72rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
+    }
+    .bt-amount {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 900; color: var(--gold); line-height: 1;
+    }
+    .bt-sub { font-size: 0.8rem; color: var(--muted); margin-top: 6px; }
+    .bt-pp {
+      text-align: right;
+    }
+    .bt-pp .bt-amount { color: var(--amber); }
+    .budget-note {
+      margin-top: 16px; font-size: 0.75rem;
+      color: rgba(232,237,245,0.35); line-height: 1.6;
     }
 
-    /* ── ABOUT ── */
-    #about { background: var(--white); }
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
-      align-items: center;
+    /* ─────────── GALLERY ─────────── */
+    #gallery { background: var(--bg3); }
+    .gallery-mosaic {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 260px 240px;
+      gap: 6px; border-radius: 6px; overflow: hidden;
     }
-    .about-quote {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.9rem; font-weight: 300; font-style: italic;
-      color: var(--ember); line-height: 1.4; border-left: 2px solid var(--gold);
-      padding-left: 1.5rem;
+    .gallery-mosaic .g0 { grid-row: 1 / 3; }
+    .gallery-mosaic img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      filter: brightness(0.8) saturate(0.85);
+      transition: filter 0.4s, transform 0.4s;
+    }
+    .gallery-mosaic img:hover { filter: brightness(1) saturate(1.05); transform: scale(1.02); }
+    @media (max-width: 640px) {
+      .gallery-mosaic {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 200px 180px 180px;
+      }
+      .gallery-mosaic .g0 { grid-column: 1 / 3; grid-row: 1; }
     }
 
-    /* ── PILLARS ── */
-    #pillars { background: var(--parchment); }
-    .pillars-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 2.5rem; margin-top: 4rem;
+    /* ─────────── TIPS ─────────── */
+    #tips { background: var(--bg2); }
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
+      gap: 16px; margin-top: 40px;
     }
-    .pillar {
-      padding: 2.5rem 2rem;
-      background: var(--white);
-      border-top: 2px solid var(--gold);
-      transition: transform 0.2s;
+    .tip-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 6px 6px 0;
+      padding: 18px 20px;
     }
-    .pillar:hover { transform: translateY(-4px); }
-    .pillar-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 3rem; font-weight: 300; color: var(--gold); opacity: 0.3;
-      line-height: 1; margin-bottom: 1rem;
+    .tip-icon { font-size: 1.3rem; margin-bottom: 8px; }
+    .tip-title {
+      font-family: 'Cinzel', serif; font-size: 0.85rem;
+      font-weight: 600; color: var(--snow); margin-bottom: 6px;
     }
-    .pillar-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem; font-weight: 400; color: var(--ink);
-      margin-bottom: 0.8rem;
-    }
-    .pillar-text { font-size: 0.9rem; opacity: 0.65; line-height: 1.7; }
+    .tip-text { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
 
-    /* ── TEACHINGS ── */
-    #teachings { background: var(--ink); color: var(--parchment); }
-    #teachings .section-title { color: var(--parchment); }
-    #teachings .section-body { color: var(--parchment); opacity: 0.6; }
-    #teachings .section-label { color: var(--gold); }
-    .teaching-list { margin-top: 4rem; }
-    .teaching-item {
-      display: flex; gap: 2rem; align-items: flex-start;
-      padding: 2rem 0; border-bottom: 1px solid rgba(201,168,76,0.15);
-    }
-    .teaching-item:first-child { border-top: 1px solid rgba(201,168,76,0.15); }
-    .teaching-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 0.2rem; }
-    .teaching-head {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.25rem; color: var(--gold); margin-bottom: 0.4rem;
-    }
-    .teaching-desc { font-size: 0.9rem; opacity: 0.55; line-height: 1.7; color: var(--parchment); }
-
-    /* ── JOIN ── */
-    #join {
-      background:
-        radial-gradient(ellipse 60% 80% at 50% 100%, rgba(201,168,76,0.12) 0%, transparent 70%),
-        var(--white);
+    /* ─────────── QUOTE BAND ─────────── */
+    #quote-band {
+      background: linear-gradient(135deg, var(--crimson) 0%, #7b1a12 100%);
+      padding: clamp(48px, 8vw, 80px) clamp(20px, 5vw, 80px);
       text-align: center;
     }
-    #join .section-title { margin: 0 auto 1rem; }
-    #join .section-body { margin: 0 auto 2.5rem; }
-    .join-form {
-      display: flex; gap: 1rem; justify-content: center;
-      flex-wrap: wrap; margin-top: 2rem;
+    .quote-text {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.1rem, 3vw, 1.7rem);
+      font-weight: 400; color: #fff; line-height: 1.55;
+      max-width: 680px; margin: 0 auto;
     }
-    .join-form input {
-      padding: 0.85rem 1.4rem;
-      border: 1px solid rgba(201,168,76,0.4);
-      background: var(--parchment); color: var(--ink);
-      font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
-      outline: none; width: 260px;
-      transition: border-color 0.2s;
+    .quote-attr {
+      margin-top: 16px; font-size: 0.7rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
     }
-    .join-form input:focus { border-color: var(--gold); }
-    .join-form button {
-      padding: 0.85rem 2rem;
-      background: var(--gold); color: var(--white);
-      border: none; cursor: pointer;
-      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
-      font-family: 'DM Sans', sans-serif;
-      transition: background 0.2s;
-    }
-    .join-form button:hover { background: var(--gold-dim); }
 
-    /* ── FOOTER ── */
+    /* ─────────── FOOTER ─────────── */
     footer {
-      background: var(--ink); color: var(--parchment);
-      text-align: center; padding: 3rem 2rem;
+      background: #060910;
+      padding: 44px 32px;
+      text-align: center;
+      border-top: 1px solid var(--border);
     }
     .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem; font-weight: 300; letter-spacing: 0.1em;
-      color: var(--gold); margin-bottom: 1rem;
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem; color: var(--gold);
+      letter-spacing: 0.06em; margin-bottom: 8px;
     }
-    .footer-text { font-size: 0.8rem; opacity: 0.35; letter-spacing: 0.05em; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { gap: 1rem; }
-      .nav-links a { font-size: 0.7rem; letter-spacing: 0.08em; }
-
-      section { padding: 4rem 1.5rem; }
-      .container { max-width: 100%; }
-
-      .hero { padding: 7rem 1.5rem 3rem; }
-      .hero-eyebrow { font-size: 0.65rem; letter-spacing: 0.18em; }
-      .hero-tagline { font-size: 1rem; }
-      .hero-sub { font-size: 0.85rem; }
-
-      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .about-quote { font-size: 1.4rem; }
-
-      .pillars-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-      .pillar { padding: 2rem 1.5rem; }
-
-      .teaching-item { gap: 1.2rem; }
-      .teaching-icon { font-size: 1.2rem; }
-
-      .join-form { flex-direction: column; align-items: center; }
-      .join-form input { width: 100%; max-width: 320px; }
-      .join-form button { width: 100%; max-width: 320px; }
+    .footer-sub {
+      font-size: 0.72rem; color: rgba(255,255,255,0.3);
+      letter-spacing: 0.14em; line-height: 1.8;
     }
 
-    @media (max-width: 480px) {
-      nav { padding: 0.9rem 1rem; }
-      .nav-logo { font-size: 1.3rem; }
-      .nav-links { gap: 0.7rem; }
-      .nav-links a { font-size: 0.62rem; }
-
-      .hero-cta { padding: 0.75rem 1.8rem; font-size: 0.68rem; }
-      .section-title { font-size: 1.7rem; }
-    }
+    /* ─────────── REVEAL UTIL ─────────── */
+    .will-reveal { opacity: 0; transform: translateY(32px); }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <a class="nav-logo" href="#">Abhinav</a>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#pillars">Pillars</a></li>
-      <li><a href="#teachings">Teachings</a></li>
-      <li><a href="#join">Join</a></li>
-    </ul>
-  </nav>
+<!-- ═══ NAV ═══ -->
+<nav id="navbar">
+  <div class="nav-brand">
+    <span style="font-size:1.4rem;">🏔</span>
+    <div>
+      <span class="nav-brand-text">Abhinav Trip Planner</span>
+      <span class="nav-brand-sub">Nepal 2025</span>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#places">Places</a>
+    <a href="#itinerary">Itinerary</a>
+    <a href="#budget">Budget</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#tips">Tips</a>
+  </div>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <p class="hero-eyebrow">A Religion of Humanity</p>
-    <h1 class="hero-name">
-      Abhi<em>nav</em>
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <span class="menu-close" onclick="toggleMenu()">✕</span>
+  <a href="#places"    onclick="toggleMenu()">Places</a>
+  <a href="#itinerary" onclick="toggleMenu()">Itinerary</a>
+  <a href="#budget"    onclick="toggleMenu()">Budget</a>
+  <a href="#gallery"   onclick="toggleMenu()">Gallery</a>
+  <a href="#tips"      onclick="toggleMenu()">Tips</a>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <!-- Sky layers -->
+  <div id="sky-night"></div>
+  <div id="sky-dawn"></div>
+  <div id="sky-day"></div>
+
+  <!-- Stars -->
+  <div id="stars"></div>
+
+  <!-- Horizon glow -->
+  <div id="horizon-glow"></div>
+
+  <!-- Sun -->
+  <div id="sun"><div id="sun-rays"></div></div>
+
+  <!-- Mountains back -->
+  <div id="mountains">
+    <svg viewBox="0 0 1440 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <!-- Far range (snow) -->
+      <polygon id="peak-far-l" points="0,420 180,80 320,200 440,60 600,180 720,30 860,150 980,50 1100,160 1220,70 1340,190 1440,100 1440,420" fill="#0c1628"/>
+      <!-- Snow caps -->
+      <polygon id="snow-1" points="680,50 720,30 760,50 740,48 720,35 700,48" fill="#c8d8e8" opacity="0.25"/>
+      <polygon id="snow-2" points="940,68 980,50 1020,68 1000,64 980,54 960,64" fill="#c8d8e8" opacity="0.2"/>
+      <polygon id="snow-3" points="420,78 460,60 500,78 480,74 460,64 440,74" fill="#c8d8e8" opacity="0.2"/>
+      <!-- Mid range -->
+      <polygon id="peak-mid" points="0,420 100,200 250,280 400,170 550,260 700,150 850,240 1000,170 1150,250 1300,180 1440,220 1440,420" fill="#0a1220"/>
+      <!-- Fore hills -->
+      <polygon id="peak-fore" points="0,420 200,300 400,340 600,290 800,320 1000,280 1200,310 1440,270 1440,420" fill="#070e1a"/>
+    </svg>
+  </div>
+
+  <!-- Alpenglow overlay (pink glow on peaks at sunrise) -->
+  <div id="alpenglow">
+    <svg viewBox="0 0 1440 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="agGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#ff9060" stop-opacity="0.55"/>
+          <stop offset="60%" stop-color="#ff5020" stop-opacity="0.1"/>
+          <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <polygon points="0,420 180,80 320,200 440,60 600,180 720,30 860,150 980,50 1100,160 1220,70 1340,190 1440,100 1440,420" fill="url(#agGrad)"/>
+    </svg>
+  </div>
+
+  <!-- Prayer flags -->
+  <div id="flags-container">
+    <div class="flag-rope"></div>
+    <div id="flags-inner"></div>
+  </div>
+
+  <!-- Hero text -->
+  <div id="hero-content">
+    <div class="hero-brand">✦ Abhinav Trip Planner · Nepal Edition ✦</div>
+    <h1 class="hero-title">
+      Where Mountains<br>Touch <span class="highlight">Heaven</span>
     </h1>
-    <p class="hero-tagline">Where every human life is sacred, and humanity itself is the highest calling.</p>
-    <div class="hero-divider"></div>
-    <p class="hero-sub">Not gods above. Not rituals of stone. Only the living breath of people, bound together in compassion.</p>
-    <a class="hero-cta" href="#about">Begin the Path</a>
-
-    <!-- Flame SVG -->
-    <div class="flame-wrap">
-      <svg viewBox="0 0 56 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M28 76C28 76 6 56 6 36C6 20 16 8 28 4C28 4 22 18 28 26C34 34 44 28 44 28C44 28 50 42 40 56C36 62 28 76 28 76Z" fill="#c9a84c" opacity="0.85"/>
-        <path d="M28 76C28 76 16 58 18 44C20 32 28 28 28 28C28 28 24 38 30 44C36 50 38 58 28 76Z" fill="#7c3a2a" opacity="0.6"/>
-      </svg>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="container">
-      <div class="about-grid">
-        <div>
-          <span class="section-label">The Way of Abhinav</span>
-          <h2 class="section-title">Born from the light within every person</h2>
-          <p class="section-body">
-            Abhinav — meaning "ever-new" in Sanskrit — is a path for those who find divinity not in sky and scripture, but in the eyes of another human being. We hold that to uplift one life is to perform the holiest act. To love across difference is the deepest prayer. To build a better world is the truest worship.
-          </p>
-        </div>
-        <blockquote class="about-quote">
-          "The divine is not distant. It breathes in the person beside you."
-        </blockquote>
+    <p class="hero-sub">4 souls &nbsp;·&nbsp; 3 days &nbsp;·&nbsp; one Himalayan adventure from Delhi</p>
+    <div class="hero-stats">
+      <div class="h-stat">
+        <div class="h-stat-num">4</div>
+        <div class="h-stat-label">Travellers</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="h-stat">
+        <div class="h-stat-num">3</div>
+        <div class="h-stat-label">Days</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="h-stat">
+        <div class="h-stat-num">6</div>
+        <div class="h-stat-label">Destinations</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="h-stat">
+        <div class="h-stat-num">~₹15k</div>
+        <div class="h-stat-label">Per Person</div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- PILLARS -->
-  <section id="pillars">
-    <div class="container">
-      <span class="section-label">The Foundation</span>
-      <h2 class="section-title">Three Pillars of the Human Path</h2>
-      <div class="pillars-grid">
-        <div class="pillar">
-          <div class="pillar-num">I</div>
-          <h3 class="pillar-title">Seva — Selfless Service</h3>
-          <p class="pillar-text">No prayer rises higher than a hand extended to another. Service to humanity is not charity — it is devotion made visible.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">II</div>
-          <h3 class="pillar-title">Satya — Radical Truth</h3>
-          <p class="pillar-text">Honesty with oneself and others is the foundation of a dignified life. Truth spoken in love is our sacred language.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">III</div>
-          <h3 class="pillar-title">Karuna — Boundless Compassion</h3>
-          <p class="pillar-text">Compassion is not weakness — it is the highest intelligence. To feel with another is to touch something eternal.</p>
-        </div>
+  <div class="scroll-hint" id="scrollHint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══ PLACES ═══ -->
+<section id="places" class="section-wrap">
+  <div class="will-reveal">
+    <p class="eyebrow">Where We Go</p>
+    <h2 class="sec-title">6 Must-Visit<br>Destinations</h2>
+    <div class="gold-bar"></div>
+  </div>
+
+  <div class="places-grid">
+    <!-- Cards injected by JS from IMAGES config -->
+  </div>
+</section>
+
+<!-- ═══ ITINERARY ═══ -->
+<section id="itinerary" class="section-wrap">
+  <div class="will-reveal">
+    <p class="eyebrow">Day by Day</p>
+    <h2 class="sec-title">3-Day Itinerary</h2>
+    <div class="gold-bar"></div>
+  </div>
+
+  <div class="itin-grid" style="margin-top:48px;">
+
+    <div class="day-card will-reveal" data-day="01">
+      <div class="day-header">
+        <small>Day One</small>
+        Kathmandu Arrival
+      </div>
+      <div class="act-row">
+        <div class="act-time">08:00</div>
+        <div class="act-dot-col"><div class="act-dot"></div><div class="act-line"></div></div>
+        <div class="act-info"><div class="act-name">Land at Tribhuvan Airport</div><div class="act-desc">Check into Thamel. Exchange currency, pick up Ncell SIM.</div></div>
+      </div>
+      <div class="act-row">
+        <div class="act-time">10:30</div>
+        <div class="act-dot-col"><div class="act-dot"></div><div class="act-line"></div></div>
+        <div class="act-info"><div class="act-name">Swayambhunath (Monkey Temple)</div><div class="act-desc">Climb 365 steps for a panoramic valley view. Spot resident macaques.</div></div>
+      </div>
+      <div class="act-row">
+        <div class="act-time">13:00</div>
+        <div class="act-dot-col"><div class="act-dot"></div><div class="act-line"></div></div>
+        <div class="act-info"><div class="act-name">Dal Bhat Lunch — Thamel</div><div class="act-desc">Unlimited Nepali thali. The real deal, not tourist-watered.</div></div>
+      </div>
+      <div class="act-row">
+        <div class="act-time">15:00</div>
+        <div class="act-dot-col"><div class="act-dot"></div><div class="act-line"></div></div>
+        <div class="act-info"><div class="act-name">Pashupatinath Temple</div><div class="act-desc">Watch Aarti on the Bagmati ghats. Sadhus, incense, eternal flame.</div></div>
+      </div>
+      <div class="act-row">
+        <div class="act-time">18:30</div>
+        <div class="act-dot-col"><div class="act-dot"></div></div>
+        <div class="act-info"><div class="act-name">Boudhanath Kora at Dusk</div><div class="act-desc">Evening circumambulation. Rooftop dinner overlooking the stupa.</div></div>
       </div>
     </div>
-  </section>
 
-  <!-- TEACHINGS -->
-  <section id="teachings">
-    <div class="container">
-      <span class="section-label">The Scroll of Abhinav</span>
-      <h2 class="section-title">What We Believe</h2>
-      <p class="section-body">A living collection of principles passed not from priest to follower, but from human to human, across every generation.</p>
-      <div class="teaching-list">
-        <div class="teaching-item">
-          <div class="teaching-icon">🌱</div>
-          <div>
-            <div class="teaching-head">Every life holds inherent worth</div>
-            <p class="teaching-desc">No birth, no background, no failure removes the sacred value of a human life. We treat every person as we would wish to be treated in our most vulnerable moment.</p>
-          </div>
-        </div>
-        <div class="teaching-item">
-          <div class="teaching-icon">🔥</div>
-          <div>
-            <div class="teaching-head">Suffering is the call to action</div>
-            <p class="teaching-desc">When we witness pain, we do not pray for it to end — we become the answer. The follower of Abhinav moves toward suffering, not away from it.</p>
-          </div>
-        </div>
-        <div class="teaching-item">
-          <div class="teaching-icon">🌊</div>
-          <div>
-            <div class="teaching-head">We are one river, many currents</div>
-            <p class="teaching-desc">Difference in language, culture, and belief is the richness of our shared humanity — not a fracture in it. Unity does not require sameness.</p>
-          </div>
-        </div>
-        <div class="teaching-item">
-          <div class="teaching-icon">✨</div>
-          <div>
-            <div class="teaching-head">The present moment is holy</div>
-            <p class="teaching-desc">There is no afterlife to defer our goodness to. This breath, this day, this chance to be kind — these are the only sanctuaries that matter.</p>
-          </div>
-        </div>
+    <div class="day-card will-reveal" data-day="02">
+      <div class="day-header">
+        <small>Day Two</small>
+        Bhaktapur + Nagarkot
+      </div>
+      <div class="act-row">
+        <div class="act-time">06:00</div>
+        <div class="act-dot-col"><div class="act-dot"></div><div class="act-line"></div></div>
+        <div class="act-info"><div class="act-name">Drive to Bhaktapur</div><div class="act-desc">Beat crowds to the medieval city. Explore Durbar Square before 9 AM.</div></div>
+      </div>
+      <div class="act-row">
+        <div class="act-time">09:30</div>
+        <div class="act-dot-col"><div class="act-dot"></div><div class="act-line"></div></div>
+        <div class="act-info"><div class="act-name">Nyatapola Temple + Potter's Square</div><div class="act-desc">Nepal's tallest pagoda. Watch potters shape clay on hand-turned wheels.</div></div>
+      </div>
+      <div class="act-row">
+        <div class="act-time">11:30</div>
+        <div class="act-dot-col"><div class="act-dot"></div><div class="act-line"></div></div>
+        <div class="act-info"><div class="act-name">Juju Dhau (King Curd)</div><div class="act-desc">Mandatory stop — legendary sweet yoghurt served in a clay bowl.</div></div>
+      </div>
+      <div class="act-row">
+        <div class="act-time">14:00</div>
+        <div class="act-dot-col"><div class="act-dot"></div><div class="act-line"></div></div>
+        <div class="act-info"><div class="act-name">Drive up to Nagarkot</div><div class="act-desc">32 km scenic hill drive. Check into hillside resort. Cool mountain air.</div></div>
+      </div>
+      <div class="act-row">
+        <div class="act-time">17:30</div>
+        <div class="act-dot-col"><div class="act-dot"></div></div>
+        <div class="act-info"><div class="act-name">Himalayan Sunset</div><div class="act-desc">Watch alpenglow paint Ganesh Himal, Langtang & Everest golden.</div></div>
       </div>
     </div>
-  </section>
 
-  <!-- JOIN -->
-  <section id="join">
-    <div class="container">
-      <span class="section-label">Take the First Step</span>
-      <h2 class="section-title">Walk with Us</h2>
-      <p class="section-body">There is no membership card, no initiation rite. Only a choice made each morning to live by the light of our shared humanity. Enter your name and let us walk together.</p>
-      <div class="join-form">
-        <input type="text" placeholder="Your name" />
-        <input type="email" placeholder="Your email" />
-        <button type="button">Begin the Path</button>
+    <div class="day-card will-reveal" data-day="03">
+      <div class="day-header">
+        <small>Day Three</small>
+        Nagarkot Sunrise + Pokhara
+      </div>
+      <div class="act-row">
+        <div class="act-time">05:00</div>
+        <div class="act-dot-col"><div class="act-dot"></div><div class="act-line"></div></div>
+        <div class="act-info"><div class="act-name">🌄 Nagarkot Sunrise</div><div class="act-desc">The moment the trip is built around. Himalayas glow flamingo-pink. Don't miss it.</div></div>
+      </div>
+      <div class="act-row">
+        <div class="act-time">08:00</div>
+        <div class="act-dot-col"><div class="act-dot"></div><div class="act-line"></div></div>
+        <div class="act-info"><div class="act-name">Fly / Drive to Pokhara</div><div class="act-desc">25-min flight (recommended ✈) or scenic 7-hr Prithvi Highway drive.</div></div>
+      </div>
+      <div class="act-row">
+        <div class="act-time">12:00</div>
+        <div class="act-dot-col"><div class="act-dot"></div><div class="act-line"></div></div>
+        <div class="act-info"><div class="act-name">Phewa Lake Boating</div><div class="act-desc">Row to Tal Barahi island temple. Annapurna reflects in still water.</div></div>
+      </div>
+      <div class="act-row">
+        <div class="act-time">15:30</div>
+        <div class="act-dot-col"><div class="act-dot"></div><div class="act-line"></div></div>
+        <div class="act-info"><div class="act-name">Lakeside Shopping</div><div class="act-desc">Pashminas, Thangka art, singing bowls. Negotiate hard.</div></div>
+      </div>
+      <div class="act-row">
+        <div class="act-time">19:00</div>
+        <div class="act-dot-col"><div class="act-dot"></div></div>
+        <div class="act-info"><div class="act-name">Farewell Dinner</div><div class="act-desc">Buff momo + apple brandy. Toast to Nepal. Fly home or onward.</div></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">Abhinav</div>
-    <p class="footer-text">A Religion of Humanity · Ever-New · Ever-Human</p>
-  </footer>
+<!-- ═══ BUDGET ═══ -->
+<section id="budget" class="section-wrap">
+  <div class="will-reveal">
+    <p class="eyebrow">Cost Breakdown</p>
+    <h2 class="sec-title">Rough Budget<br>Delhi → Nepal</h2>
+    <div class="gold-bar"></div>
+    <p class="budget-intro">Estimates for 4 people, mid-range comfort. Prices in ₹ (Indian Rupees). Nepal Rupee ≈ ₹0.62. All costs per group unless marked.</p>
+  </div>
 
+  <div class="budget-grid">
+
+    <div class="budget-card will-reveal">
+      <div class="budget-cat">
+        <div class="budget-icon">✈️</div>
+        <div class="budget-cat-name">Flights & Travel</div>
+      </div>
+      <div class="budget-row"><span class="budget-item">Delhi → Kathmandu (IndiGo / Air India)</span><span class="budget-amt">₹4,000–7,000<span style="font-size:0.65rem;color:var(--muted);">/pp</span></span></div>
+      <div class="budget-row"><span class="budget-item">Kathmandu → Pokhara flight (Yeti / Buddha Air)</span><span class="budget-amt">₹2,500–4,000<span style="font-size:0.65rem;color:var(--muted);">/pp</span></span></div>
+      <div class="budget-row"><span class="budget-item">Pokhara → Delhi return</span><span class="budget-amt">₹5,000–9,000<span style="font-size:0.65rem;color:var(--muted);">/pp</span></span></div>
+      <div class="budget-row" style="border-top:1px solid var(--gold-dim);margin-top:6px;padding-top:10px;"><span class="budget-item" style="color:var(--snow);font-weight:600;">Flight Total (4 persons)</span><span class="budget-amt per-person">~₹60,000</span></div>
+    </div>
+
+    <div class="budget-card will-reveal">
+      <div class="budget-cat">
+        <div class="budget-icon">🏨</div>
+        <div class="budget-cat-name">Accommodation</div>
+      </div>
+      <div class="budget-row"><span class="budget-item">Thamel hotel (2 rooms × 1 night)</span><span class="budget-amt">₹3,000–4,500</span></div>
+      <div class="budget-row"><span class="budget-item">Nagarkot hillside resort (2 rooms × 1 night)</span><span class="budget-amt">₹4,000–6,000</span></div>
+      <div class="budget-row"><span class="budget-item">Pokhara Lakeside hotel (2 rooms × 1 night)</span><span class="budget-amt">₹3,500–5,500</span></div>
+      <div class="budget-row" style="border-top:1px solid var(--gold-dim);margin-top:6px;padding-top:10px;"><span class="budget-item" style="color:var(--snow);font-weight:600;">Hotel Total</span><span class="budget-amt per-person">~₹14,000</span></div>
+    </div>
+
+    <div class="budget-card will-reveal">
+      <div class="budget-cat">
+        <div class="budget-icon">🚕</div>
+        <div class="budget-cat-name">Local Transport</div>
+      </div>
+      <div class="budget-row"><span class="budget-item">Airport pickup (shared cab)</span><span class="budget-amt">₹800–1,200</span></div>
+      <div class="budget-row"><span class="budget-item">Private jeep 2 days (Ktm + Bhaktapur + Nagarkot)</span><span class="budget-amt">₹7,000–9,000</span></div>
+      <div class="budget-row"><span class="budget-item">Pokhara local tuk-tuks & cabs</span><span class="budget-amt">₹1,200–2,000</span></div>
+      <div class="budget-row"><span class="budget-item">Phewa Lake boat rental (1 hr)</span><span class="budget-amt">₹500–800</span></div>
+      <div class="budget-row" style="border-top:1px solid var(--gold-dim);margin-top:6px;padding-top:10px;"><span class="budget-item" style="color:var(--snow);font-weight:600;">Transport Total</span><span class="budget-amt per-person">~₹11,000</span></div>
+    </div>
+
+    <div class="budget-card will-reveal">
+      <div class="budget-cat">
+        <div class="budget-icon">🍜</div>
+        <div class="budget-cat-name">Food & Drinks</div>
+      </div>
+      <div class="budget-row"><span class="budget-item">Breakfast (3 days × 4 persons)</span><span class="budget-amt">₹2,500</span></div>
+      <div class="budget-row"><span class="budget-item">Lunch — Dal Bhat, Momo, Thakali</span><span class="budget-amt">₹3,500</span></div>
+      <div class="budget-row"><span class="budget-item">Dinner (rooftop, Lakeside etc.)</span><span class="budget-amt">₹5,500</span></div>
+      <div class="budget-row"><span class="budget-item">Chai, apple brandy, snacks</span><span class="budget-amt">₹1,500</span></div>
+      <div class="budget-row" style="border-top:1px solid var(--gold-dim);margin-top:6px;padding-top:10px;"><span class="budget-item" style="color:var(--snow);font-weight:600;">Food Total</span><span class="budget-amt per-person">~₹13,000</span></div>
+    </div>
+
+    <div class="budget-card will-reveal">
+      <div class="budget-cat">
+        <div class="budget-icon">🎟️</div>
+        <div class="budget-cat-name">Entry Fees & Activities</div>
+      </div>
+      <div class="budget-row"><span class="budget-item">Pashupatinath (foreigners entry)</span><span class="budget-amt">₹2,400 total</span></div>
+      <div class="budget-row"><span class="budget-item">Bhaktapur Durbar entry</span><span class="budget-amt">₹1,600 total</span></div>
+      <div class="budget-row"><span class="budget-item">Boudhanath entry</span><span class="budget-amt">₹400 total</span></div>
+      <div class="budget-row"><span class="budget-item">Swayambhunath entry</span><span class="budget-amt">₹400 total</span></div>
+      <div class="budget-row" style="border-top:1px solid var(--gold-dim);margin-top:6px;padding-top:10px;"><span class="budget-item" style="color:var(--snow);font-weight:600;">Entry Total</span><span class="budget-amt per-person">~₹5,000</span></div>
+    </div>
+
+    <div class="budget-card will-reveal">
+      <div class="budget-cat">
+        <div class="budget-icon">🛍️</div>
+        <div class="budget-cat-name">Shopping & Misc</div>
+      </div>
+      <div class="budget-row"><span class="budget-item">Pashmina, souvenirs (per person)</span><span class="budget-amt">₹1,500–3,000</span></div>
+      <div class="budget-row"><span class="budget-item">Ncell SIM + data (4 persons)</span><span class="budget-amt">₹600</span></div>
+      <div class="budget-row"><span class="budget-item">Tips & donations</span><span class="budget-amt">₹800</span></div>
+      <div class="budget-row"><span class="budget-item">Medicines / contingency</span><span class="budget-amt">₹1,500</span></div>
+      <div class="budget-row" style="border-top:1px solid var(--gold-dim);margin-top:6px;padding-top:10px;"><span class="budget-item" style="color:var(--snow);font-weight:600;">Misc Total</span><span class="budget-amt per-person">~₹11,000</span></div>
+    </div>
+  </div>
+
+  <div class="budget-total-bar will-reveal">
+    <div>
+      <div class="bt-label">Total Trip Cost (4 persons)</div>
+      <div class="bt-amount">~₹1,14,000</div>
+      <div class="bt-sub">Mid-range estimate · includes all categories above</div>
+    </div>
+    <div class="bt-pp">
+      <div class="bt-label">Per Person</div>
+      <div class="bt-amount">~₹28,500</div>
+      <div class="bt-sub">Budget travellers: ~₹18k &nbsp;|&nbsp; Luxury: ~₹45k</div>
+    </div>
+  </div>
+  <p class="budget-note will-reveal">
+    ⚠ Estimates as of 2024–25 · Flight prices vary heavily by season (Oct–Nov peak = +30%). Indians pay higher temple entry fees than Nepali nationals. Book flights 3–4 weeks in advance for best rates. Nepal Rupee is pegged to INR at ~1.60; INR accepted almost everywhere.
+  </p>
+</section>
+
+<!-- ═══ GALLERY ═══ -->
+<section id="gallery" class="section-wrap">
+  <div class="will-reveal">
+    <p class="eyebrow">Through the Lens</p>
+    <h2 class="sec-title">Nepal in Frames</h2>
+    <div class="gold-bar"></div>
+  </div>
+  <div class="gallery-mosaic will-reveal">
+    <!-- injected by JS -->
+  </div>
+</section>
+
+<!-- ═══ TIPS ═══ -->
+<section id="tips" class="section-wrap">
+  <div class="will-reveal">
+    <p class="eyebrow">Before You Pack</p>
+    <h2 class="sec-title">Traveller Tips</h2>
+    <div class="gold-bar"></div>
+  </div>
+  <div class="tips-grid">
+    <div class="tip-card will-reveal" style="border-left-color:var(--gold);">
+      <div class="tip-icon">🛂</div>
+      <div class="tip-title">No Visa Needed</div>
+      <div class="tip-text">Indians don't need a visa for Nepal. Just your Aadhar / passport at TIA. Zero fee, smooth entry.</div>
+    </div>
+    <div class="tip-card will-reveal" style="border-left-color:var(--teal);">
+      <div class="tip-icon">💵</div>
+      <div class="tip-title">INR Widely Accepted</div>
+      <div class="tip-text">₹100, ₹200, ₹500 accepted at 1.6x rate. Keep NPR for small shops. ATMs in Thamel work with Indian cards.</div>
+    </div>
+    <div class="tip-card will-reveal" style="border-left-color:var(--amber);">
+      <div class="tip-icon">🌤</div>
+      <div class="tip-title">Best Season</div>
+      <div class="tip-text">Oct–Nov for crystal mountain views. Mar–May for rhododendrons. Monsoon (Jun–Sep) = poor visibility.</div>
+    </div>
+    <div class="tip-card will-reveal" style="border-left-color:var(--crimson);">
+      <div class="tip-icon">🕉</div>
+      <div class="tip-title">Temple Etiquette</div>
+      <div class="tip-text">Remove shoes. Dress modestly (shoulders + knees covered). Walk clockwise around stupas. No pointing feet at idols.</div>
+    </div>
+    <div class="tip-card will-reveal" style="border-left-color:var(--gold);">
+      <div class="tip-icon">🚕</div>
+      <div class="tip-title">Hire a Private Jeep</div>
+      <div class="tip-text">~₹7,000–9,000 for 2 days covers Ktm → Bhaktapur → Nagarkot. Far more flexible than shared taxis. Negotiate the night before.</div>
+    </div>
+    <div class="tip-card will-reveal" style="border-left-color:var(--teal);">
+      <div class="tip-icon">🍜</div>
+      <div class="tip-title">Must Eat</div>
+      <div class="tip-text">Buff momo, Dal Bhat (unlimited refills!), Juju Dhau in Bhaktapur, Sel Roti, apple brandy. Avoid raw salads.</div>
+    </div>
+    <div class="tip-card will-reveal" style="border-left-color:var(--amber);">
+      <div class="tip-icon">📱</div>
+      <div class="tip-title">Get Ncell SIM</div>
+      <div class="tip-text">Buy at TIA for ~NPR 100. Fast 4G in cities. Coverage weakens in Nagarkot hills — download maps offline.</div>
+    </div>
+    <div class="tip-card will-reveal" style="border-left-color:var(--crimson);">
+      <div class="tip-icon">🎒</div>
+      <div class="tip-title">Pack for Altitude</div>
+      <div class="tip-text">Layers for Nagarkot (can drop to 8°C at night). Good walking shoes essential. Sunscreen — UV is intense at 2,000+ m.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ QUOTE BAND ═══ -->
+<div id="quote-band">
+  <p class="quote-text">"The mountains are calling and I must go."</p>
+  <p class="quote-attr">— John Muir</p>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-logo">🏔 Abhinav Trip Planner</div>
+  <div class="footer-sub">
+    Nepal 2025 &nbsp;·&nbsp; 4 friends &nbsp;·&nbsp; 3 extraordinary days<br>
+    All Wikipedia images are public domain &nbsp;·&nbsp; Replace URLs in the IMAGES JSON at top of file
+  </div>
+</footer>
+
+<script>
+// ╔══════════════════════════════════════════════════╗
+// ║  IMAGES CONFIG — Replace any URL here           ║
+// ║  IDs are used throughout the page               ║
+// ╚══════════════════════════════════════════════════╝
+const IMAGES = {
+  hero_bg:       "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg/1600px-Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg",
+  pashupatinath: "https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGFzaHVwYXRpbmF0aCUyMHRlbXBsZSUyQyUyMGthdGhtYW5kdSUyQyUyMG5lcGFsfGVufDB8fDB8fHww",
+  boudhanath:    "https://plus.unsplash.com/premium_photo-1697730384116-b434d9626b23?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fEJvdWRoYW5hdGglMjBTdHVwYXxlbnwwfHwwfHx8MA%3D%3D",
+  swayambhunath: "https://images.unsplash.com/photo-1731491435516-566d6d1e3141?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8S2F0aG1hbmR1JTIwVmFsbGV5fGVufDB8fDB8fHww",
+  phewa_lake:    "https://images.unsplash.com/photo-1610997686651-98492fd08108?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8UGhld2ElMjBMYWtlfGVufDB8fDB8fHww",
+  nagarkot:      "https://media.istockphoto.com/id/532647807/photo/himalayan-village-with-snow-mountain-backdrop.webp?a=1&b=1&s=612x612&w=0&k=20&c=vcIti3vZDobUAqbOWAB7TH4-h3eOB4WNZfGnGVy23HA=",
+  bhaktapur:     "https://media.istockphoto.com/id/1585398450/photo/temple-of-durbar-square-at-patan-near-kathmandu-in-nepal.webp?a=1&b=1&s=612x612&w=0&k=20&c=-yQcfb0_PgM9N_AuyKD7O_r8UjSv8H6O0I298GLJ-Zk=",
+  gallery_1:     "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg/1280px-Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg",
+  gallery_2:     "https://plus.unsplash.com/premium_photo-1697729740727-5eac56dc008e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8U3dheWFtYmh1bmF0aHxlbnwwfHwwfHx8MA%3D%3D",
+  gallery_3:     "https://images.unsplash.com/photo-1668892256397-da4c01f22855?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cGhld2ElMjBsYWtlfGVufDB8fDB8fHww",
+  gallery_4:     "https://images.unsplash.com/photo-1533130061792-64b345e4a833?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fG5lcGFsfGVufDB8fDB8fHww",
+  gallery_5:     "https://images.unsplash.com/photo-1668892256397-da4c01f22855?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cGhld2ElMjBsYWtlfGVufDB8fDB8fHww"
+};
+
+// ── Inject place cards ──
+const placesData = [
+  { key:'pashupatinath', badge:'Sacred Temple',  name:'Pashupatinath Temple', loc:'Kathmandu',       desc:'One of the most sacred Hindu temples in the world. Ghats alive with rituals, sadhus, and timeless ceremony on the Bagmati River. UNESCO World Heritage.',             chips:['Spiritual','UNESCO','Evening Aarti'] },
+  { key:'boudhanath',    badge:'Buddhist Icon',   name:'Boudhanath Stupa',    loc:'Kathmandu',       desc:"Asia's largest stupa draped in prayer flags. Walk the kora at dusk as butter-lamp smoke drifts skyward and monks chant in surrounding monasteries.",    chips:['Buddhist','Architecture','UNESCO'] },
+  { key:'swayambhunath', badge:'Monkey Temple',   name:'Swayambhunath',       loc:'Kathmandu Valley',desc:'Perched atop a hill 2,000 years old. The all-seeing Buddha eyes watch over the valley. Sunrise here is absolutely otherworldly — and so are the monkeys.', chips:['Panoramic','Sunrise','Monkeys'] },
+  { key:'phewa_lake',    badge:'Lake City',       name:'Phewa Lake, Pokhara', loc:'Pokhara',         desc:'Row a wooden boat with Annapurna reflected in still water. The Tal Barahi island temple sits in the middle — the perfect Himalayan postcard.',           chips:['Boating','Annapurna View','Serene'] },
+  { key:'nagarkot',      badge:'Sunrise Point',   name:'Nagarkot Viewpoint',  loc:'Bhaktapur District',desc:'Wake at 5 AM and watch the Himalayas — including Everest on clear days — turn flamingo-pink. The most dramatic dawn in South Asia. Book ahead.',      chips:['Everest View','Sunrise','Hiking'] },
+  { key:'bhaktapur',     badge:'Ancient City',    name:'Bhaktapur Durbar Square', loc:'Bhaktapur',   desc:'Medieval Newari architecture at its finest. Terracotta pagodas, carved wooden windows, potters at work. Try Juju Dhau fresh from a clay pot.',          chips:['Architecture','Culture','Street Food'] },
+];
+
+const placesGrid = document.querySelector('.places-grid');
+placesData.forEach(p => {
+  placesGrid.insertAdjacentHTML('beforeend', `
+    <div class="place-card will-reveal">
+      <div class="place-badge">${p.badge}</div>
+      <img src="${IMAGES[p.key]}" alt="${p.name}" loading="lazy"/>
+      <div class="place-body">
+        <div class="place-name">${p.name}</div>
+        <div class="place-loc">📍 ${p.loc}</div>
+        <p class="place-desc">${p.desc}</p>
+        <div class="place-chips">${p.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div>
+      </div>
+    </div>
+  `);
+});
+
+// ── Inject gallery ──
+const gallery = document.querySelector('.gallery-mosaic');
+const galleryKeys = ['gallery_1','gallery_2','gallery_3','gallery_4','gallery_5'];
+const galleryAlts = ['Mount Everest','Swayambhunath','Bhaktapur','Boudhanath','Phewa Lake'];
+galleryKeys.forEach((k,i) => {
+  gallery.insertAdjacentHTML('beforeend',
+    `<img class="${i===0?'g0':''}" src="${IMAGES[k]}" alt="${galleryAlts[i]}" loading="lazy"/>`
+  );
+});
+
+// ── Prayer flags ──
+const flagColors = ['#c0392b','#1a2a4a','#f39c12','#2e86ab','#27ae60'];
+const flagsInner = document.getElementById('flags-inner');
+const numFlags = Math.ceil(window.innerWidth / 32) + 4;
+for(let i=0;i<numFlags;i++){
+  const f = document.createElement('div');
+  f.className = 'flag-el';
+  f.style.cssText = `left:${i*32}px;background:${flagColors[i%5]};animation-delay:${(i%5)*0.3}s;`;
+  flagsInner.appendChild(f);
+}
+
+// ── Nav scroll ──
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', ()=>{ navbar.classList.toggle('solid', scrollY > 60); });
+
+// ── Mobile menu ──
+function toggleMenu(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// ────────────────────────────────────────────
+// GSAP ANIMATIONS
+// ────────────────────────────────────────────
+gsap.registerPlugin(ScrollTrigger);
+
+// Respect reduced motion
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (!prefersReduced) {
+
+  // ── 1. SUNRISE SCROLL ANIMATION ──
+  // The sun rises from behind the mountains as user scrolls through hero
+  const sunriseTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 1.5,
+      pin: true,
+      anticipatePin: 1,
+    }
+  });
+
+  // Stars fade out
+  sunriseTl.to('#stars', { opacity: 0, duration: 0.3 }, 0);
+
+  // Night sky → dawn sky
+  sunriseTl.to('#sky-dawn', { opacity: 1, duration: 0.5 }, 0.05);
+
+  // Horizon glow brightens
+  sunriseTl.to('#horizon-glow', {
+    opacity: 1,
+    background: 'linear-gradient(to top, rgba(255,140,40,0.45) 0%, rgba(255,100,20,0.12) 40%, transparent 100%)',
+    duration: 0.4
+  }, 0.1);
+
+  // Sun rises — starts below horizon (bottom:-120px), rises to 38% from bottom
+  sunriseTl.to('#sun', {
+    bottom: '38%',
+    opacity: 1,
+    duration: 0.55,
+    ease: 'power2.out'
+  }, 0.1);
+
+  // Sun rays burst
+  sunriseTl.to('#sun-rays', { opacity: 1, duration: 0.3 }, 0.35);
+
+  // Alpenglow on peaks
+  sunriseTl.to('#alpenglow', { opacity: 1, duration: 0.3 }, 0.3);
+
+  // Dawn → day sky
+  sunriseTl.to('#sky-day', { opacity: 1, duration: 0.4 }, 0.55);
+  sunriseTl.to('#sky-dawn', { opacity: 0, duration: 0.3 }, 0.6);
+
+  // Mountains lighten (mid-day feel)
+  sunriseTl.to('#peak-far-l', { fill: '#1a2e50', duration: 0.4 }, 0.5);
+  sunriseTl.to('#peak-mid',   { fill: '#112038', duration: 0.4 }, 0.5);
+  sunriseTl.to('#peak-fore',  { fill: '#0c1828', duration: 0.4 }, 0.5);
+  sunriseTl.to('#snow-1, #snow-2, #snow-3', { opacity: 0.7, duration: 0.4 }, 0.5);
+
+  // Horizon glow fades as day comes
+  sunriseTl.to('#horizon-glow', { opacity: 0, duration: 0.3 }, 0.65);
+  sunriseTl.to('#sun-rays', { opacity: 0.5, duration: 0.2 }, 0.65);
+
+
+  // ── 2. HERO ELEMENTS ENTRANCE ──
+  const heroIn = gsap.timeline({ delay: 0.3 });
+  heroIn
+    .to('.hero-brand',  { opacity:1, y:0, duration:0.6, ease:'power2.out' })
+    .to('.hero-title',  { opacity:1, y:0, duration:0.7, ease:'power2.out' }, '-=0.3')
+    .to('.hero-sub',    { opacity:1, y:0, duration:0.5, ease:'power2.out' }, '-=0.2')
+    .to('.hero-stats',  { opacity:1, y:0, duration:0.5, ease:'power2.out' }, '-=0.1')
+    .to('#scrollHint',  { opacity:1, duration:0.5 }, '-=0.1');
+
+  // Set initial state for hero elements
+  gsap.set(['.hero-brand','.hero-title','.hero-sub','.hero-stats','#scrollHint'], { y:20 });
+
+
+  // ── 3. SCROLL REVEAL for all sections ──
+  gsap.utils.toArray('.will-reveal').forEach((el, i) => {
+    gsap.fromTo(el,
+      { opacity: 0, y: 36 },
+      {
+        opacity: 1, y: 0,
+        duration: 0.7,
+        ease: 'power2.out',
+        delay: (i % 3) * 0.08,
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+  });
+
+
+  // ── 4. PARALLAX on mountain layers ──
+  gsap.to('#peak-far-l', {
+    y: -40,
+    scrollTrigger: { trigger:'#places', start:'top bottom', end:'bottom top', scrub: 2 }
+  });
+
+  // ── 5. FLAG FLUTTER — subtle y wave on the flag container ──
+  gsap.to('#flags-container', {
+    y: 8,
+    repeat: -1,
+    yoyo: true,
+    duration: 3,
+    ease: 'sine.inOut'
+  });
+
+  // ── 6. Number count-up on hero stats ──
+  // (simple, no extra lib needed)
+
+} else {
+  // Reduced motion: just show everything
+  gsap.set(['.hero-brand','.hero-title','.hero-sub','.hero-stats','#scrollHint'], { opacity:1, y:0 });
+  gsap.set('.will-reveal', { opacity:1, y:0 });
+}
+</script>
 </body>
 </html>
