@@ -1,651 +1,1232 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Sorry Mahiii</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>For You</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Nunito:wght@300;400;600;700&display=swap">
-
-<style>
-  :root {
-    --bg: #fff5f7;
-    --bg2: #ffe8ee;
-    --card: #ffffff;
-    --fg: #3a1a22;
-    --fg2: #7a4a57;
-    --rose: #e8436a;
-    --rose-light: #ffb3c6;
-    --rose-pale: #ffd6e0;
-    --rose-pale2: #fff0f3;
-    --gold: #c9845a;
-    --shadow: rgba(232,67,106,0.18);
-    --divider: rgba(232,67,106,0.15);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #1a0a0f; --bg2: #2a0f18; --card: #2d1420;
-      --fg: #ffd6e0; --fg2: #c9899a; --rose: #ff6b8a;
-      --rose-light: #d4456a; --rose-pale: #3d1a24; --rose-pale2: #2a1018;
-      --gold: #e8b08a; --shadow: rgba(255,107,138,0.25);
-      --divider: rgba(255,107,138,0.18); color-scheme: dark;
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@300;400;500&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: { ink: '#0b0d14', panel: '#12151f', line: '#232838', rose: '#fb7185', gold: '#fbbf24', mist: '#9aa3b8' },
+        fontFamily: {
+          display: ['"Cormorant Garamond"', 'serif'],
+          hand: ['Caveat', 'cursive'],
+          sans: ['Inter', 'system-ui', 'sans-serif']
+        }
+      }
     }
-  }
-  :root[data-theme="dark"] {
-    --bg: #1a0a0f; --bg2: #2a0f18; --card: #2d1420;
-    --fg: #ffd6e0; --fg2: #c9899a; --rose: #ff6b8a;
-    --rose-light: #d4456a; --rose-pale: #3d1a24; --rose-pale2: #2a1018;
-    --gold: #e8b08a; --shadow: rgba(255,107,138,0.25);
-    --divider: rgba(255,107,138,0.18); color-scheme: dark;
-  }
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  html { background: #0b0d14; overflow-x: hidden; overflow-x: clip; max-width: 100%; }
+  body { background: #0b0d14; color: #e7e9f0; font-family: Inter, system-ui, sans-serif; overflow-x: hidden; overflow-x: clip; max-width: 100%; position: relative; }
+  #teddy, #dock, #lightGlow { transform: translateZ(0); }
+  .touch-none-drag { touch-action: none; user-select: none; -webkit-user-select: none; }
+  ::selection { background: #fb7185; color: #0b0d14; }
+  .firefly { position: absolute; width: 4px; height: 4px; border-radius: 9999px; background: #fbbf24; box-shadow: 0 0 10px 3px rgba(251,191,36,.5); pointer-events: none; z-index: 1; opacity: 0; }
+  .glow { background: radial-gradient(circle, rgba(251,191,36,.55) 0%, rgba(251,191,36,.12) 45%, transparent 70%); }
+  .window-lit { background: #fbbf24; box-shadow: 0 0 8px rgba(251,191,36,.7); }
+  #walk { height: 100vh; height: 100svh; }
+  input, textarea, button { font-family: inherit; }
+  input[type=text], textarea { font-size: 16px; }
+  .q-card { transition: border-color .3s, box-shadow .3s; scroll-margin-top: 90px; }
+  .q-card.err { border-color: #fb7185; box-shadow: 0 0 0 1px #fb7185 inset; }
+  .q-card.done { border-color: rgba(251,113,133,.35); }
+  .chip { padding: .6rem 1rem; border-radius: 9999px; border: 1px solid #232838; color: #9aa3b8; font-size: .95rem; transition: all .2s; text-align: left; }
+  .chip:hover { border-color: #fb7185; color: #fff; }
+  .chip.on { background: #fb7185; color: #0b0d14; border-color: #fb7185; font-weight: 500; }
+  input[type=range].lv { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 9999px; background: #232838; outline: none; touch-action: pan-y; }
+  input[type=range].lv::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; border-radius: 9999px; background: #fb7185; box-shadow: 0 0 14px rgba(251,113,133,.7); cursor: pointer; }
+  input[type=range].lv::-moz-range-thumb { width: 28px; height: 28px; border: 0; border-radius: 9999px; background: #fb7185; box-shadow: 0 0 14px rgba(251,113,133,.7); cursor: pointer; }
+  input[type=range].lv.untouched::-webkit-slider-thumb { background: #3a4056; box-shadow: none; }
+  input[type=range].lv.untouched::-moz-range-thumb { background: #3a4056; box-shadow: none; }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg); color: var(--fg);
-    font-family: 'Nunito', sans-serif; min-height: 100%; overflow-x: hidden;
-    padding-left: max(16px, env(safe-area-inset-left, 0px));
-    padding-right: max(16px, env(safe-area-inset-right, 0px));
-    padding-block: 0;
-  }
+  /* string lights */
+  #lights { position: fixed; top: 0; left: 0; right: 0; width: 100%; height: 0; z-index: 58; pointer-events: none; overflow-x: clip; transform: translateZ(0); }
+  .bulb { position: absolute; top: 2px; width: 14px; pointer-events: auto; cursor: pointer; }
+  .bulb .sock { display: block; width: 6px; height: 6px; margin: 0 auto; background: #3a4056; border-radius: 1px; }
+  .bulb .glass { display: block; width: 14px; height: 20px; border-radius: 50% 50% 50% 50% / 38% 38% 62% 62%; background: var(--c, #fbbf24); box-shadow: 0 0 14px 4px var(--c, #fbbf24); }
+  #lights.off .glass { box-shadow: none; filter: saturate(.3); }
 
-  .bg-gradient {
-    position: fixed; inset: 0;
-    background:
-      radial-gradient(ellipse at 20% 30%, var(--bg2) 0%, var(--bg) 60%),
-      radial-gradient(ellipse at 80% 70%, var(--rose-pale) 0%, transparent 50%);
-    z-index: 0;
-  }
-  #petals { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+  /* first-visit nudges */
+  @keyframes nudge { 0% { box-shadow: 0 0 0 0 rgba(251,191,36,.7); } 70% { box-shadow: 0 0 0 14px rgba(251,191,36,0); } 100% { box-shadow: 0 0 0 0 rgba(251,191,36,0); } }
+  .nudge { animation: nudge 1.6s infinite; border-color: #fbbf24; }
 
-  .page {
-    position: relative; z-index: 2;
-    display: flex; flex-direction: column; align-items: center;
-    padding-block: 48px 64px; gap: 36px;
-    max-width: 560px; margin: 0 auto;
-  }
-
-  .float-name {
-    font-family: 'Dancing Script', cursive;
-    font-size: clamp(2.4rem, 9vw, 4.2rem);
-    color: var(--rose); text-shadow: 0 2px 24px var(--shadow);
-    animation: floatName 3s ease-in-out infinite;
-    letter-spacing: 0.02em; text-align: center;
-  }
-  @keyframes floatName {
-    0%,100% { transform: translateY(0); }
-    50%      { transform: translateY(-10px); }
-  }
-
-  .card {
-    background: var(--card); border-radius: 28px;
-    padding: clamp(28px,6vw,52px) clamp(22px,5vw,44px); width: 100%;
-    box-shadow: 0 8px 48px var(--shadow), 0 2px 12px rgba(0,0,0,0.06);
-    display: flex; flex-direction: column; align-items: center; gap: 20px;
-    position: relative; overflow: hidden;
-  }
-  .card::before { content:'🌹'; position:absolute; top:16px; left:18px; font-size:1.5rem; opacity:.4; animation:spinPulse 4s ease-in-out infinite; }
-  .card::after  { content:'🌹'; position:absolute; top:16px; right:18px; font-size:1.5rem; opacity:.4; animation:spinPulse 4s ease-in-out infinite 1s; }
-  @keyframes spinPulse {
-    0%,100% { transform:scale(1) rotate(0deg); opacity:.4; }
-    50%      { transform:scale(1.3) rotate(15deg); opacity:.7; }
-  }
-
-  .sorry-word {
-    font-family: 'Dancing Script', cursive;
-    font-size: clamp(3.2rem, 13vw, 6rem); font-weight: 700;
-    color: var(--rose); line-height: 1;
-    animation: sorryPop 0.8s cubic-bezier(0.34,1.56,0.64,1) both;
-    text-align: center;
-  }
-  @keyframes sorryPop {
-    0%   { transform:scale(0) rotate(-10deg); opacity:0; }
-    100% { transform:scale(1) rotate(0deg); opacity:1; }
-  }
-
-  .heart { font-size: clamp(3rem,10vw,4.5rem); animation: heartBeat 1.2s ease-in-out infinite; display:block; line-height:1; }
-  @keyframes heartBeat {
-    0%,100%{transform:scale(1)} 14%{transform:scale(1.2)} 28%{transform:scale(1)} 42%{transform:scale(1.12)} 70%{transform:scale(1)}
-  }
-
-  .msg {
-    font-size: clamp(.95rem,3vw,1.08rem); color: var(--fg2);
-    text-align: center; line-height: 1.75; font-weight: 400;
-    animation: fadeSlideUp .8s ease both; animation-delay:.5s;
-    opacity:0; animation-fill-mode:forwards;
-  }
-  .msg-hindi {
-    font-family: 'Dancing Script', cursive;
-    font-size: clamp(1.1rem,3.5vw,1.3rem); color: var(--rose);
-    animation-delay:.7s;
-  }
-  @keyframes fadeSlideUp {
-    from { opacity:0; transform:translateY(16px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
-
-  .stars { display:flex; gap:6px; animation:fadeSlideUp .8s ease both; animation-delay:1.1s; opacity:0; animation-fill-mode:forwards; }
-  .star { font-size:1.4rem; animation:starWiggle 2s ease-in-out infinite; }
-  .star:nth-child(2){animation-delay:.15s} .star:nth-child(3){animation-delay:.3s}
-  .star:nth-child(4){animation-delay:.45s} .star:nth-child(5){animation-delay:.6s}
-  @keyframes starWiggle { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-5px) scale(1.2)} }
-
-  .promise {
-    background:var(--rose-pale); border-left:3px solid var(--rose);
-    border-radius:0 12px 12px 0; padding:14px 18px; width:100%;
-    font-size:clamp(.88rem,2.5vw,.95rem); color:var(--fg2);
-    animation:fadeSlideUp .8s ease both; animation-delay:1.3s;
-    opacity:0; animation-fill-mode:forwards; line-height:1.65;
-  }
-  .promise strong { color:var(--rose); font-weight:600; display:block; margin-bottom:4px; font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; }
-
-  .signature {
-    font-family:'Dancing Script',cursive; font-size:clamp(1.2rem,4vw,1.5rem);
-    color:var(--gold); text-align:center;
-    animation:fadeSlideUp .8s ease both; animation-delay:1.5s;
-    opacity:0; animation-fill-mode:forwards; margin-top:4px;
-  }
-
-  .hug-btn {
-    background:var(--rose); color:#fff; border:none;
-    border-radius:50px; padding:14px 40px;
-    font-family:'Nunito',sans-serif; font-size:1rem; font-weight:700;
-    cursor:pointer; position:relative; overflow:hidden;
-    transition:transform .15s,box-shadow .15s; box-shadow:0 4px 18px var(--shadow);
-    animation:fadeSlideUp .8s ease both; animation-delay:1.7s;
-    opacity:0; animation-fill-mode:forwards; letter-spacing:.03em;
-  }
-  .hug-btn:hover{box-shadow:0 6px 28px var(--shadow);transform:translateY(-2px)}
-  .hug-btn:active{transform:scale(.96)}
-  .hug-btn .ripple { position:absolute; border-radius:50%; background:rgba(255,255,255,.4); transform:scale(0); animation:rippleAnim .6s linear; pointer-events:none; }
-  @keyframes rippleAnim{to{transform:scale(4);opacity:0}}
-
-  .divider { width:100%; height:1px; background:var(--divider); border-radius:2px; margin:4px 0; }
-
-  .section-title { font-family:'Dancing Script',cursive; font-size:clamp(1.5rem,5vw,2rem); color:var(--rose); text-align:center; line-height:1.2; text-wrap:balance; }
-
-  .shayari-card {
-    background:var(--card); border-radius:28px;
-    padding:clamp(28px,5vw,44px) clamp(22px,5vw,40px); width:100%;
-    box-shadow:0 8px 48px var(--shadow),0 2px 12px rgba(0,0,0,.06);
-    display:flex; flex-direction:column; gap:28px;
-  }
-  .shayari-item { display:flex; flex-direction:column; gap:10px; padding-bottom:24px; border-bottom:1px solid var(--divider); }
-  .shayari-item:last-child{border-bottom:none;padding-bottom:0}
-  .shayari-urdu { font-family:'Dancing Script',cursive; font-size:clamp(1.15rem,4vw,1.4rem); color:var(--rose); line-height:1.6; text-align:center; }
-  .shayari-trans { font-size:clamp(.82rem,2.5vw,.92rem); color:var(--fg2); text-align:center; line-height:1.6; font-style:italic; }
-
-  .reasons-card {
-    background:var(--card); border-radius:28px;
-    padding:clamp(28px,5vw,44px) clamp(22px,5vw,40px); width:100%;
-    box-shadow:0 8px 48px var(--shadow),0 2px 12px rgba(0,0,0,.06);
-    display:flex; flex-direction:column; gap:16px;
-  }
-  .reason-item { display:grid; grid-template-columns:44px 1fr; gap:12px; align-items:start; background:var(--rose-pale2); border-radius:16px; padding:14px 16px; opacity:0; animation:fadeSlideUp .6s ease both; }
-  .reason-num { width:36px;height:36px;background:var(--rose);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;flex-shrink:0;margin-top:2px; }
-  .reason-text strong { display:block;color:var(--rose);font-size:.82rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px;font-weight:700; }
-  .reason-text span { font-size:clamp(.88rem,2.5vw,.95rem);color:var(--fg2);line-height:1.6; }
-
-  .note-card {
-    background:linear-gradient(135deg,var(--rose) 0%,#c4305a 100%);
-    border-radius:28px; padding:clamp(32px,6vw,52px) clamp(24px,5vw,44px); width:100%;
-    display:flex;flex-direction:column;gap:16px;align-items:center;
-    box-shadow:0 12px 48px var(--shadow);
-  }
-  .note-card .note-big { font-family:'Dancing Script',cursive; font-size:clamp(2rem,8vw,3.2rem); color:#fff; text-align:center; line-height:1.2; text-shadow:0 2px 12px rgba(0,0,0,.18); }
-  .note-card .note-sub { font-size:clamp(.88rem,2.5vw,1rem); color:rgba(255,255,255,.85); text-align:center; line-height:1.7; }
-  .note-card .note-sign { font-family:'Dancing Script',cursive; font-size:clamp(1.3rem,4vw,1.6rem); color:rgba(255,255,255,.9); }
-
-  /* ── Quiz / Slider section ── */
-  .quiz-card {
-    background:var(--card); border-radius:28px;
-    padding:clamp(28px,5vw,44px) clamp(22px,5vw,40px); width:100%;
-    box-shadow:0 8px 48px var(--shadow),0 2px 12px rgba(0,0,0,.06);
-    display:flex; flex-direction:column; gap:30px;
-  }
-  .q-item { display:flex; flex-direction:column; gap:12px; padding-bottom:28px; border-bottom:1px solid var(--divider); }
-  .q-item:last-child { border-bottom:none; padding-bottom:0; }
-  .q-label { font-size:clamp(.95rem,3vw,1.08rem); color:var(--fg); font-weight:700; text-align:center; line-height:1.5; }
-  .q-emoji { font-size:1.8rem; text-align:center; }
-  .q-msg { font-family:'Dancing Script',cursive; font-size:clamp(1rem,3.5vw,1.15rem); color:var(--rose); text-align:center; min-height:1.8em; transition:all .25s ease; }
-  .slider-wrap { display:flex; flex-direction:column; gap:6px; }
-  .slider-row { display:flex; align-items:center; gap:10px; }
-  .slider-row span { font-size:.78rem; color:var(--fg2); white-space:nowrap; }
-  input[type=range] {
-    -webkit-appearance:none; appearance:none; flex:1; height:6px; border-radius:6px; outline:none; cursor:pointer;
-    background:linear-gradient(to right,var(--rose) 0%,var(--rose) var(--val,50%),var(--rose-pale) var(--val,50%),var(--rose-pale) 100%);
-  }
-  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:26px; height:26px; border-radius:50%; background:var(--rose); border:3px solid #fff; box-shadow:0 2px 8px var(--shadow); cursor:pointer; transition:transform .15s; }
-  input[type=range]::-webkit-slider-thumb:hover { transform:scale(1.2); }
-  input[type=range]::-moz-range-thumb { width:22px; height:22px; border-radius:50%; background:var(--rose); border:3px solid #fff; box-shadow:0 2px 8px var(--shadow); }
-  .slider-val { font-size:1.4rem; font-weight:800; color:var(--rose); text-align:center; }
-  .choices { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
-  .choice-btn {
-    background:var(--rose-pale2); border:2px solid var(--divider); border-radius:50px; padding:9px 18px;
-    font-family:'Nunito',sans-serif; font-size:.88rem; font-weight:600; color:var(--fg2); cursor:pointer; transition:all .2s;
-  }
-  .choice-btn:hover { border-color:var(--rose); color:var(--rose); transform:scale(1.04); }
-  .choice-btn.selected { background:var(--rose); color:#fff; border-color:var(--rose); }
-  .dl-section { display:flex; flex-direction:column; gap:12px; align-items:center; }
-  .dl-btn {
-    background:linear-gradient(135deg,var(--rose),#c4305a); color:#fff; border:none;
-    border-radius:50px; padding:14px 40px; width:100%; max-width:320px;
-    font-family:'Nunito',sans-serif; font-size:1rem; font-weight:700; cursor:pointer;
-    transition:transform .15s,box-shadow .15s; box-shadow:0 4px 18px var(--shadow);
-    letter-spacing:.03em; display:flex; align-items:center; justify-content:center; gap:8px;
-  }
-  .dl-btn:hover { transform:translateY(-2px); box-shadow:0 6px 28px var(--shadow); }
-  .dl-btn:active { transform:scale(.96); }
-  .dl-hint { font-size:.8rem; color:var(--fg2); text-align:center; line-height:1.6; }
-
-  .burst { position:fixed;pointer-events:none;z-index:100;font-size:2rem;animation:burstFly 1s ease-out forwards; }
-  @keyframes burstFly { 0%{opacity:1;transform:scale(.5) translateY(0)} 100%{opacity:0;transform:scale(1.5) translateY(-80px)} }
-
-  @media (prefers-reduced-motion:reduce) { *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0ms!important} }
+  /* notes */
+  .note.read { border-color: rgba(251,113,133,.35); }
+  .fav { color: #3a4056; transition: color .2s, transform .2s; }
+  .fav:hover { transform: scale(1.12); }
+  .fav.on { color: #fb7185; }
 </style>
+</head>
+<body>
 
-<div class="bg-gradient"></div>
-<canvas id="petals"></canvas>
+<!-- Global overlays -->
+<div id="flash" class="fixed inset-0 pointer-events-none z-[55] opacity-0" style="background: radial-gradient(circle at 50% 50%, rgba(251,113,133,.35), transparent 70%)"></div>
+<div id="popLayer" class="fixed inset-0 pointer-events-none z-[60] overflow-hidden"></div>
 
-<div class="page">
+<!-- String lights + glow -->
+<div id="lightGlow" class="fixed top-0 left-0 right-0 h-40 pointer-events-none z-[57]"></div>
+<div id="lights"></div>
 
-  <div class="float-name">Mahiii 🌹</div>
-
-  <div class="card">
-    <span class="sorry-word">Sorry</span>
-    <span class="heart">💗</span>
-
-    <p class="msg">
-      Mahi, aapko hurt kiya — yeh sahi nahi tha.<br>
-      Aage se aisa nahi hoga, pakka.
-    </p>
-
-    <p class="msg msg-hindi">
-      "Mahi, dil se maafi maangta hoon 🥺"
-    </p>
-
-    <div class="stars">
-      <span class="star">✨</span>
-      <span class="star">💕</span>
-      <span class="star">🌙</span>
-      <span class="star">💕</span>
-      <span class="star">✨</span>
-    </div>
-
-    <div class="promise">
-      <strong>Pakka promise</strong>
-      Jo bhi hua, aage se nahi hoga. Aap important hain — hamesha.
-      Yeh galti dubara nahi hogi.
-    </div>
-
-    <p class="signature">— aapka ❤️</p>
-
-    <button class="hug-btn" id="hugBtn">Virtual Hug Bhejo 🤗</button>
+<!-- Teddy -->
+<div id="teddy" class="fixed z-[56] flex flex-col items-start pointer-events-none max-w-[calc(100vw-16px)]" style="bottom: calc(env(safe-area-inset-bottom, 0px) + 8px); left: calc(env(safe-area-inset-left, 0px) + 8px)">
+  <div id="bubble" class="opacity-0 mb-1 ml-3 max-w-[62vw] sm:max-w-xs w-max bg-panel/95 border border-rose/40 rounded-2xl px-3.5 py-2 shadow-lg">
+    <p id="bubbleText" class="font-hand text-xl leading-tight text-white"></p>
   </div>
-
-  <!-- SHAYARI -->
-  <div class="shayari-card">
-    <div class="section-title">💌 Dil se Shayari</div>
-    <div class="divider"></div>
-
-    <div class="shayari-item">
-      <div class="shayari-urdu">
-        "Aapse naraaz hona bhi mushkil hai Mahi,<br>
-        Aapke bina chain se jeena bhi mushkil hai..."
-      </div>
-      <div class="shayari-trans">Being upset with you is impossible, Mahi — and living without you peacefully is too.</div>
-    </div>
-
-    <div class="shayari-item">
-      <div class="shayari-urdu">
-        "Maafi maangna aata nahi mujhe accha se,<br>
-        Par aapke liye seekh lunga, baar baar seekh lunga..."
-      </div>
-      <div class="shayari-trans">I'm not great at apologies — but for you, I'll keep learning, every single time.</div>
-    </div>
-
-    <div class="shayari-item">
-      <div class="shayari-urdu">
-        "Aapki ek naraazgi mujhe raat bhar sone nahi deti,<br>
-        Kyunki aapse pyaar karna mujhe chain se jeene nahi deta..."
-      </div>
-      <div class="shayari-trans">Your one moment of anger keeps me awake all night — because loving you doesn't let me rest easy.</div>
-    </div>
-
-    <div class="shayari-item">
-      <div class="shayari-urdu">
-        "Galti ho gayi, par irada aapka dil dukhaana nahi tha,<br>
-        Bas ye jaanta hoon — aapke bina koi bhi pal khaas nahi tha..."
-      </div>
-      <div class="shayari-trans">I made a mistake, but hurting you was never my intention — every moment without you feels incomplete.</div>
-    </div>
-
-    <div class="shayari-item">
-      <div class="shayari-urdu">
-        "Aap meri subah hain, aap meri raat hain,<br>
-        Aapki ek muskaan meri poori kaaynat hai..."
-      </div>
-      <div class="shayari-trans">You are my morning, you are my night — your one smile is my whole universe.</div>
-    </div>
-  </div>
-
-  <!-- QUIZ -->
-  <div class="quiz-card">
-    <div class="section-title">💬 Aapki Baari — Jawab Dijiye</div>
-    <div class="divider"></div>
-
-    <!-- Q1: How much do you love me slider -->
-    <div class="q-item">
-      <div class="q-emoji">💗</div>
-      <div class="q-label">Kitna pyaar hai aapko mujhse?</div>
-      <div class="slider-wrap">
-        <div class="slider-row">
-          <span>Thoda sa 🌱</span>
-          <input type="range" min="0" max="100" value="50" id="q1" oninput="updateSlider(this,'q1msg','love')">
-          <span>Bohot zyada 🌊</span>
-        </div>
-        <div class="slider-val" id="q1val">50%</div>
-      </div>
-      <div class="q-msg" id="q1msg">Slider ghuma ke batao 🥺</div>
-    </div>
-
-    <!-- Q2: Miss karna -->
-    <div class="q-item">
-      <div class="q-emoji">🌙</div>
-      <div class="q-label">Aap mujhe miss karti hain?</div>
-      <div class="slider-wrap">
-        <div class="slider-row">
-          <span>Nahi bilkul 😒</span>
-          <input type="range" min="0" max="100" value="50" id="q2" oninput="updateSlider(this,'q2msg','miss')">
-          <span>Bahut zyada 😭</span>
-        </div>
-        <div class="slider-val" id="q2val">50%</div>
-      </div>
-      <div class="q-msg" id="q2msg">Sach batao, jhooth mat bolna 👀</div>
-    </div>
-
-    <!-- Q3: Maafi mili? -->
-    <div class="q-item">
-      <div class="q-emoji">🥺</div>
-      <div class="q-label">Maafi mili? 🙏</div>
-      <div class="choices" id="q3choices">
-        <button class="choice-btn" onclick="selectChoice('q3','Haan, maaf kiya 💕','q3msg')">Haan, maaf kiya 💕</button>
-        <button class="choice-btn" onclick="selectChoice('q3','Thoda time chahiye... 😤','q3msg')">Thoda aur time chahiye 😤</button>
-        <button class="choice-btn" onclick="selectChoice('q3','Baat bhi nahi karni 🙄','q3msg')">Abhi nahi bolunga 🙄</button>
-      </div>
-      <div class="q-msg" id="q3msg">Dil ki baat batao 🤍</div>
-    </div>
-
-    <!-- Q4: Gusse ka level -->
-    <div class="q-item">
-      <div class="q-emoji">🌡️</div>
-      <div class="q-label">Abhi gusse ka level kitna hai?</div>
-      <div class="slider-wrap">
-        <div class="slider-row">
-          <span>Bilkul nahi 😇</span>
-          <input type="range" min="0" max="100" value="50" id="q4" oninput="updateSlider(this,'q4msg','anger')">
-          <span>Aag lagi hai 🔥</span>
-        </div>
-        <div class="slider-val" id="q4val">50%</div>
-      </div>
-      <div class="q-msg" id="q4msg">Sach bol do, promise kuch nahi bolunga 😅</div>
-    </div>
-
-    <!-- Q5: Favourite cheez -->
-    <div class="q-item">
-      <div class="q-emoji">✨</div>
-      <div class="q-label">Main kya hoon aapke liye?</div>
-      <div class="choices" id="q5choices">
-        <button class="choice-btn" onclick="selectChoice('q5','Meri neend 😴','q5msg')">Meri neend 😴</button>
-        <button class="choice-btn" onclick="selectChoice('q5','Meri tension 😤','q5msg')">Meri tension 😤</button>
-        <button class="choice-btn" onclick="selectChoice('q5','Meri khushi 🌸','q5msg')">Meri khushi 🌸</button>
-        <button class="choice-btn" onclick="selectChoice('q5','Sab kuch 💗','q5msg')">Sab kuch 💗</button>
-      </div>
-      <div class="q-msg" id="q5msg">Jo dil mein aaye, woh chunna 🤍</div>
-    </div>
-
-  </div>
-
-  <!-- 10 REASONS -->
-  <div class="reasons-card">
-    <div class="section-title">🌹 10 Wajah — Kyun Chahta Hoon Aapko</div>
-    <div class="divider"></div>
-
-    <div class="reason-item" style="animation-delay:.1s">
-      <div class="reason-num">1</div>
-      <div class="reason-text">
-        <strong>Aapki aankhein</strong>
-        <span>Jab aap khush hoti hain, aapki aankhon mein ek alag hi chamak aati hai — woh chamak mere din ka sabse khoobsurat hissa hai.</span>
-      </div>
-    </div>
-
-    <div class="reason-item" style="animation-delay:.2s">
-      <div class="reason-num">2</div>
-      <div class="reason-text">
-        <strong>Aapka confidence</strong>
-        <span>Aap jo sochti hain, seedha keh deti hain. Koi bakwaas nahi, koi drama nahi. Yahi baat aapko sabse alag banati hai.</span>
-      </div>
-    </div>
-
-    <div class="reason-item" style="animation-delay:.3s">
-      <div class="reason-num">3</div>
-      <div class="reason-text">
-        <strong>Aapki hasi</strong>
-        <span>Aapki hasi sunke lagta hai sab theek ho jayega. Seriously — koi bhi tension ho, aapki ek hassi sab khatam kar deti hai.</span>
-      </div>
-    </div>
-
-    <div class="reason-item" style="animation-delay:.4s">
-      <div class="reason-num">4</div>
-      <div class="reason-text">
-        <strong>Aapki care</strong>
-        <span>Aap chillaati bhi hain toh isliye kyunki fikar hoti hai. Naraaz hoti hain toh bhi woh pyaar ka hi ek roop hai — aur main samajhta hoon.</span>
-      </div>
-    </div>
-
-    <div class="reason-item" style="animation-delay:.5s">
-      <div class="reason-num">5</div>
-      <div class="reason-text">
-        <strong>Aapka dil</strong>
-        <span>Aap chahe kitni bhi gusse mein hon — andar se aap bahut soft hain. Aur yahi aapko itna khaas banata hai.</span>
-      </div>
-    </div>
-
-    <div class="reason-item" style="animation-delay:.6s">
-      <div class="reason-num">6</div>
-      <div class="reason-text">
-        <strong>Meri duniya</strong>
-        <span>Aapki ek "good morning" se mera din shuru hota hai aur aapki "good night" se khatam. Aap ek routine nahi — zaroorat hain meri.</span>
-      </div>
-    </div>
-
-    <div class="reason-item" style="animation-delay:.7s">
-      <div class="reason-num">7</div>
-      <div class="reason-text">
-        <strong>Aapka judgment</strong>
-        <span>Aap kabhi bhi bekar cheez pe time waste nahi karti. Smart hain aap — aur honestly thoda intimidating bhi — but I love that.</span>
-      </div>
-    </div>
-
-    <div class="reason-item" style="animation-delay:.8s">
-      <div class="reason-num">8</div>
-      <div class="reason-text">
-        <strong>Aapki stubborn side</strong>
-        <span>Aap naraaz hoti hain toh properly hoti hain — half-heartedly nahi. Yahi side bhi pyaari lagti hai aap mein, I'm not even kidding.</span>
-      </div>
-    </div>
-
-    <div class="reason-item" style="animation-delay:.9s">
-      <div class="reason-num">9</div>
-      <div class="reason-text">
-        <strong>Mera better version</strong>
-        <span>Aapke saath rehke main better banta hoon. Aapko impress karna chahta hoon — isliye try karta rehta hoon. Aap meri motivation hain.</span>
-      </div>
-    </div>
-
-    <div class="reason-item" style="animation-delay:1s">
-      <div class="reason-num">10</div>
-      <div class="reason-text">
-        <strong>Bas aap — sirf aap</strong>
-        <span>Koi reason nahi chahiye honestly. Aapki ID dekh ke dil thoda zyada dhak dhak karta hai — aur yahi kaafi hai.</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- FINAL NOTE -->
-  <div class="note-card">
-    <div class="note-big">Mahi,<br>Maaf kar dijiye 🥺</div>
-    <div class="note-sub">
-      Aapko hurt kiya — yeh galat tha.<br>
-      Par aap jaanti hain na — kitna pyaar hai aapse?<br><br>
-      <em>"Aapki naraazgi bhi aapki yaad dilati hai,<br>
-      Isliye shayad dil ko chain nahi aata..."</em>
-    </div>
-    <div class="note-sign">— hamesha aapka 💗</div>
-  </div>
-
-  <!-- DOWNLOAD -->
-  <div class="dl-section">
-    <p class="dl-hint">Saare jawab de diye? Ab yeh file download karke mujhe bhej dena 💌<br><em>File naam: <strong>11__temp_response.json</strong></em></p>
-    <button class="dl-btn" id="dlBtn">📥 Download Jawab (JSON)</button>
-    <p class="dl-hint" style="font-size:.75rem;opacity:.7">WhatsApp pe bhej dena — wait karunga 🥺</p>
-  </div>
-
+  <button id="teddyBtn" type="button" aria-label="Teddy" class="pointer-events-auto w-20 sm:w-24">
+    <svg id="teddyBody" viewBox="0 0 100 110" class="w-full h-auto overflow-visible">
+      <circle cx="24" cy="20" r="11" fill="#b98558"/><circle cx="24" cy="20" r="6" fill="#e8c4a0"/>
+      <circle cx="76" cy="20" r="11" fill="#b98558"/><circle cx="76" cy="20" r="6" fill="#e8c4a0"/>
+      <ellipse cx="30" cy="100" rx="13" ry="8" fill="#b98558"/>
+      <ellipse cx="70" cy="100" rx="13" ry="8" fill="#b98558"/>
+      <ellipse cx="50" cy="82" rx="27" ry="24" fill="#c8935f"/>
+      <ellipse cx="50" cy="86" rx="15" ry="15" fill="#ecd0ac"/>
+      <ellipse cx="24" cy="76" rx="9" ry="14" fill="#c8935f" transform="rotate(25 24 76)"/>
+      <ellipse cx="76" cy="76" rx="9" ry="14" fill="#c8935f" transform="rotate(-25 76 76)"/>
+      <circle cx="50" cy="38" r="28" fill="#c8935f"/>
+      <ellipse cx="50" cy="48" rx="13" ry="10" fill="#ecd0ac"/>
+      <ellipse cx="50" cy="43" rx="4.5" ry="3.2" fill="#3b2a22"/>
+      <circle cx="40" cy="33" r="2.8" fill="#1b1410"/><circle cx="60" cy="33" r="2.8" fill="#1b1410"/>
+      <path d="M44 51 Q50 56 56 51" stroke="#3b2a22" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <circle cx="33" cy="45" r="4" fill="#fb7185" opacity=".35"/><circle cx="67" cy="45" r="4" fill="#fb7185" opacity=".35"/>
+      <path d="M50 94 C50 94 40 87 40 81 C40 77.500 42.500 75.500 45 75.500 C47 75.500 48.700 76.700 50 78.500 C51.300 76.700 53 75.500 55 75.500 C57.500 75.500 60 77.500 60 81 C60 87 50 94 50 94Z" fill="#fb7185"/>
+    </svg>
+  </button>
 </div>
 
+<!-- Floating controls: lights + journey -->
+<div id="dock" class="fixed z-[56] flex flex-col items-end gap-2" style="bottom: calc(env(safe-area-inset-bottom, 0px) + 12px); right: calc(env(safe-area-inset-right, 0px) + 12px)">
+  <div id="panel" class="hidden w-[min(320px,calc(100vw-24px))] bg-panel/95 backdrop-blur border border-line rounded-2xl p-4">
+    <div id="panelTabs" class="flex gap-2 mb-4">
+      <button type="button" data-tab="lights" class="chip on">Lights</button>
+      <button type="button" data-tab="journey" class="chip">Your journey</button>
+    </div>
+    <div id="tabLights"></div>
+    <div id="tabJourney" class="hidden"></div>
+  </div>
+  <div id="dockHint" class="pointer-events-none flex items-center gap-2 bg-panel/95 border border-gold/40 rounded-xl px-3 py-1.5">
+    <p class="font-hand text-xl text-gold leading-tight">Tap the bulb to change the lights</p>
+    <svg class="w-4 h-4 text-gold shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+  </div>
+  <div class="flex gap-2">
+    <button id="btnLights" type="button" aria-label="Lights" class="w-11 h-11 rounded-full bg-panel border border-line text-gold flex items-center justify-center hover:border-rose transition nudge">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+    </button>
+    <button id="btnJourney" type="button" aria-label="Your journey" class="w-11 h-11 rounded-full bg-panel border border-line text-rose flex items-center justify-center hover:border-rose transition">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- 1. HERO -->
+<section id="hero" class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 py-24 overflow-hidden">
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse at 50% 110%, #1d2140 0%, #0b0d14 60%)"></div>
+  <p class="hero-in relative font-hand text-2xl text-mist mb-3">made for</p>
+  <h1 class="hero-in relative font-display italic text-7xl md:text-9xl text-white leading-tight" data-nick></h1>
+  <p class="hero-in relative mt-6 max-w-md text-mist font-light">Scroll slowly. Some things will find you on the way.</p>
+
+  <div id="guide" class="hero-in relative mt-8 w-full max-w-sm text-left bg-panel/80 backdrop-blur border border-rose/30 rounded-2xl p-4">
+    <p class="font-hand text-2xl text-rose leading-tight mb-1">Hey Mahiii, this is Abhinav.</p>
+    <p id="guideText" class="text-sm text-mist font-light mb-3">Let me help you with two small things before you start.</p>
+    <ul class="space-y-2.5 text-sm">
+      <li class="flex items-center gap-2.5"><span id="gTeddy" class="shrink-0"></span><span>Tap the teddy in the bottom-left corner to say hi.</span></li>
+      <li class="flex items-center gap-2.5"><span id="gLights" class="shrink-0"></span><span>Tap the bulb button in the bottom-right to change the lights.</span></li>
+    </ul>
+  </div>
+  <div class="hero-in absolute bottom-10 flex flex-col items-center text-mist text-xs tracking-[0.3em] uppercase">
+    <span>scroll</span>
+    <span id="cue" class="block w-px h-10 bg-gradient-to-b from-rose to-transparent mt-3"></span>
+  </div>
+</section>
+
+<!-- 2. MALL ROAD WALK (pinned, scroll-scrubbed) -->
+<section id="walk" class="relative h-screen overflow-hidden" style="background: linear-gradient(to bottom, #090b16 0%, #141a33 55%, #2a2340 100%)">
+  <div id="stars" class="absolute inset-0"></div>
+  <div class="absolute left-1/2 top-[8vh] -translate-x-1/2 w-12 h-12 rounded-full" style="background:#f4efe1; box-shadow:0 0 60px 12px rgba(244,239,225,.25)"></div>
+
+  <div id="capWrap" class="absolute top-[22vh] left-0 right-0 text-center px-6 z-20 h-24">
+    <p id="cap" class="font-display italic text-3xl md:text-5xl text-white opacity-0"></p>
+  </div>
+
+  <div id="layerFar" class="absolute bottom-[14vh] left-0 h-[46vh] w-[200vw]"></div>
+  <div id="layerMid" class="absolute bottom-[14vh] left-0 h-[40vh] w-[300vw]"></div>
+  <div id="mist1" class="absolute bottom-[12vh] left-0 w-[300vw] h-[22vh] opacity-40" style="background: radial-gradient(ellipse at 20% 60%, rgba(180,190,220,.35), transparent 50%), radial-gradient(ellipse at 60% 50%, rgba(180,190,220,.3), transparent 45%), radial-gradient(ellipse at 90% 60%, rgba(180,190,220,.35), transparent 50%); filter: blur(14px)"></div>
+  <div id="layerLamps" class="absolute bottom-[14vh] left-0 h-[34vh] w-[500vw]"></div>
+
+  <div class="absolute bottom-0 left-0 right-0 h-[14vh]" style="background: linear-gradient(to bottom, #151927, #0b0d14)"></div>
+  <div class="absolute bottom-[13.6vh] left-0 right-0 h-px bg-line"></div>
+
+  <!-- The two of us -->
+  <div id="us" class="absolute bottom-[11vh] left-[22%] md:left-[38%] w-[150px] h-[190px] z-10">
+    <svg viewBox="0 0 150 190" class="w-full h-full overflow-visible">
+      <!-- him -->
+      <g id="him">
+        <circle cx="48" cy="28" r="13" fill="#e9c7a6"/>
+        <path d="M35 24 Q48 8 62 24 Q56 18 48 18 Q40 18 35 24Z" fill="#1a1d2b"/>
+        <path d="M32 52 Q48 42 64 52 L66 112 L30 112Z" fill="#3b4a78"/>
+        <g id="himLegA" style="transform-origin:42px 110px"><rect x="36" y="110" width="10" height="62" rx="5" fill="#222741"/></g>
+        <g id="himLegB" style="transform-origin:54px 110px"><rect x="49" y="110" width="10" height="62" rx="5" fill="#2b3150"/></g>
+        <path d="M62 62 Q84 72 92 80" stroke="#e9c7a6" stroke-width="7" stroke-linecap="round" fill="none"/>
+      </g>
+      <!-- her -->
+      <g id="her">
+        <circle cx="108" cy="34" r="12" fill="#e9c7a6"/>
+        <path d="M94 34 Q96 14 110 16 Q124 18 122 38 L124 70 Q112 60 100 66 Z" fill="#14121c"/>
+        <path d="M94 56 Q108 48 122 56 L132 118 L84 118Z" fill="#fb7185"/>
+        <g id="herLegA" style="transform-origin:100px 116px"><rect x="95" y="116" width="9" height="56" rx="4.5" fill="#d9a98a"/></g>
+        <g id="herLegB" style="transform-origin:114px 116px"><rect x="109" y="116" width="9" height="56" rx="4.5" fill="#caa086"/></g>
+        <path d="M96 66 Q92 76 90 80" stroke="#e9c7a6" stroke-width="6" stroke-linecap="round" fill="none"/>
+      </g>
+      <circle cx="91" cy="81" r="4" fill="#e9c7a6"/>
+    </svg>
+  </div>
+
+  <div class="absolute bottom-4 left-0 right-0 text-center text-xs tracking-[0.3em] uppercase text-mist z-20">Mall Road, Darjeeling</div>
+</section>
+
+<!-- 3. TIMELINE -->
+<section id="timeline" class="relative px-6 py-32 max-w-4xl mx-auto">
+  <p class="font-hand text-2xl text-rose text-center">how we got here</p>
+  <h2 class="font-display italic text-5xl md:text-6xl text-center mb-20">Our Story</h2>
+  <div id="tlWrap" class="relative">
+    <div class="absolute left-[3px] md:left-1/2 top-0 bottom-0 w-px bg-line"></div>
+    <div id="tlLine" class="absolute left-[3px] md:left-1/2 top-0 bottom-0 w-px bg-rose origin-top scale-y-0"></div>
+    <div id="tlItems"></div>
+  </div>
+</section>
+
+<!-- 3b. LOVE NOTES -->
+<section id="notes" class="relative px-4 sm:px-6 py-28">
+  <div class="max-w-2xl mx-auto">
+    <p class="font-hand text-2xl text-rose text-center">read slowly</p>
+    <h2 class="font-display italic text-5xl md:text-6xl text-center mb-3">Things I Want You To Know</h2>
+    <p class="text-mist font-light text-center mb-12 text-sm md:text-base">Tap the heart on any note you want to keep.</p>
+    <div id="notesList" class="space-y-6"></div>
+  </div>
+</section>
+
+<!-- 4. FEED GAME -->
+<section id="feed" class="relative px-6 py-32 bg-panel border-y border-line">
+  <div class="max-w-xl mx-auto text-center">
+    <p class="font-hand text-2xl text-rose">tiny game</p>
+    <h2 class="font-display italic text-5xl md:text-6xl mb-3">Feed Me To You</h2>
+    <p class="text-mist font-light mb-8">Drag the momo to her mouth. I will hold it for you.</p>
+
+    <div id="feedStage" class="relative mx-auto h-[420px] w-full max-w-sm touch-none-drag">
+      <!-- face -->
+      <svg id="face" viewBox="0 0 220 220" class="absolute left-1/2 top-0 -translate-x-1/2 w-52 h-52">
+        <path d="M30 120 Q20 20 110 14 Q200 20 190 120 Q190 70 110 62 Q30 70 30 120Z" fill="#14121c"/>
+        <circle cx="110" cy="112" r="72" fill="#e9c7a6"/>
+        <path d="M44 100 Q50 38 110 36 Q170 38 176 100 Q150 62 110 62 Q70 62 44 100Z" fill="#14121c"/>
+        <circle cx="84" cy="106" r="5" fill="#14121c"/>
+        <circle cx="136" cy="106" r="5" fill="#14121c"/>
+        <circle cx="72" cy="128" r="9" fill="#fb7185" opacity=".35"/>
+        <circle cx="148" cy="128" r="9" fill="#fb7185" opacity=".35"/>
+        <ellipse id="mouth" cx="110" cy="144" rx="14" ry="4" fill="#7a2b3a"/>
+      </svg>
+      <p id="feedMsg" class="absolute top-[225px] left-0 right-0 font-hand text-3xl text-rose h-10">Open wide.</p>
+      <p id="feedCount" class="absolute top-[262px] left-0 right-0 text-xs tracking-[0.25em] uppercase text-mist">0 momos</p>
+
+      <!-- holder (hand + momo) -->
+      <div id="holder" class="absolute left-1/2 bottom-0 -ml-[45px] w-[90px] h-[110px] cursor-grab">
+        <svg viewBox="0 0 90 110" class="w-full h-full overflow-visible">
+          <!-- hand -->
+          <g fill="#e9c7a6">
+            <rect x="18" y="50" width="54" height="52" rx="22"/>
+            <rect x="14" y="36" width="12" height="34" rx="6"/>
+            <rect x="29" y="30" width="12" height="40" rx="6"/>
+            <rect x="44" y="30" width="12" height="40" rx="6"/>
+            <rect x="59" y="36" width="12" height="34" rx="6"/>
+          </g>
+          <!-- momo -->
+          <g id="momo">
+            <path d="M8 38 Q8 4 45 4 Q82 4 82 38 Q82 50 45 50 Q8 50 8 38Z" fill="#f5ead7"/>
+            <path d="M22 12 L26 28 M34 7 L37 28 M45 5 L45 28 M56 7 L53 28 M68 12 L64 28" stroke="#d9c7a6" stroke-width="2" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <button id="feedReset" class="hidden mt-4 px-5 py-2 rounded-full border border-line text-sm text-mist hover:text-white hover:border-rose transition">Feed again</button>
+  </div>
+</section>
+
+<!-- 5. RUNAWAY NO -->
+<section id="ask" class="relative px-6 py-32">
+  <div class="max-w-xl mx-auto text-center">
+    <p class="font-hand text-2xl text-rose">one important question</p>
+    <h2 class="font-display italic text-4xl md:text-5xl mb-10">Will you have chai with me, and talk about nothing for hours?</h2>
+    <div id="askArea" class="relative h-44">
+      <button id="yesBtn" class="absolute left-[calc(50%-110px)] top-4 px-8 py-3 rounded-full bg-rose text-ink font-medium hover:scale-105 transition">Yes</button>
+      <button id="noBtn" class="absolute left-[calc(50%+20px)] top-4 px-8 py-3 rounded-full border border-line text-mist">No</button>
+    </div>
+    <p id="askResult" class="font-display italic text-3xl text-white opacity-0 h-12"></p>
+  </div>
+</section>
+
+<!-- 6. OPEN WHEN LETTERS -->
+<section id="letters" class="relative px-6 py-32 bg-panel border-y border-line">
+  <div class="max-w-2xl mx-auto">
+    <p class="font-hand text-2xl text-rose text-center">for the hard and soft days</p>
+    <h2 class="font-display italic text-5xl md:text-6xl text-center mb-14">Open When</h2>
+    <div id="letterList" class="space-y-4"></div>
+  </div>
+</section>
+
+<!-- 6b. QUESTIONS -->
+<section id="questions" class="relative px-4 sm:px-6 py-28">
+  <div class="max-w-2xl mx-auto">
+    <p class="font-hand text-2xl text-rose text-center">your turn</p>
+    <h2 class="font-display italic text-5xl md:text-6xl text-center mb-3">A Few Questions</h2>
+    <p class="text-mist font-light text-center mb-8 text-sm md:text-base">Answer honestly. There are no wrong answers. Every question needs an answer, but you can always pick "not sure yet" or "I'd rather tell you in person".</p>
+
+    <p class="text-mist/70 text-xs text-center mb-6">This page quietly notes which parts you opened and for how long. It stays on your phone unless you send the file.</p>
+
+    <div id="qProgress" class="sticky top-0 z-40 -mx-4 sm:mx-0 px-4 sm:px-0 py-3 bg-ink/90 backdrop-blur">
+      <div class="flex justify-between text-xs tracking-[0.2em] uppercase text-mist mb-2"><span>Progress</span><span id="qCount">0 / 0</span></div>
+      <div class="h-1 rounded-full bg-line overflow-hidden"><div id="qBar" class="h-full bg-rose w-0 transition-all duration-500"></div></div>
+    </div>
+
+    <div id="qList" class="space-y-6 mt-8"></div>
+
+    <div class="mt-12 text-center">
+      <p id="qError" class="text-rose text-sm mb-4 min-h-[1.25rem]"></p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <button id="qSubmit" class="px-7 py-3 rounded-full bg-rose text-ink font-medium hover:scale-105 transition">Download my answers</button>
+        <button id="qShare" class="hidden px-7 py-3 rounded-full border border-line text-white hover:border-rose transition">Share with <span data-you></span></button>
+      </div>
+      <p id="qDone" class="font-display italic text-2xl mt-8 opacity-0"></p>
+    </div>
+  </div>
+</section>
+
+<!-- 7. LOCKED FINAL MESSAGE -->
+<section id="final" class="relative px-6 py-40 text-center overflow-hidden">
+  <div class="max-w-xl mx-auto">
+    <p class="font-hand text-2xl text-rose">last page</p>
+    <h2 class="font-display italic text-5xl md:text-6xl mb-4">One more thing</h2>
+    <div id="lockBox">
+      <p class="text-mist font-light mb-6">This part opens with a secret only you know.</p>
+      <form id="lockForm" class="flex gap-2 justify-center">
+        <input id="lockInput" type="text" autocomplete="off" placeholder="type the secret" class="w-56 bg-panel border border-line rounded-full px-5 py-3 text-center outline-none focus:border-rose transition">
+        <button class="px-6 py-3 rounded-full bg-rose text-ink font-medium hover:scale-105 transition">Open</button>
+      </form>
+      <button id="hintBtn" class="mt-4 text-xs tracking-[0.2em] uppercase text-mist hover:text-white transition">need a hint</button>
+      <p id="hintText" class="mt-2 text-sm text-mist italic opacity-0"></p>
+    </div>
+    <div id="finalMsg" class="hidden text-left space-y-5 font-display text-2xl md:text-3xl leading-relaxed"></div>
+  </div>
+</section>
+
+<footer class="py-10 text-center text-xs tracking-[0.3em] uppercase text-mist">
+  Made by <span data-you></span>, for <span data-her></span>
+</footer>
+
 <script>
-  const canvas = document.getElementById('petals');
-  const ctx = canvas.getContext('2d');
-  let petals = [];
-  function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
-  resize(); window.addEventListener('resize',resize);
-  function isDark(){if(document.documentElement.dataset.theme==='dark')return true;if(document.documentElement.dataset.theme==='light')return false;return window.matchMedia('(prefers-color-scheme: dark)').matches}
-  function rand(a,b){return a+Math.random()*(b-a)}
-  function mkPetal(){return{x:rand(-40,canvas.width+40),y:rand(-60,-10),size:rand(7,16),speedY:rand(0.5,1.6),speedX:rand(-0.4,0.4),angle:rand(0,Math.PI*2),spin:rand(-0.022,0.022),opacity:rand(0.45,0.85),wobble:rand(0,Math.PI*2),wobbleSpeed:rand(0.01,0.03)}}
-  for(let i=0;i<32;i++){const p=mkPetal();p.y=rand(0,canvas.height);petals.push(p)}
-  const petalColors={light:['#e8436a','#ff7096','#d63060','#ffb3c6','#ff8fa3'],dark:['#d4456a','#ff6b8a','#c4305a','#ff8fa3','#e8557a']};
-  function drawPetal(p){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.angle);ctx.globalAlpha=p.opacity;const cols=isDark()?petalColors.dark:petalColors.light;ctx.fillStyle=cols[Math.floor(Math.random()*cols.length)];ctx.beginPath();ctx.moveTo(0,-p.size);ctx.bezierCurveTo(p.size*.7,-p.size*.5,p.size*.7,p.size*.5,0,p.size*.3);ctx.bezierCurveTo(-p.size*.7,p.size*.5,-p.size*.7,-p.size*.5,0,-p.size);ctx.closePath();ctx.fill();ctx.restore()}
-  (function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);petals.forEach(p=>{p.wobble+=p.wobbleSpeed;p.x+=p.speedX+Math.sin(p.wobble)*.35;p.y+=p.speedY;p.angle+=p.spin;if(p.y>canvas.height+30)Object.assign(p,mkPetal());drawPetal(p)});requestAnimationFrame(animate)})();
+/* ============================================================
+   EDIT THIS BLOCK ONLY. Everything personal lives here.
+   ============================================================ */
+const CONFIG = {
+  her: "Mahima",
+  nick: "Mahiii",
+  you: "Abhinav",
 
-  const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.style.opacity='1'})},{threshold:0.15});
-  document.querySelectorAll('.reason-item').forEach(el=>io.observe(el));
+  // secret for the final page (case-insensitive)
+  password: "mallroad",
+  hint: "Where I keep asking you to walk with me.",
 
-  // Slider messages
-  const sliderMsgs = {
-    love: [
-      [0,10,  "Yeh toh bahut kam hai 😢"],
-      [11,25, "Thoda pyaar hain... chalega 🥺"],
-      [26,40, "Acha hai, par aur chahiye 🌸"],
-      [41,55, "Theek hai theek hai 😊"],
-      [56,70, "Yeh sunke dil khush hua 💕"],
-      [71,85, "Ohhh Mahi 😍 itna pyaar!"],
-      [86,99, "Main pagal ho jaunga 🥰"],
-      [100,100,"100%?! Mujhe rone mat dena 😭💗"]
-    ],
-    miss: [
-      [0,10,  "Jhooth mat bolo, pata hai 😏"],
-      [11,25, "Thoda toh miss kiya hoga 🥺"],
-      [26,40, "Chhupa rahi hain aap 😒"],
-      [41,55, "Haan thoda miss kiya... 🌙"],
-      [56,70, "Dekha! Miss kiya na 😄"],
-      [71,85, "Itna miss kiya? Dil bhar gaya 💕"],
-      [86,99, "Bahut miss kiya 😭 main aa jaata!"],
-      [100,100,"100%! Main bhi yahi feel kar raha tha 🌹"]
-    ],
-    anger: [
-      [0,10,  "Matlab maafi mil gayi? 🥰"],
-      [11,25, "Thoda gussa hai, theek hai 🥺"],
-      [26,40, "Sach bol rahi hain? 😅"],
-      [41,55, "Haan thoda toh banta hai gussa 😤"],
-      [56,70, "Sorry Mahi, sachchi 🙏"],
-      [71,85, "Sorry sorry sorry 😭"],
-      [86,99, "Mujhe pata tha... Sorry 💔"],
-      [100,100,"🔥🔥 — Main deserve karta hoon. Sorry 😔"]
-    ]
+  // short lines that appear suddenly while she scrolls
+  pops: [
+    "I love you",
+    "Hi Mahiii",
+    "Still you",
+    "I am really glad it is you",
+    "I love you, again",
+    "You are my favourite person",
+    "Mahiii. I love you."
+  ],
+
+  // captions during the Mall Road walk (4 of them)
+  walkCaptions: [
+    "Mall Road, evening. Just us, walking.",
+    "No plan. No rush.",
+    "Chai in one hand, your hand in the other.",
+    "Someday soon. I am holding you to this walk."
+  ],
+
+  // add img: "photos/first.jpg" to show a real photo (put files next to index.html)
+  timeline: [
+    { date: "How it started",   title: "Hello",        text: "A mutual friend, a first message, and somehow it never stopped.", img: "" },
+    { date: "Our own language", title: "Cook the tickets", text: "Somewhere between booking and cooking, we invented a joke only we understand.", img: "" },
+    { date: "Our trip",         title: "Together",     text: "Write your favourite moment from the trip here.", img: "" },
+    { date: "The day you said it", title: "I love you more", text: "You said it back. I am still smiling about it.", img: "" },
+    { date: "Soon",             title: "Darjeeling",   text: "You, me, Mall Road, and a very long evening.", img: "" }
+  ],
+
+  /* Questions she must answer. type: slider | choice | text
+     choice + other:true adds a "Something else" box. slider labels = [[from, text], ...] */
+  questions: [
+    { id: "love_meter", group: "Little games", type: "slider", q: "Love meter: how much do you love me?", note: "Drag it. Be honest, I will know.",
+      labels: [[0, "Hmm. Rude."], [25, "A little"], [50, "A decent amount"], [75, "A lot"], [95, "Dangerously a lot"], [100, "Overflowing"]] },
+    { id: "jokes", group: "Little games", type: "slider", min: 0, max: 10, q: "Rate my jokes out of 10",
+      labels: [[0, "Please stop"], [4, "Mixed feelings"], [7, "Okay fine, funny"], [10, "Genius"]] },
+    { id: "chai_coffee", group: "Little games", type: "choice", q: "Chai or coffee, forever?", options: ["Chai", "Coffee", "Both, do not ask me again"] },
+    { id: "lost", group: "Little games", type: "choice", q: "We are lost in Darjeeling. Who finds the way?", options: ["Me", "You", "Google Maps", "A random local uncle"] },
+    { id: "cook", group: "Little games", type: "choice", q: "Tickets: do we cook them or book them?", options: ["Cook, obviously", "Book, I guess", "Cook, and you are paying"] },
+
+    { id: "date", group: "The date", type: "choice", q: "Will you go on a date with me?", options: ["Yes", "Yes, but I choose the place", "Only if there is food", "Ask me properly, in person"] },
+    { id: "date_first", group: "The date", type: "choice", q: "On Mall Road, what do we do first?", options: ["Chai", "Momos", "Photos", "Just walk and talk"] },
+    { id: "date_time", group: "The date", type: "choice", q: "Best time for our date?", options: ["Sunrise", "Evening", "Late night", "Whenever you are free"] },
+
+    { id: "consider", group: "About us", type: "choice", other: true, q: "What do you consider me in your life?", options: ["My friend", "My best friend", "My safe place", "My person", "Not sure yet"] },
+    { id: "value", group: "About us", type: "text", q: "What value have I brought into your life?", placeholder: "In your own words, short or long" },
+    { id: "miss_when", group: "About us", type: "choice", q: "When do you miss me the most?", options: ["Morning", "Night", "When something funny happens", "When the day was heavy", "Not sure yet"] },
+    { id: "happy", group: "About us", type: "text", q: "What is one thing I do that makes you happy or comfortable?", placeholder: "Anything, even something tiny" },
+    { id: "more", group: "About us", type: "text", q: "One small thing you would like me to do more of?", placeholder: "Be honest, I really want to know" },
+    { id: "trip", group: "About us", type: "text", q: "Where should our next trip be?", placeholder: "A place, a mountain, a random town" },
+
+    { id: "freeform", group: "Last one", type: "text", q: "Anything you want to tell me?", placeholder: "Anything at all" }
+  ],
+
+  letters: [
+    { title: "Open when you miss me",   body: "Write a warm note here. Mention something only the two of you know." },
+    { title: "Open when you cannot sleep", body: "Write something calming. Maybe a tiny story, or what you would say if you were next to her." },
+    { title: "Open when you are sad",   body: "Remind her what she is to you, in your own words. Short and honest works best." }
+  ],
+
+  // love notes. Keep only the lines you can truly keep.
+  notes: [
+    { id: "never-hurt", title: "I never want to hurt you",
+      body: "I never want to be the reason your eyes fill up. I am not perfect, and I will get things wrong. But when I do, I will not hide, defend myself or go quiet. I will come to you, say it plainly, and make it right. You will never have to chase an apology from me." },
+    { id: "never-guess", title: "You never have to guess",
+      body: "You never have to wonder where you stand with me. If I am quiet, it does not mean you matter less. If I am busy, it does not mean you moved down the list. And if your mind starts building a whole story out of one silence, just ask me. I will always answer you honestly and gently." },
+    { id: "deserve", title: "The way you deserve to be loved",
+      body: "I want to love you patiently, out loud, and in small things. Not only when it is easy, and not only when someone is watching. I want to love you so steadily that your heart finally stops bracing for the next disappointment." },
+    { id: "heart", title: "Your heart",
+      body: "I love how deeply you feel. Some people might call it too much. I think it is the reason you notice who is hurting, remember the tiny things, and love with everything you have. I will never ask you to feel less. I will only try to be gentle with it." },
+    { id: "place", title: "Your place is already yours",
+      body: "You do not have to earn your place in my life. You do not have to be cheerful, easy or perfect for me to stay. On your loud days and your quiet days, you are already important to me, and nothing you do will change that." },
+    { id: "value", title: "I want to value you",
+      body: "I want to value what you say, what you dream, and what you are afraid to say. I want to cheer for your plans, the MBA, the big ones and the small ones, as loudly as you cheer for mine. Your opinion will always matter to me, not just your smile." },
+    { id: "give", title: "What I want to give you",
+      body: "I want to give you calm. I want to give you a person who remembers, who shows up, and who says sorry first when it is needed. I want to give you a place where you can be tired, moody, silly and unsure, and still be completely loved." },
+    { id: "heavy-days", title: "On your heavy days",
+      body: "On the days your heart feels heavy, you do not have to explain it perfectly. You can just tell me you are not okay, and I will stay. No lecture, no rushing to fix it. Just me, listening, until it feels lighter." },
+    { id: "choose", title: "I choose you",
+      body: "I do not choose you because it is easy. I choose you on ordinary days, after small fights, and when we are far apart. If you ever doubt it, come back to this page. All of it is true." }
+  ],
+
+  // what the teddy says as she reaches each section
+  teddy: {
+    hero: "Hi Mahiii. Tap me to say hi.",
+    walk: "Keep scrolling. He is walking you down Mall Road.",
+    timeline: "Your story. His favourite one.",
+    notes: "Read slowly. He wrote every word for you.",
+    feed: "He says momos taste better when shared.",
+    ask: "Say yes. I already told him you would.",
+    letters: "Open the one you need today.",
+    questions: "Be honest. Honest is all he wants.",
+    final: "You made it to the last page."
+  },
+  teddyTaps: ["Hug received.", "He misses you.", "You are loved, Mahiii.", "Hold me a little tighter.", "You deserve soft things."],
+
+  // shown after the password is entered. One paragraph per entry.
+  finalMessage: [
+    "I made this at 2 AM because that is when I think about you most clearly.",
+    "Mahiii, I want to marry you. Not because it sounds romantic, but because I cannot picture a future I would want without you in it. There is no pressure and no deadline. Take all the time you need, and I will still be here when you answer.",
+    "I want to give you a home where you feel safe, a life where you feel valued, and a love that never makes you guess.",
+    "I want to love you the way you deserve to be loved. Gently. Daily. For a very long time.",
+    "Happy to be yours."
+  ]
+};
+
+/* ============================================================
+   Setup
+   ============================================================ */
+gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.config({ ignoreMobileResize: true });
+const $ = (s, r = document) => r.querySelector(s);
+const rand = gsap.utils.random;
+const HEART_PATH = "M12 21C12 21 3 14.500 3 8.500 3 5.500 5.300 4 7.500 4c1.800 0 3.300 1 4.500 2.700C13.200 5 14.700 4 16.500 4 18.700 4 21 5.500 21 8.500 21 14.500 12 21 12 21z";
+const heartSVG = (cls = '') => `<svg viewBox="0 0 24 24" fill="currentColor" class="${cls}"><path d="${HEART_PATH}"/></svg>`;
+
+document.querySelectorAll('[data-her]').forEach(el => el.textContent = CONFIG.her);
+document.querySelectorAll('[data-you]').forEach(el => el.textContent = CONFIG.you);
+document.querySelectorAll('[data-nick]').forEach(el => el.textContent = CONFIG.nick);
+document.title = "For " + CONFIG.nick;
+
+function seeded(seed) { return () => (seed = (seed * 16807) % 2147483647) / 2147483647; }
+
+/* ---------- activity tracker (stays in her browser; only shared if she sends the file) ---------- */
+const TRACK = (() => {
+  const KEY = 'mahima_activity_v1';
+  let d = {};
+  try { d = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { d = {}; }
+  d.sets = d.sets || {}; d.secs = d.secs || {}; d.v = d.v || {};
+  const subs = [];
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {} };
+  const fire = () => subs.forEach(f => f());
+  try { if (!sessionStorage.getItem('mahima_visit')) { sessionStorage.setItem('mahima_visit', '1'); d.visits = (d.visits || 0) + 1; } } catch (e) {}
+  d.firstOpened = d.firstOpened || new Date().toISOString();
+  d.lastOpened = new Date().toISOString();
+  save();
+  return {
+    set(k, val) { d.v[k] = val; save(); fire(); },
+    get(k, def) { return d.v[k] === undefined ? def : d.v[k]; },
+    inc(k) { d.v[k] = (d.v[k] || 0) + 1; save(); fire(); },
+    mark(set, id) { const s = d.sets[set] = d.sets[set] || []; if (s.includes(id)) return false; s.push(id); save(); fire(); return true; },
+    unmark(set, id) { d.sets[set] = (d.sets[set] || []).filter(x => x !== id); save(); fire(); },
+    has(set, id) { return (d.sets[set] || []).includes(id); },
+    list(set) { return (d.sets[set] || []).slice(); },
+    addSecs(id) { d.secs[id] = (d.secs[id] || 0) + 1; },
+    flush: save,
+    onChange(f) { subs.push(f); },
+    summary() {
+      return {
+        visits: d.visits || 1, firstOpened: d.firstOpened, lastOpened: new Date().toISOString(),
+        sectionsSeen: d.sets.sections || [], secondsPerSection: d.secs,
+        notesRead: d.sets.notesRead || [], favouriteNotes: d.sets.favNotes || [], lettersOpened: d.sets.letters || [],
+        momosFed: d.v.feedMomos || 0, askedYes: !!d.v.askedYes, noButtonDodges: d.v.noDodges || 0,
+        bulbClicks: d.v.bulbClicks || 0, teddyTaps: d.v.teddyTaps || 0, lights: d.v.lights || null, finalOpened: !!d.v.finalOpened
+      };
+    }
+  };
+})();
+
+/* ---------- hearts burst ---------- */
+function burst(x, y, n = 10) {
+  for (let i = 0; i < n; i++) {
+    const el = document.createElement('div');
+    el.className = 'absolute text-rose pointer-events-none';
+    el.style.left = x + 'px'; el.style.top = y + 'px';
+    el.style.width = el.style.height = rand(12, 26) + 'px';
+    el.innerHTML = heartSVG('w-full h-full');
+    $('#popLayer').appendChild(el);
+    gsap.fromTo(el, { xPercent: -50, yPercent: -50, scale: 0, opacity: 1 }, {
+      x: rand(-130, 130), y: rand(-170, -30), rotation: rand(-40, 40), scale: rand(.8, 1.4),
+      duration: rand(.9, 1.5), ease: 'power2.out',
+      onComplete: () => gsap.to(el, { opacity: 0, duration: .3, onComplete: () => el.remove() })
+    });
+  }
+}
+
+/* ---------- hero intro + fireflies ---------- */
+gsap.from('.hero-in', { y: 24, opacity: 0, duration: 1.2, stagger: .25, ease: 'power3.out' });
+gsap.to('#cue', { scaleY: .3, transformOrigin: 'top', repeat: -1, yoyo: true, duration: 1, ease: 'sine.inOut' });
+
+const flies = document.createElement('div');
+flies.style.cssText = 'position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1';
+document.body.appendChild(flies);
+for (let i = 0; i < 26; i++) {
+  const f = document.createElement('div');
+  f.className = 'firefly';
+  f.style.left = rand(0, 100) + 'vw'; f.style.top = rand(0, 100) + 'vh';
+  flies.appendChild(f);
+  gsap.to(f, { opacity: rand(.3, .9), duration: rand(1.5, 3.5), repeat: -1, yoyo: true, delay: rand(0, 3), ease: 'sine.inOut' });
+  gsap.to(f, { x: rand(-60, 60), y: rand(-60, 60), duration: rand(5, 10), repeat: -1, yoyo: true, ease: 'sine.inOut' });
+}
+
+/* ============================================================
+   "I love you" pops while scrolling
+   ============================================================ */
+let popIdx = 0;
+function pop() {
+  const el = document.createElement('div');
+  el.className = 'absolute font-display italic text-rose select-none';
+  el.textContent = CONFIG.pops[popIdx++ % CONFIG.pops.length];
+  el.style.fontSize = (innerWidth < 640 ? rand(1.8, 2.8, .1) : rand(2.2, 4.4, .1)) + 'rem';
+  el.style.left = rand(6, 32) + 'vw';
+  el.style.top = rand(14, 74) + 'vh';
+  el.style.maxWidth = '68vw';
+  el.style.lineHeight = '1.1';
+  el.style.textShadow = '0 0 30px rgba(251,113,133,.55)';
+  $('#popLayer').appendChild(el);
+  gsap.timeline({ onComplete: () => el.remove() })
+    .fromTo(el, { scale: 0, opacity: 0, rotation: rand(-10, 10) }, { scale: 1, opacity: 1, duration: .18, ease: 'back.out(3)' })
+    .to(el, { duration: 1 })
+    .to(el, { opacity: 0, y: -24, duration: .5, ease: 'power1.in' });
+  gsap.fromTo('#flash', { opacity: .9 }, { opacity: 0, duration: .8, ease: 'power2.out' });
+  burst(innerWidth * rand(.3, .7), innerHeight * rand(.4, .7), 7);
+}
+
+const POP_COUNT = 9;
+const thresholds = Array.from({ length: POP_COUNT }, (_, i) => (i + 1) / (POP_COUNT + 1) + rand(-.025, .025));
+let lastCount = 0;
+ScrollTrigger.create({
+  trigger: document.body, start: 'top top', end: 'bottom bottom',
+  onUpdate: self => {
+    const count = thresholds.filter(t => t <= self.progress).length;
+    if (count > lastCount) pop();
+    lastCount = count;
+  }
+});
+
+/* ============================================================
+   Mall Road walk
+   ============================================================ */
+(function buildWalk() {
+  // stars
+  const stars = $('#stars');
+  for (let i = 0; i < 70; i++) {
+    const s = document.createElement('div');
+    const size = rand(1, 2.5);
+    s.style.cssText = `position:absolute;left:${rand(0, 100)}%;top:${rand(0, 45)}%;width:${size}px;height:${size}px;border-radius:9999px;background:#fff;opacity:${rand(.2, .8)}`;
+    stars.appendChild(s);
+    gsap.to(s, { opacity: rand(.1, .9), duration: rand(1, 3), repeat: -1, yoyo: true, delay: rand(0, 2) });
+  }
+
+  // ridges
+  const ridge = (id, color, seed, amp, base) => {
+    const r = seeded(seed); const pts = [`0,100`];
+    for (let x = 0; x <= 1000; x += 20) pts.push(`${x},${base - r() * amp - Math.sin(x / 90) * amp * .25}`);
+    pts.push('1000,100');
+    $(id).insertAdjacentHTML('beforeend',
+      `<svg viewBox="0 0 1000 100" preserveAspectRatio="none" class="absolute inset-0 w-full h-full"><polygon points="${pts.join(' ')}" fill="${color}"/></svg>`);
+  };
+  ridge('#layerFar', '#161b30', 7, 45, 60);
+
+  // mid layer: shopfronts with lit windows
+  const mid = $('#layerMid'); let x = 0; const r = seeded(21);
+  while (x < 300) {
+    const w = 9 + r() * 6, h = 16 + r() * 18;
+    const b = document.createElement('div');
+    b.style.cssText = `position:absolute;left:${x}vw;bottom:0;width:${w}vw;height:${h}vh;background:${r() > .5 ? '#1d2238' : '#191e33'};border-top:3px solid #262c47`;
+    const n = 5 + Math.floor(r() * 5);
+    for (let k = 0; k < n; k++) {
+      const wi = document.createElement('div');
+      wi.className = r() > .25 ? 'window-lit' : '';
+      wi.style.cssText = `position:absolute;left:${8 + r() * 70}%;top:${10 + r() * 70}%;width:7%;height:9%;background:${wi.className ? '' : '#232842'};opacity:${.55 + r() * .45}`;
+      b.appendChild(wi);
+    }
+    mid.appendChild(b);
+    x += w + r() * 1.5;
+  }
+
+  // lamps
+  const lamps = $('#layerLamps');
+  for (let i = 0; i < 17; i++) {
+    const l = document.createElement('div');
+    l.style.cssText = `position:absolute;left:${6 + i * 30}vw;bottom:0;width:3px;height:30vh;background:#2a2f45`;
+    l.innerHTML = `<div class="glow" style="position:absolute;left:50%;top:-60px;width:150px;height:150px;transform:translateX(-50%)"></div><div style="position:absolute;left:50%;top:-6px;width:14px;height:14px;border-radius:9999px;transform:translateX(-50%);background:#fde68a;box-shadow:0 0 14px 4px rgba(251,191,36,.7)"></div>`;
+    lamps.appendChild(l);
+  }
+})();
+
+(function walkScroll() {
+  const caps = CONFIG.walkCaptions;
+  const ranges = [[0, .24], [.26, .5], [.52, .76], [.78, 1.01]];
+  let active = -1;
+  const cap = $('#cap');
+  const showCap = i => {
+    active = i;
+    gsap.to(cap, { opacity: 0, y: 10, duration: .25, overwrite: true, onComplete: () => {
+      if (i < 0) return;
+      cap.textContent = caps[i] || '';
+      gsap.fromTo(cap, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .6, ease: 'power2.out' });
+    }});
   };
 
-  function getMsg(type, val) {
-    return sliderMsgs[type].find(([a,b])=>val>=a&&val<=b)?.[2] || '';
-  }
+  const tl = gsap.timeline({ defaults: { ease: 'none' } });
+  tl.to('#layerFar', { x: '-100vw' }, 0)
+    .to('#layerMid', { x: '-200vw' }, 0)
+    .to('#mist1', { x: '-160vw' }, 0)
+    .to('#layerLamps', { x: '-400vw' }, 0);
 
-  function updateSlider(el, msgId, type) {
-    const val = parseInt(el.value);
-    el.style.setProperty('--val', val+'%');
-    const valEl = document.getElementById(el.id+'val');
-    if(valEl) valEl.textContent = val+'%';
-    const msgEl = document.getElementById(msgId);
-    if(msgEl) { msgEl.style.opacity='0'; setTimeout(()=>{ msgEl.textContent=getMsg(type,val); msgEl.style.opacity='1'; },150); }
-  }
-
-  // Init slider fill
-  ['q1','q2','q4'].forEach(id => {
-    const el = document.getElementById(id);
-    if(el) el.style.setProperty('--val','50%');
-  });
-
-  // Choice buttons
-  const choiceAnswers = {};
-  function selectChoice(qid, val, msgId) {
-    choiceAnswers[qid] = val;
-    document.querySelectorAll(`#${qid}choices .choice-btn`).forEach(b=>b.classList.remove('selected'));
-    event.target.classList.add('selected');
-    const msgs = {
-      'Haan, maaf kiya 💕': 'Sachchi?! Yeh sunke dil aa gaya 🥹💗',
-      'Thoda aur time chahiye 😤': 'Theek hai, wait karunga. Aap worth it hain 🌹',
-      'Abhi nahi bolunga 🙄': 'Fair enough. Jab ready hon tab bata dena 🤍',
-      'Meri neend 😴': 'Toh main hi hoon jo chain deta hoon 😌',
-      'Meri tension 😤': 'Haha, fair hai yaar 😅 Sorry!',
-      'Meri khushi 🌸': 'Yeh sun ke sach mein khush ho gaya 🌸',
-      'Sab kuch 💗': 'Main sab kuch hoon? Ab rona mat 😭💗'
-    };
-    const msgEl = document.getElementById(msgId);
-    if(msgEl) { msgEl.style.opacity='0'; setTimeout(()=>{ msgEl.textContent=msgs[val]||'💕'; msgEl.style.opacity='1'; },150); }
-  }
-
-  // Download JSON
-  document.getElementById('dlBtn').addEventListener('click', async function() {
-    const btn = this;
-    const data = {
-      from: "Mahima",
-      timestamp: new Date().toISOString(),
-      answers: {
-        pyaar_kitna: document.getElementById('q1')?.value + '%',
-        miss_karna: document.getElementById('q2')?.value + '%',
-        maafi_mili: choiceAnswers['q3'] || 'Jawab nahi diya',
-        gusse_ka_level: document.getElementById('q4')?.value + '%',
-        main_kya_hoon: choiceAnswers['q5'] || 'Jawab nahi diya'
-      },
-      note: "Yeh file Abhinav ko bhejni hai"
-    };
-    const json = JSON.stringify(data, null, 2);
-    try {
-      const downloads = await window.claude.use('downloads');
-      if (downloads) {
-        await downloads.save({ filename: '11__temp_response.json', data: json });
-      } else { throw new Error('unavailable'); }
-    } catch(e) {
-      // fallback: blob download
-      const blob = new Blob([json], {type:'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = '11__temp_response.json';
-      document.body.appendChild(a); a.click();
-      document.body.removeChild(a); URL.revokeObjectURL(url);
+  const legs = ['#himLegA', '#himLegB', '#herLegA', '#herLegB'];
+  ScrollTrigger.create({
+    trigger: '#walk', start: 'top top', end: '+=4200', pin: true, scrub: .6, animation: tl,
+    onUpdate: self => {
+      const p = self.progress, phase = p * Math.PI * 2 * 22;
+      legs.forEach((id, i) => gsap.set(id, { rotation: Math.sin(phase + (i % 2 ? Math.PI : 0)) * 20 }));
+      gsap.set('#us', { y: Math.abs(Math.sin(phase)) * -4 });
+      const idx = ranges.findIndex(([a, b]) => p >= a && p < b);
+      if (idx !== active) showCap(idx);
     }
-    btn.textContent = 'Downloaded! Ab bhej dena WhatsApp pe 💌';
-    btn.style.background = 'linear-gradient(135deg,#2ecc71,#27ae60)';
-    setTimeout(()=>{ btn.textContent='📥 Download Jawab (JSON)'; btn.style.background=''; },3500);
+  });
+})();
+
+/* ============================================================
+   Timeline
+   ============================================================ */
+(function timeline() {
+  const wrap = $('#tlItems');
+  CONFIG.timeline.forEach((t, i) => {
+    const item = document.createElement('div');
+    item.className = 'tl-item relative pl-8 md:pl-0 mb-16 md:flex ' + (i % 2 ? 'md:justify-end' : '');
+    const media = t.img
+      ? `<img src="${t.img}" alt="" class="w-full h-48 object-cover rounded-xl mb-4 border border-line">`
+      : `<div class="w-full h-32 rounded-xl mb-4 border border-line" style="background: linear-gradient(135deg, #1b2036, #2a1f3a)"></div>`;
+    item.innerHTML = `
+      <span class="absolute left-0 top-6 md:left-1/2 md:-translate-x-1/2 w-2 h-2 rounded-full bg-rose" style="box-shadow:0 0 12px 3px rgba(251,113,133,.6)"></span>
+      <div class="tl-card md:w-[calc(50%-2.5rem)] bg-panel border border-line rounded-2xl p-5 ${i % 2 ? 'md:text-left' : 'md:text-right'}">
+        ${media}
+        <p class="font-hand text-xl text-rose">${t.date}</p>
+        <h3 class="font-display italic text-3xl mb-1">${t.title}</h3>
+        <p class="text-mist font-light text-sm leading-relaxed">${t.text}</p>
+      </div>`;
+    wrap.appendChild(item);
+    gsap.from(item.querySelector('.tl-card'), {
+      opacity: 0, y: 40, x: window.innerWidth > 768 ? (i % 2 ? 50 : -50) : 0, duration: .9, ease: 'power3.out',
+      scrollTrigger: { trigger: item, start: 'top 85%' }
+    });
+  });
+  gsap.to('#tlLine', { scaleY: 1, ease: 'none', scrollTrigger: { trigger: '#tlWrap', start: 'top 70%', end: 'bottom 70%', scrub: true } });
+})();
+
+/* ============================================================
+   Feed game
+   ============================================================ */
+(function feedGame() {
+  const holder = $('#holder'), mouth = $('#mouth'), msg = $('#feedMsg'), count = $('#feedCount'), reset = $('#feedReset');
+  const lines = ["Mmm.", "Another one?", "Open wide again.", "You are so cute when you chew.", "Okay, one more.", "Too full. Worth it."];
+  const MAX = lines.length;
+  let n = 0, dragging = false, sx = 0, sy = 0, ox = 0, oy = 0, busy = false;
+
+  const momoCenter = () => { const r = $('#momo').getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; };
+  const mouthCenter = () => { const r = mouth.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; };
+  const dist = () => { const a = momoCenter(), b = mouthCenter(); return Math.hypot(a.x - b.x, a.y - b.y); };
+
+  holder.addEventListener('pointerdown', e => {
+    if (busy || n >= MAX) return;
+    dragging = true; holder.setPointerCapture(e.pointerId);
+    sx = e.clientX; sy = e.clientY; ox = gsap.getProperty(holder, 'x'); oy = gsap.getProperty(holder, 'y');
+    holder.style.cursor = 'grabbing';
+  });
+  holder.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    gsap.set(holder, { x: ox + e.clientX - sx, y: oy + e.clientY - sy });
+    gsap.to(mouth, { attr: { ry: dist() < 110 ? 16 : 4, rx: dist() < 110 ? 12 : 14 }, duration: .15 });
+  });
+  const drop = () => {
+    if (!dragging) return; dragging = false; holder.style.cursor = 'grab';
+    if (dist() < 80) eat();
+    else {
+      gsap.to(holder, { x: 0, y: 0, duration: .5, ease: 'back.out(1.6)' });
+      gsap.to(mouth, { attr: { ry: 4, rx: 14 }, duration: .2 });
+    }
+  };
+  holder.addEventListener('pointerup', drop);
+  holder.addEventListener('pointercancel', drop);
+
+  function eat() {
+    busy = true; n++;
+    gsap.to(holder, { scale: 0, opacity: 0, duration: .2 });
+    const m = mouthCenter(); burst(m.x, m.y, 6);
+    gsap.timeline()
+      .to(mouth, { attr: { ry: 3, rx: 16 }, duration: .12, repeat: 5, yoyo: true })
+      .to(mouth, { attr: { ry: 4, rx: 14 }, duration: .15 });
+    gsap.to('#face', { rotation: 4, duration: .1, repeat: 5, yoyo: true, transformOrigin: '50% 80%' });
+    msg.textContent = lines[n - 1];
+    TRACK.set('feedMomos', n);
+    count.textContent = n + (n === 1 ? ' momo' : ' momos');
+    gsap.fromTo(msg, { scale: .8, opacity: 0 }, { scale: 1, opacity: 1, duration: .4, ease: 'back.out(2)' });
+    gsap.delayedCall(.9, () => {
+      busy = false;
+      if (n >= MAX) { reset.classList.remove('hidden'); return; }
+      gsap.set(holder, { x: 0, y: 0 });
+      gsap.fromTo(holder, { scale: .4, opacity: 0 }, { scale: 1, opacity: 1, duration: .4, ease: 'back.out(2)' });
+    });
+  }
+  reset.addEventListener('click', () => {
+    n = 0; msg.textContent = 'Open wide.'; count.textContent = '0 momos'; reset.classList.add('hidden');
+    gsap.set(holder, { x: 0, y: 0 });
+    gsap.fromTo(holder, { scale: .4, opacity: 0 }, { scale: 1, opacity: 1, duration: .4, ease: 'back.out(2)' });
+  });
+  gsap.from('#feedStage', { opacity: 0, y: 40, duration: 1, scrollTrigger: { trigger: '#feedStage', start: 'top 85%' } });
+})();
+
+/* ============================================================
+   Runaway "No"
+   ============================================================ */
+(function askGame() {
+  const area = $('#askArea'), no = $('#noBtn'), yes = $('#yesBtn'), res = $('#askResult');
+  const nos = ["No", "Nope", "Nice try", "Too slow", "Really?", "Come on", "Just say yes"];
+  let k = 0;
+  const dodge = e => {
+    if (e && e.cancelable) e.preventDefault();
+    k++; no.textContent = nos[k % nos.length];
+    TRACK.set('noDodges', k);
+    const a = area.getBoundingClientRect(), b = no.getBoundingClientRect();
+    const maxX = a.width - b.width, maxY = a.height - b.height;
+    gsap.to(no, { left: rand(0, maxX), top: rand(0, maxY), duration: .25, ease: 'power2.out' });
+    gsap.to(yes, { scale: Math.min(1 + k * .06, 1.5), duration: .25 });
+  };
+  no.addEventListener('pointerenter', dodge);
+  no.addEventListener('pointerdown', dodge);
+  no.addEventListener('click', dodge);
+  yes.addEventListener('click', e => {
+    const r = yes.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 18);
+    gsap.to(no, { opacity: 0, pointerEvents: 'none', duration: .3 });
+    res.textContent = "I knew it. I love you.";
+    TRACK.set('askedYes', true);
+    gsap.to(res, { opacity: 1, y: -6, duration: .6 });
+  });
+})();
+
+/* ============================================================
+   Open-when letters
+   ============================================================ */
+(function letters() {
+  const list = $('#letterList');
+  CONFIG.letters.forEach(l => {
+    const card = document.createElement('div');
+    card.className = 'bg-ink border border-line rounded-2xl overflow-hidden';
+    card.innerHTML = `
+      <button class="w-full flex items-center justify-between px-6 py-5 text-left">
+        <span class="font-display italic text-2xl md:text-3xl">${l.title}</span>
+        <svg class="chev w-5 h-5 text-rose transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="body h-0 overflow-hidden"><p class="px-6 pb-6 font-hand text-2xl text-mist leading-snug">${l.body}</p></div>`;
+    list.appendChild(card);
+    const body = card.querySelector('.body'), chev = card.querySelector('.chev'); let open = false;
+    card.querySelector('button').addEventListener('click', () => {
+      open = !open;
+      gsap.to(body, { height: open ? 'auto' : 0, duration: .5, ease: 'power2.inOut' });
+      gsap.to(chev, { rotation: open ? 180 : 0, duration: .4 });
+      if (open) { const r = card.getBoundingClientRect(); burst(r.left + 40, r.top + 30, 5); TRACK.mark('letters', l.title); }
+    });
+  });
+  gsap.from('#letterList > div', { opacity: 0, y: 30, stagger: .15, duration: .8, scrollTrigger: { trigger: '#letterList', start: 'top 85%' } });
+})();
+
+/* ============================================================
+   Locked final message
+   ============================================================ */
+(function finalLock() {
+  const form = $('#lockForm'), input = $('#lockInput'), box = $('#lockBox'), msg = $('#finalMsg');
+  $('#hintBtn').addEventListener('click', () => {
+    $('#hintText').textContent = CONFIG.hint;
+    gsap.to('#hintText', { opacity: 1, duration: .5 });
+  });
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (input.value.trim().toLowerCase() === CONFIG.password.toLowerCase()) {
+      gsap.to(box, { opacity: 0, y: -20, duration: .5, onComplete: () => {
+        box.classList.add('hidden');
+        TRACK.set('finalOpened', true);
+        msg.classList.remove('hidden');
+        msg.innerHTML = CONFIG.finalMessage.map(p => `<p class="fm opacity-0">${p}</p>`).join('') +
+          `<div class="fm opacity-0 pt-6 text-center text-rose w-10 h-10 mx-auto">${heartSVG('w-full h-full')}</div>`;
+        gsap.to('.fm', { opacity: 1, y: 0, stagger: .9, duration: 1.2, ease: 'power2.out' });
+        const r = $('#final').getBoundingClientRect();
+        for (let i = 0; i < 6; i++) gsap.delayedCall(i * .4, () => burst(innerWidth * rand(.2, .8), innerHeight * rand(.4, .8), 12));
+      }});
+    } else {
+      gsap.fromTo(input, { x: -8 }, { x: 0, duration: .5, ease: 'elastic.out(1, .3)' });
+      input.value = ''; input.placeholder = 'not quite, try again';
+    }
+  });
+})();
+
+/* ============================================================
+   Questions + validator + JSON download
+   ============================================================ */
+(function questions() {
+  const Q = CONFIG.questions, list = $('#qList');
+  const KEY = 'mahima_answers_v1';
+  let ans = {};
+  try { ans = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { ans = {}; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(ans)); } catch (e) {} };
+  const cards = {};
+
+  const isValid = q => {
+    const a = ans[q.id];
+    if (a === undefined || a === null) return false;
+    if (q.type === 'slider') return typeof a === 'number';
+    if (q.type === 'text') return String(a).trim().length >= 2;
+    if (a && typeof a === 'object') return String(a.other || '').trim().length >= 2;
+    return String(a).length > 0;
+  };
+  const fmt = a => (a && typeof a === 'object') ? 'Something else: ' + String(a.other).trim() : (typeof a === 'string' ? a.trim() : a);
+
+  const refreshProgress = () => {
+    const n = Q.filter(isValid).length;
+    $('#qCount').textContent = n + ' / ' + Q.length;
+    $('#qBar').style.width = (n / Q.length * 100) + '%';
+    TRACK.set('answered', n);
+  };
+  const changed = q => {
+    const c = cards[q.id];
+    if (isValid(q)) { c.classList.add('done'); c.classList.remove('err'); c.querySelector('.q-err').classList.add('hidden'); }
+    else c.classList.remove('done');
+    save(); refreshProgress();
+    if (!Q.some(x => !isValid(x))) $('#qError').textContent = '';
+  };
+
+  let lastGroup = '';
+  Q.forEach(q => {
+    if (q.group !== lastGroup) {
+      lastGroup = q.group;
+      const h = document.createElement('p');
+      h.className = 'font-hand text-3xl text-rose pt-6';
+      h.textContent = q.group;
+      list.appendChild(h);
+    }
+    const card = document.createElement('div');
+    card.className = 'q-card bg-panel border border-line rounded-2xl p-5 sm:p-6';
+    card.innerHTML =
+      `<p class="font-display italic text-2xl md:text-3xl leading-snug mb-1">${q.q}</p>` +
+      (q.note ? `<p class="text-mist text-sm font-light mb-4">${q.note}</p>` : '<div class="mb-4"></div>') +
+      `<div class="q-body"></div><p class="q-err text-rose text-xs mt-3 hidden">Please answer this one.</p>`;
+    list.appendChild(card);
+    cards[q.id] = card;
+    const body = card.querySelector('.q-body');
+
+    if (q.type === 'slider') {
+      const min = q.min ?? 0, max = q.max ?? 100;
+      body.innerHTML = `<div class="flex items-end justify-between mb-4 gap-3"><span class="q-label font-hand text-2xl text-mist">Drag to answer</span><span class="q-val font-display text-4xl text-rose shrink-0">-</span></div>
+        <input type="range" class="lv untouched" min="${min}" max="${max}" step="${q.step || 1}" value="${Math.round((min + max) / 2)}">`;
+      const inp = body.querySelector('input'), label = body.querySelector('.q-label'), val = body.querySelector('.q-val');
+      const show = v => {
+        val.textContent = max === 100 ? v + '%' : v + ' / ' + max;
+        let t = ''; (q.labels || []).forEach(([th, tx]) => { if (v >= th) t = tx; });
+        label.textContent = t;
+      };
+      if (typeof ans[q.id] === 'number') { inp.value = ans[q.id]; inp.classList.remove('untouched'); show(+inp.value); }
+      inp.addEventListener('input', () => {
+        const v = +inp.value, was = ans[q.id];
+        inp.classList.remove('untouched'); ans[q.id] = v; show(v);
+        gsap.fromTo(val, { scale: 1.25 }, { scale: 1, duration: .25, ease: 'back.out(3)' });
+        if (v === max && was !== max) { const r = inp.getBoundingClientRect(); burst(r.right - 20, r.top, 10); }
+        changed(q);
+      });
+    }
+
+    if (q.type === 'choice') {
+      const opts = q.options.concat(q.other ? ['Something else'] : []);
+      body.innerHTML = `<div class="flex flex-wrap gap-2">${opts.map((o, i) => `<button type="button" class="chip" data-i="${i}">${o}</button>`).join('')}</div>` +
+        (q.other ? `<input type="text" class="q-other hidden mt-3 w-full bg-ink border border-line rounded-xl px-4 py-3 outline-none focus:border-rose" placeholder="Write it here">` : '');
+      const chips = [...body.querySelectorAll('.chip')], other = body.querySelector('.q-other');
+      const paint = () => {
+        const a = ans[q.id];
+        chips.forEach((c, i) => c.classList.toggle('on', a && typeof a === 'object' ? opts[i] === 'Something else' : a === opts[i]));
+        if (other) { const isOther = a && typeof a === 'object'; other.classList.toggle('hidden', !isOther); if (isOther) other.value = a.other || ''; }
+      };
+      chips.forEach((c, i) => c.addEventListener('click', () => {
+        if (opts[i] === 'Something else') { ans[q.id] = { other: (ans[q.id] && ans[q.id].other) || '' }; paint(); other.focus(); }
+        else { ans[q.id] = opts[i]; paint(); }
+        changed(q);
+      }));
+      if (other) other.addEventListener('input', () => { ans[q.id] = { other: other.value }; changed(q); });
+      paint();
+    }
+
+    if (q.type === 'text') {
+      body.innerHTML = `<textarea rows="3" class="w-full bg-ink border border-line rounded-xl px-4 py-3 outline-none focus:border-rose resize-none" placeholder="${q.placeholder || 'Type here'}"></textarea>
+        <button type="button" class="q-inperson mt-3 text-xs tracking-[0.15em] uppercase text-mist hover:text-white transition">I'd rather tell you in person</button>`;
+      const ta = body.querySelector('textarea');
+      if (typeof ans[q.id] === 'string') ta.value = ans[q.id];
+      ta.addEventListener('input', () => { ans[q.id] = ta.value; changed(q); });
+      body.querySelector('.q-inperson').addEventListener('click', () => {
+        ta.value = "I'd rather tell you in person."; ans[q.id] = ta.value; changed(q);
+      });
+    }
+
+    if (isValid(q)) card.classList.add('done');
+  });
+  refreshProgress();
+
+  /* ---- validation + export ---- */
+  const fileName = CONFIG.her.toLowerCase() + '_answers.json';
+  const payload = () => JSON.stringify({
+    from: CONFIG.her, to: CONFIG.you, submittedAt: new Date().toISOString(),
+    activity: TRACK.summary(),
+    answers: Q.map(q => ({ id: q.id, group: q.group, question: q.q, type: q.type, answer: fmt(ans[q.id]) }))
+  }, null, 2);
+
+  function ensureValid() {
+    const missing = Q.filter(q => !isValid(q));
+    if (!missing.length) { $('#qError').textContent = ''; return true; }
+    missing.forEach(q => { cards[q.id].classList.add('err'); cards[q.id].querySelector('.q-err').classList.remove('hidden'); });
+    $('#qError').textContent = missing.length + (missing.length === 1 ? ' question is' : ' questions are') + ' still unanswered.';
+    const first = cards[missing[0].id];
+    first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    gsap.fromTo(first, { x: -6 }, { x: 0, duration: .6, ease: 'elastic.out(1, .3)', delay: .3 });
+    return false;
+  }
+  function thanks() {
+    const d = $('#qDone');
+    d.textContent = 'Thank you, ' + CONFIG.nick + '. Now send that file to ' + CONFIG.you + '.';
+    gsap.to(d, { opacity: 1, y: -4, duration: .7 });
+    for (let i = 0; i < 4; i++) gsap.delayedCall(i * .3, () => burst(innerWidth * rand(.25, .75), innerHeight * rand(.4, .75), 12));
+  }
+
+  $('#qSubmit').addEventListener('click', () => {
+    if (!ensureValid()) return;
+    const blob = new Blob([payload()], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = fileName;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    thanks();
   });
 
-  const hugBtn=document.getElementById('hugBtn');
-  const bursts=['🤗','💕','💗','🌹','✨','💖','🥰','💝','🌸','💫'];
-  hugBtn.addEventListener('click',function(e){
-    const rect=hugBtn.getBoundingClientRect();
-    const rip=document.createElement('span');rip.className='ripple';
-    const sz=Math.max(rect.width,rect.height);
-    rip.style.cssText=`width:${sz}px;height:${sz}px;left:${e.clientX-rect.left-sz/2}px;top:${e.clientY-rect.top-sz/2}px`;
-    hugBtn.appendChild(rip);setTimeout(()=>rip.remove(),700);
-    for(let i=0;i<8;i++){setTimeout(()=>{const b=document.createElement('div');b.className='burst';b.textContent=bursts[Math.floor(Math.random()*bursts.length)];b.style.left=(e.clientX+rand(-70,70))+'px';b.style.top=(e.clientY+rand(-20,20))+'px';document.body.appendChild(b);setTimeout(()=>b.remove(),1100)},i*70)}
-    hugBtn.textContent='Hug Diya! 💗';hugBtn.disabled=true;
-    setTimeout(()=>{hugBtn.textContent='Virtual Hug Bhejo 🤗';hugBtn.disabled=false},2200);
+  try {
+    const probe = new File(['{}'], fileName, { type: 'application/json' });
+    if (navigator.canShare && navigator.canShare({ files: [probe] })) {
+      const sb = $('#qShare'); sb.classList.remove('hidden');
+      sb.addEventListener('click', async () => {
+        if (!ensureValid()) return;
+        try {
+          await navigator.share({ files: [new File([payload()], fileName, { type: 'application/json' })], title: 'My answers' });
+          thanks();
+        } catch (e) { /* cancelled */ }
+      });
+    }
+  } catch (e) {}
+})();
+
+/* ============================================================
+   Love notes
+   ============================================================ */
+(function notes() {
+  const wrap = $('#notesList');
+  const timers = new Map();
+  const nio = new IntersectionObserver(es => es.forEach(e => {
+    const id = e.target.dataset.id;
+    if (e.isIntersecting) {
+      if (!TRACK.has('notesRead', id)) timers.set(id, setTimeout(() => { TRACK.mark('notesRead', id); e.target.classList.add('read'); }, 1500));
+    } else clearTimeout(timers.get(id));
+  }), { rootMargin: '-30% 0px -30% 0px' });
+
+  CONFIG.notes.forEach(n => {
+    const card = document.createElement('article');
+    card.dataset.id = n.id;
+    card.className = 'note relative bg-panel border border-line rounded-3xl p-6 md:p-9 transition-colors duration-700' + (TRACK.has('notesRead', n.id) ? ' read' : '');
+    card.innerHTML = `
+      <button type="button" class="fav absolute top-4 right-4 w-8 h-8 ${TRACK.has('favNotes', n.id) ? 'on' : ''}" aria-label="Keep this note">${heartSVG('w-full h-full')}</button>
+      <p class="font-hand text-2xl text-rose mb-3 pr-10">${n.title}</p>
+      <p class="font-display text-2xl md:text-3xl leading-relaxed text-white/90">${n.body}</p>`;
+    wrap.appendChild(card);
+    nio.observe(card);
+    const fav = card.querySelector('.fav');
+    fav.addEventListener('click', () => {
+      if (TRACK.has('favNotes', n.id)) { TRACK.unmark('favNotes', n.id); fav.classList.remove('on'); }
+      else { TRACK.mark('favNotes', n.id); fav.classList.add('on'); const r = fav.getBoundingClientRect(); burst(r.left + 16, r.top + 16, 8); }
+    });
+    gsap.from(card, { opacity: 0, y: 50, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: card, start: 'top 90%' } });
   });
+})();
+
+/* ============================================================
+   String lights (Diwali) with colour + style controls
+   ============================================================ */
+(function lights() {
+  const PAL = {
+    diwali: ['#fbbf24', '#fb7185', '#34d399', '#60a5fa', '#f97316', '#c084fc'],
+    warm: ['#fbbf24', '#fde68a', '#f59e0b'],
+    rose: ['#fb7185', '#fda4af', '#f43f5e'],
+    moon: ['#bfdbfe', '#e0e7ff', '#a5b4fc']
+  };
+  const NAMES = { diwali: 'Diwali', warm: 'Warm', rose: 'Rose', moon: 'Moon' };
+  const MODES = ['twinkle', 'steady', 'chase'];
+  const saved = TRACK.get('lights', null) || {};
+  const st = { color: PAL[saved.color] ? saved.color : 'diwali', mode: MODES.includes(saved.mode) ? saved.mode : 'twinkle', on: saved.on !== false };
+  const wrap = $('#lights'), glow = $('#lightGlow');
+  let glasses = [], tw = [], lastW = innerWidth;
+
+  function paint() {
+    tw.forEach(t => t.kill()); tw = [];
+    const pal = PAL[st.color];
+    wrap.classList.toggle('off', !st.on);
+    glasses.forEach((g, i) => g.style.setProperty('--c', pal[i % pal.length]));
+    glow.style.background = st.on ? `linear-gradient(to bottom, ${pal[0]}26, transparent)` : 'none';
+    gsap.set(glasses, { opacity: st.on ? 1 : .15, scale: 1 });
+    if (!st.on) return;
+    if (st.mode === 'twinkle') {
+      glasses.forEach(g => tw.push(gsap.to(g, { opacity: rand(.35, .7), duration: rand(.6, 1.6), repeat: -1, yoyo: true, delay: rand(0, 1.5), ease: 'sine.inOut' })));
+    }
+    if (st.mode === 'chase') {
+      const tl = gsap.timeline({ repeat: -1 });
+      glasses.forEach((g, i) => tl.fromTo(g, { opacity: .2 }, { opacity: 1, duration: .25, yoyo: true, repeat: 1 }, i * .07));
+      tw.push(tl);
+    }
+  }
+
+  function build() {
+    wrap.innerHTML = '';
+    const sp = innerWidth < 640 ? 42 : 58, n = Math.ceil(innerWidth / sp) + 1;
+    let d = 'M0,4';
+    for (let i = 1; i <= n; i++) d += ` Q${(i - .5) * sp},20 ${i * sp},4`;
+    wrap.insertAdjacentHTML('beforeend', `<svg class="absolute left-0 top-0 pointer-events-none" width="${innerWidth}" height="24"><path d="${d}" fill="none" stroke="#2a2f45" stroke-width="1.5"/></svg>`);
+    glasses = [];
+    for (let i = 1; i * sp + 7 <= innerWidth; i++) {
+      const b = document.createElement('div');
+      b.className = 'bulb'; b.style.left = (i * sp - 7) + 'px';
+      b.innerHTML = '<i class="sock"></i><i class="glass"></i>';
+      wrap.appendChild(b);
+      const g = b.querySelector('.glass'); glasses.push(g);
+      b.addEventListener('click', () => {
+        TRACK.inc('bulbClicks');
+        const r = g.getBoundingClientRect(); burst(r.left + 7, r.bottom, 3);
+        gsap.fromTo(g, { scale: 1.6 }, { scale: 1, duration: .5, ease: 'elastic.out(1, .4)' });
+      });
+    }
+    paint();
+  }
+
+  /* controls */
+  const tab = $('#tabLights');
+  tab.innerHTML = `
+    <p class="text-xs tracking-[0.2em] uppercase text-mist mb-2">Colour</p>
+    <div class="flex flex-wrap gap-2 mb-4">${Object.keys(PAL).map(k => `<button type="button" class="chip" data-p="${k}"><span class="inline-block w-2.5 h-2.5 rounded-full mr-2" style="background:${PAL[k][0]}"></span>${NAMES[k]}</button>`).join('')}</div>
+    <p class="text-xs tracking-[0.2em] uppercase text-mist mb-2">Style</p>
+    <div class="flex flex-wrap gap-2">${MODES.map(m => `<button type="button" class="chip" data-m="${m}">${m[0].toUpperCase() + m.slice(1)}</button>`).join('')}<button id="lightsToggle" type="button" class="chip"></button></div>
+    <p class="text-xs text-mist/70 mt-4">Tip: tap any bulb on the string.</p>`;
+  const sync = () => {
+    tab.querySelectorAll('[data-p]').forEach(b => b.classList.toggle('on', b.dataset.p === st.color));
+    tab.querySelectorAll('[data-m]').forEach(b => b.classList.toggle('on', b.dataset.m === st.mode));
+    $('#lightsToggle').textContent = st.on ? 'Turn off' : 'Turn on';
+  };
+  const apply = () => { TRACK.set('lights', { ...st }); sync(); paint(); };
+  tab.querySelectorAll('[data-p]').forEach(b => b.addEventListener('click', () => { st.color = b.dataset.p; st.on = true; apply(); }));
+  tab.querySelectorAll('[data-m]').forEach(b => b.addEventListener('click', () => { st.mode = b.dataset.m; st.on = true; apply(); }));
+  $('#lightsToggle').addEventListener('click', () => { st.on = !st.on; apply(); });
+
+  build(); sync();
+  window.addEventListener('resize', () => { if (innerWidth !== lastW) { lastW = innerWidth; build(); } });
+})();
+
+/* ============================================================
+   Dock panel (lights + journey tabs)
+   ============================================================ */
+(function dock() {
+  const panel = $('#panel'); let tab = null;
+  const show = t => {
+    $('#tabLights').classList.toggle('hidden', t !== 'lights');
+    $('#tabJourney').classList.toggle('hidden', t !== 'journey');
+    document.querySelectorAll('#panelTabs .chip').forEach(c => c.classList.toggle('on', c.dataset.tab === t));
+  };
+  const open = t => {
+    gsap.killTweensOf(panel);
+    if (tab === t) {
+      tab = null;
+      gsap.to(panel, { opacity: 0, y: 10, duration: .2, onComplete: () => panel.classList.add('hidden') });
+      return;
+    }
+    const wasHidden = panel.classList.contains('hidden');
+    tab = t; show(t);
+    if (wasHidden) { panel.classList.remove('hidden'); gsap.fromTo(panel, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .3 }); }
+    else gsap.set(panel, { opacity: 1, y: 0 });
+  };
+  $('#btnLights').addEventListener('click', () => { TRACK.set('openedLights', true); open('lights'); });
+  $('#btnJourney').addEventListener('click', () => open('journey'));
+  document.querySelectorAll('#panelTabs .chip').forEach(c => c.addEventListener('click', () => { tab = c.dataset.tab; show(tab); }));
+})();
+
+/* ============================================================
+   Journey tracker (what she has seen, read, and done)
+   ============================================================ */
+(function tracker() {
+  /* which section is under the middle of the screen, and for how long */
+  const visible = new Set();
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) {
+      visible.add(e.target.id);
+      TRACK.mark('sections', e.target.id);
+      document.dispatchEvent(new CustomEvent('section', { detail: e.target.id }));
+    } else visible.delete(e.target.id);
+  }), { rootMargin: '-45% 0px -45% 0px' });
+  document.querySelectorAll('section[id]').forEach(s => io.observe(s));
+  setInterval(() => { if (!document.hidden) visible.forEach(id => TRACK.addSecs(id)); }, 1000);
+  setInterval(() => TRACK.flush(), 5000);
+  window.addEventListener('pagehide', () => TRACK.flush());
+  document.addEventListener('visibilitychange', () => { if (document.hidden) TRACK.flush(); });
+
+  /* journey panel */
+  const box = $('#tabJourney');
+  const check = on => on
+    ? `<svg class="w-4 h-4 text-rose shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>`
+    : `<svg class="w-4 h-4 text-line shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/></svg>`;
+  function render() {
+    const total = CONFIG.notes.length, read = TRACK.list('notesRead').length;
+    const letters = TRACK.list('letters').length, ans = TRACK.get('answered', 0), tq = CONFIG.questions.length;
+    const rows = [
+      ['Walk on Mall Road', TRACK.has('sections', 'walk'), ''],
+      ['Our story', TRACK.has('sections', 'timeline'), ''],
+      ['Things I want you to know', read >= total, read + ' / ' + total],
+      ['Feed game', TRACK.get('feedMomos', 0) > 0, ''],
+      ['The chai question', !!TRACK.get('askedYes', false) || TRACK.get('noDodges', 0) > 0, ''],
+      ['Open When letters', letters > 0, letters + ' / ' + CONFIG.letters.length],
+      ['Your questions', ans >= tq, ans + ' / ' + tq],
+      ['The last page', !!TRACK.get('finalOpened', false), '']
+    ];
+    const done = rows.filter(r => r[1]).length, pct = Math.round(done / rows.length * 100);
+    box.innerHTML = `
+      <div class="flex justify-between text-xs tracking-[0.2em] uppercase text-mist mb-2"><span>Journey</span><span>${pct}%</span></div>
+      <div class="h-1 rounded-full bg-line overflow-hidden mb-4"><div class="h-full bg-rose" style="width:${pct}%"></div></div>
+      <ul class="space-y-2.5">${rows.map(r => `<li class="flex items-center gap-2.5 text-sm ${r[1] ? 'text-white' : 'text-mist'}">${check(r[1])}<span class="flex-1">${r[0]}</span><span class="text-xs text-mist">${r[2]}</span></li>`).join('')}</ul>
+      <p class="text-xs text-mist/70 mt-4">Notes you kept: ${TRACK.list('favNotes').length}. This stays on your phone unless you send your answers file.</p>`;
+  }
+  TRACK.onChange(render);
+  render();
+})();
+
+/* ============================================================
+   Teddy
+   ============================================================ */
+(function teddy() {
+  const bubble = $('#bubble'), text = $('#bubbleText');
+  let hideT, cur = null, tapIdx = 0;
+  function say(t, ms = 4500) {
+    text.textContent = t;
+    gsap.killTweensOf(bubble);
+    gsap.fromTo(bubble, { opacity: 0, y: 8, scale: .9 }, { opacity: 1, y: 0, scale: 1, duration: .35, ease: 'back.out(2)' });
+    clearTimeout(hideT);
+    hideT = setTimeout(() => gsap.to(bubble, { opacity: 0, duration: .4 }), ms);
+  }
+  document.addEventListener('section', e => {
+    if (e.detail === cur) return;
+    cur = e.detail;
+    const line = CONFIG.teddy[cur];
+    if (line) say(line, cur === 'hero' && !TRACK.get('teddyTaps', 0) ? 12000 : 4500);
+  });
+  /* gentle wiggle until she taps the teddy for the first time */
+  const wig = gsap.timeline({ repeat: -1, repeatDelay: 1.4, paused: TRACK.get('teddyTaps', 0) > 0 })
+    .to('#teddyBtn', { rotation: -8, duration: .12, transformOrigin: '50% 100%' })
+    .to('#teddyBtn', { rotation: 8, duration: .12 })
+    .to('#teddyBtn', { rotation: -6, duration: .12 })
+    .to('#teddyBtn', { rotation: 0, duration: .15 });
+  $('#teddyBtn').addEventListener('click', () => {
+    TRACK.inc('teddyTaps');
+    wig.kill(); gsap.set('#teddyBtn', { rotation: 0 });
+    if (TRACK.get('teddyTaps', 0) === 1 && !TRACK.get('openedLights', false)) say('Hi! Now tap the bulb button, bottom right.', 6000);
+    else say(CONFIG.teddyTaps[tapIdx++ % CONFIG.teddyTaps.length], 3000);
+    const r = $('#teddyBtn').getBoundingClientRect(); burst(r.left + r.width / 2, r.top + 10, 6);
+    gsap.fromTo('#teddyBody', { scale: 1.12 }, { scale: 1, duration: .5, ease: 'elastic.out(1, .4)', transformOrigin: '50% 100%' });
+  });
+  gsap.to('#teddyBody', { y: -3, repeat: -1, yoyo: true, duration: 1.6, ease: 'sine.inOut' });
+})();
+
+/* ============================================================
+   First-visit guide (teddy + lights hints)
+   ============================================================ */
+(function guide() {
+  const tick = on => on
+    ? `<svg class="w-5 h-5 text-rose" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>`
+    : `<svg class="w-5 h-5 text-mist" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>`;
+  function update() {
+    const t = TRACK.get('teddyTaps', 0) > 0, l = !!TRACK.get('openedLights', false);
+    $('#gTeddy').innerHTML = tick(t);
+    $('#gLights').innerHTML = tick(l);
+    $('#guideText').textContent = (t && l)
+      ? 'Perfect. Now scroll slowly and take your time.'
+      : 'Let me help you with two small things before you start.';
+    $('#dockHint').classList.toggle('hidden', l);
+    $('#btnLights').classList.toggle('nudge', !l);
+  }
+  TRACK.onChange(update);
+  update();
+})();
+
+window.addEventListener('load', () => ScrollTrigger.refresh());
 </script>
-
-</body></html>
+</body>
+</html>
