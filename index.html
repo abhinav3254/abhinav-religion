@@ -3,49 +3,584 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="robots" content="noindex">
-<title>Website Removed</title>
+<title>For Mahii</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@300;400;500&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: { ink: '#0c0a07', panel: '#15110b', line: '#2b2417', sun: '#f5b301', sun2: '#ffd23f', mist: '#b8ab94', leaf: '#4d7c2f' },
+        fontFamily: {
+          display: ['"Cormorant Garamond"', 'serif'],
+          hand: ['Caveat', 'cursive'],
+          sans: ['Inter', 'system-ui', 'sans-serif']
+        }
+      }
+    }
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
-  :root { --bg: #0b0d14; --fg: #e7e9f0; --mute: #9aa3b8; --line: #232838; --accent: #fb7185; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; background: var(--bg); color: var(--fg); overflow-x: clip; }
-  body {
-    min-height: 100vh; min-height: 100svh;
-    display: flex; align-items: center; justify-content: center;
-    padding: 24px; font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
-    background: radial-gradient(ellipse at 50% 120%, #1d2140 0%, var(--bg) 60%);
-  }
-  main { width: 100%; max-width: 440px; text-align: center; }
-  .icon {
-    width: 64px; height: 64px; margin: 0 auto 28px; border-radius: 50%;
-    border: 1px solid var(--line); display: flex; align-items: center; justify-content: center;
-    color: var(--accent); animation: fade 1s ease both;
-  }
-  .icon svg { width: 28px; height: 28px; }
-  h1 {
-    font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-weight: 500;
-    font-size: clamp(2.4rem, 11vw, 3.6rem); line-height: 1.1; animation: rise .9s .1s ease both;
-  }
-  .rule { width: 40px; height: 1px; background: var(--accent); margin: 24px auto; animation: fade 1s .3s ease both; }
-  p { color: var(--mute); font-weight: 300; line-height: 1.6; font-size: 1rem; animation: rise .9s .35s ease both; }
-  .by { margin-top: 28px; font-size: .72rem; letter-spacing: .3em; text-transform: uppercase; animation: fade 1s .6s ease both; }
-  .by b { color: var(--fg); font-weight: 500; }
-  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
-  @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  html { background: #0c0a07; overflow-x: hidden; overflow-x: clip; max-width: 100%; }
+  body { background: #0c0a07; color: #f3ecdc; font-family: Inter, system-ui, sans-serif; overflow-x: hidden; overflow-x: clip; max-width: 100%; position: relative; -webkit-tap-highlight-color: transparent; }
+  ::selection { background: #f5b301; color: #0c0a07; }
+  input, textarea, button { font-family: inherit; }
+  input[type=text], textarea { font-size: 16px; }
+  .outline { color: transparent; -webkit-text-stroke: 1px rgba(245,179,1,.6); }
+  .marquee { display: flex; width: max-content; animation: mq 42s linear infinite; }
+  .marquee.rev { animation-direction: reverse; animation-duration: 55s; }
+  @keyframes mq { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .marquee { animation: none; } }
+
+  .stem { position: absolute; left: -2px; bottom: 0; width: 4px; height: 100%; border-radius: 4px; background: linear-gradient(to top, #2f5d1f, #5c8f31); transform-origin: 50% 100%; }
+  .leaf { position: absolute; width: 18px; height: 9px; background: #4d7c2f; }
+  .leaf.l { left: -17px; bottom: 30%; border-radius: 100% 0 100% 0; transform-origin: 100% 100%; }
+  .leaf.r { left: 2px; bottom: 46%; border-radius: 0 100% 0 100%; transform-origin: 0 100%; }
+  .chip { padding: .6rem 1rem; border-radius: 9999px; border: 1px solid #2b2417; color: #b8ab94; font-size: .95rem; transition: all .2s; }
+  .chip:hover { border-color: #f5b301; color: #fff; }
+  .chip.on { background: #f5b301; color: #0c0a07; border-color: #f5b301; font-weight: 500; }
+  .pg { cursor: pointer; }
 </style>
 </head>
 <body>
-<main>
-  <div class="icon" aria-hidden="true">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0 1 12 5c5 0 8.5 4.5 9.5 7a13.6 13.6 0 0 1-2.6 3.9"/><path d="M6.6 6.6C4.5 8 3 10.200 2.500 12c1 2.500 4.500 7 9.500 7a9.700 9.700 0 0 0 4.100-.9"/><path d="M9.900 9.900a3 3 0 0 0 4.200 4.200"/>
-    </svg>
+
+<!-- sunflower symbol (built in JS) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs><radialGradient id="seedg"><stop offset="0" stop-color="#6b4016"/><stop offset="1" stop-color="#3a220d"/></radialGradient></defs>
+  <symbol id="sf" viewBox="0 0 200 200"></symbol>
+</svg>
+
+<!-- global layers -->
+<div id="prog" class="fixed top-0 left-0 right-0 h-[3px] z-[70] pointer-events-none overflow-hidden"><div id="progBar" class="h-full bg-sun origin-left" style="transform:scaleX(0)"></div></div>
+<div id="petals" class="fixed inset-0 overflow-hidden pointer-events-none z-[5]"></div>
+<div id="fx" class="fixed inset-0 overflow-hidden pointer-events-none z-[60]"></div>
+
+<!-- 1. HERO -->
+<section id="hero" class="relative min-h-[100svh] flex flex-col items-center justify-center text-center px-5 py-20 overflow-hidden">
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse at 50% 38%, rgba(245,179,1,.16) 0%, rgba(12,10,7,0) 55%), radial-gradient(ellipse at 50% 120%, #2a1d08 0%, #0c0a07 60%)"></div>
+  <p class="hero-in relative font-hand text-2xl text-sun">for my favourite person</p>
+  <div class="hero-in relative mx-auto mt-4 mb-3" style="width:min(84vw,400px);height:min(84vw,400px)">
+    <div id="heroRingBox" class="absolute inset-0"></div>
+    <div id="heroFlower" class="absolute" style="inset:17%"><div id="heroSpin" class="w-full h-full"></div></div>
   </div>
-  <h1>Website Removed</h1>
-  <div class="rule"></div>
-  <p>This page is no longer available.</p>
-  <p class="by">Removed by <b>Abhinav</b></p>
-</main>
+  <h1 class="hero-in relative font-display italic text-6xl sm:text-7xl md:text-8xl leading-none text-white">Mahima</h1>
+  <p class="hero-in relative font-hand text-4xl text-sun mt-1">my Mahii</p>
+  <p class="hero-in relative mt-5 max-w-sm text-mist font-light">Scroll slowly. I planted something for you.</p>
+  <div class="hero-in absolute bottom-7 flex flex-col items-center text-mist text-xs tracking-[0.3em] uppercase">
+    <span>scroll</span><span id="cue" class="block w-px h-9 bg-gradient-to-b from-sun to-transparent mt-3"></span>
+  </div>
+</section>
+
+<!-- 2. NAMES MARQUEE -->
+<section id="names" class="relative py-12 overflow-hidden border-y border-line bg-panel/60 select-none" aria-hidden="true">
+  <div id="mq1" class="marquee mb-2"></div>
+  <div id="mq2" class="marquee rev"></div>
+</section>
+
+<!-- 3. GROWING SUNFLOWER (pinned) -->
+<section id="grow" class="relative overflow-hidden" style="height:100vh;height:100svh;background:linear-gradient(to bottom,#0c0a07 0%,#17110a 55%,#2a1b09 100%)">
+  <div class="absolute inset-0" style="background:radial-gradient(ellipse at 50% 45%, rgba(245,179,1,.12), transparent 60%)"></div>
+  <div class="absolute top-[11svh] inset-x-0 px-6 text-center z-10 h-28">
+    <p id="growText" class="font-display italic text-3xl md:text-5xl text-white opacity-0"></p>
+  </div>
+  <div class="absolute left-1/2 w-0" style="bottom:6svh;height:50svh">
+    <div id="growStem" class="absolute rounded-full" style="left:-3px;bottom:0;width:6px;height:100%;background:linear-gradient(to top,#2f5d1f,#5c8f31);transform-origin:50% 100%;transform:scaleY(0)"></div>
+    <div id="gLeafL" class="absolute" style="left:-64px;bottom:30%;width:64px;height:30px;background:#4d7c2f;border-radius:100% 0 100% 0;transform-origin:100% 100%"></div>
+    <div id="gLeafR" class="absolute" style="left:3px;bottom:46%;width:56px;height:26px;background:#5a8f35;border-radius:0 100% 0 100%;transform-origin:0 100%"></div>
+    <div id="growHead" class="absolute w-40 sm:w-56" style="left:0;top:0"></div>
+  </div>
+  <div class="absolute bottom-0 inset-x-0" style="height:6svh;background:linear-gradient(to bottom,#2a1b09,#120d06)"></div>
+</section>
+
+<!-- 4. PLANT A SUNFLOWER -->
+<section id="field" class="relative px-4 py-24">
+  <div class="max-w-3xl mx-auto text-center">
+    <p class="reveal font-hand text-2xl text-sun">your turn</p>
+    <h2 class="reveal font-display italic text-5xl md:text-6xl mb-3">Plant a Sunflower</h2>
+    <p class="reveal text-mist font-light mb-2 text-sm md:text-base">Tap anywhere in the field. Each one grows from something I love about you.</p>
+    <p class="reveal text-xs tracking-[0.25em] uppercase text-mist mb-6"><span id="fCount">0</span> / <span id="fTotal">12</span> found</p>
+    <div id="fieldBox" class="relative mx-auto w-full overflow-hidden rounded-3xl border border-line select-none" style="height:62svh;min-height:430px;touch-action:manipulation;background:linear-gradient(to top,#24180a 0%,#16110a 20%,#0f0c08 100%);cursor:pointer">
+      <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at 50% 0%, rgba(245,179,1,.14), transparent 60%)"></div>
+      <p id="fieldMsg" class="absolute top-4 inset-x-5 text-center font-display italic text-xl md:text-2xl text-sun2 pointer-events-none z-10" style="min-height:3.2rem">Tap anywhere to plant your first one.</p>
+      <div id="plants" class="absolute inset-0 pointer-events-none"></div>
+      <div class="absolute bottom-0 inset-x-0 pointer-events-none" style="height:18px;background:linear-gradient(to bottom,#3a2610,#1a1008)"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. NOTES -->
+<section id="notes" class="relative px-4 sm:px-6 py-24 bg-panel/60 border-y border-line overflow-hidden">
+  <div class="max-w-2xl mx-auto">
+    <p class="reveal font-hand text-2xl text-sun text-center">read slowly</p>
+    <h2 class="reveal font-display italic text-5xl md:text-6xl text-center mb-12">Letters in the Sun</h2>
+    <div id="notesList" class="space-y-6"></div>
+  </div>
+</section>
+
+<!-- 6. PETALS -->
+<section id="petalGame" class="relative px-4 py-24">
+  <div class="max-w-md mx-auto text-center">
+    <p class="reveal font-hand text-2xl text-sun">an old game</p>
+    <h2 class="reveal font-display italic text-5xl md:text-6xl mb-3">Pluck the Petals</h2>
+    <p class="reveal text-mist font-light mb-6 text-sm md:text-base">You know how this goes. Tap the petals. (This one has no wrong ending.)</p>
+    <div class="relative mx-auto" style="width:min(86vw,360px)">
+      <svg id="petalSvg" viewBox="0 0 300 300" class="w-full h-auto overflow-visible"></svg>
+    </div>
+    <p id="petalText" class="font-display italic text-2xl md:text-3xl text-sun2 mt-4" style="min-height:4.5rem">Tap a petal.</p>
+    <p class="text-xs tracking-[0.25em] uppercase text-mist"><span id="pCount">0</span> / <span id="pTotal">13</span></p>
+    <button id="petalReset" class="hidden mt-5 chip">Pluck again</button>
+  </div>
+</section>
+
+<!-- 7. SEEDS -->
+<section id="seeds" class="relative px-4 py-24 bg-panel/60 border-y border-line">
+  <div class="max-w-3xl mx-auto text-center">
+    <p class="reveal font-hand text-2xl text-sun">small promises</p>
+    <h2 class="reveal font-display italic text-5xl md:text-6xl mb-3">Seeds For Us</h2>
+    <p class="reveal text-mist font-light mb-10 text-sm md:text-base">Tap a seed to plant it.</p>
+    <div id="seedGrid" class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4"></div>
+  </div>
+</section>
+
+<!-- 8. FINAL -->
+<section id="final" class="relative px-5 py-28 text-center overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at 50% 18%, rgba(245,179,1,.14), transparent 55%)"></div>
+  <div class="relative max-w-xl mx-auto">
+    <div class="reveal relative mx-auto mb-6" style="width:min(70vw,300px);height:min(70vw,300px)">
+      <div id="finalRingBox" class="absolute inset-0"></div>
+      <div id="finalFlower" class="absolute" style="inset:17%"></div>
+    </div>
+    <h2 class="reveal font-display italic text-5xl md:text-7xl leading-tight">Mahima,<br><span class="text-sun">my Mahii.</span></h2>
+    <div id="finalLines" class="mt-8 space-y-5 font-display text-2xl md:text-3xl leading-relaxed text-white/90"></div>
+    <p class="reveal font-hand text-3xl text-sun mt-8">Always yours, Abhinav</p>
+
+    <div class="reveal mt-16 text-left bg-panel border border-line rounded-3xl p-5 sm:p-7">
+      <p class="font-display italic text-3xl mb-1">Send a sunflower back</p>
+      <p class="text-mist text-sm font-light mb-5">Optional. Tell me how this felt. It takes a few seconds.</p>
+      <div id="chips" class="flex flex-wrap gap-2 mb-4"></div>
+      <textarea id="replyText" rows="3" class="w-full bg-ink border border-line rounded-xl px-4 py-3 outline-none focus:border-sun resize-none" placeholder="Anything you want to tell me?"></textarea>
+      <p class="text-xs text-mist/70 mt-3">The file has your feelings, your note, and which little games you tried. Nothing else.</p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-5">
+        <button id="replySend" class="px-6 py-3 rounded-full bg-sun text-ink font-medium hover:scale-105 transition">Download my reply</button>
+        <button id="replyShare" class="hidden px-6 py-3 rounded-full border border-line text-white hover:border-sun transition">Share with <span data-you></span></button>
+      </div>
+      <p id="replyDone" class="font-display italic text-2xl mt-5 opacity-0"></p>
+    </div>
+  </div>
+</section>
+
+<footer class="py-10 text-center text-xs tracking-[0.3em] uppercase text-mist">
+  Made by <span data-you></span>, for <span data-her></span>
+</footer>
+
+<script>
+/* ============================================================
+   EDIT THIS BLOCK. Everything personal lives here.
+   ============================================================ */
+const CONFIG = {
+  her: "Mahima",
+  nick: "Mahii",
+  you: "Abhinav",
+
+  growCaptions: [
+    "It started so quietly, Mahii.",
+    "And slowly, everything in me began to turn toward you.",
+    "The way sunflowers turn toward the light.",
+    "You are that light. Thank you for letting me love you."
+  ],
+
+  // one appears each time she plants a sunflower
+  reasons: [
+    "Because you feel everything so deeply, and I think that is beautiful.",
+    "Because you love your family so much.",
+    "Because your smile changes the whole mood of my day.",
+    "Because you trust me with the real you, not a performance.",
+    "Because you keep working hard, even when nobody sees it.",
+    "Because your laugh is my favourite sound.",
+    "Because you remember the little things.",
+    "Because you stay kind even when you are hurt.",
+    "Because you make me want to be better.",
+    "Because talking to you feels like coming home.",
+    "Because you are stronger than you give yourself credit for.",
+    "Because you are you, Mahii. Just that."
+  ],
+  fieldDone: "That is all twelve. And I could plant a thousand more.",
+
+  notes: [
+    { t: "You are my sunshine", b: "Mahii, some people light up a room. You light up my ordinary days. I did not know how much I needed that until you came." },
+    { t: "Your heart is not too much", b: "You feel things deeply, and I have never seen that as a weakness. It is why you love so fully and notice so much. I will always handle it with care." },
+    { t: "You never have to guess", b: "If you ever wonder where you stand with me, ask me. I will tell you honestly and gently. You should never have to carry that doubt alone." },
+    { t: "On your cloudy days", b: "You do not have to shine every day. On the heavy days, the tired days and the quiet days, you can just rest. I will be the one turning toward you." },
+    { t: "What I want to give you", b: "A safe place. A person who remembers, who shows up, and who says sorry first when it is needed. A love that is calm and never makes you feel small." },
+    { t: "I choose you", b: "Not because it is easy, but because it is you. On ordinary days, on far-apart days, and after hard days. I keep choosing you." }
+  ],
+
+  petalLines: [
+    "He loves me.", "He loves me, quietly.", "He loves me, loudly.", "He loves me on busy days.",
+    "He loves me on bad days.", "He loves me when I am tired.", "He loves me when I am quiet.",
+    "He loves me when we are far apart.", "He loves me every single day.", "He loves me more than he says.",
+    "He is not going anywhere.", "He chose me, and he keeps choosing me.", "He loves me. Always."
+  ],
+  petalDone: "Every petal says the same thing.",
+
+  promises: [
+    "I will say sorry first when I am the one who got it wrong.",
+    "I will listen to the whole story before I answer.",
+    "I will make time for you, even on my busiest days.",
+    "I will never make you chase my love or guess it.",
+    "I will cheer for your dreams as loudly as for mine.",
+    "I will be gentle with your heart, especially on heavy days."
+  ],
+
+  finalLines: [
+    "I made this because a chat window felt too small for what I wanted to say.",
+    "You are the person I want beside me, on the sunny days and the cloudy ones.",
+    "One day, if you want it too, I would love to build a life with you. No rush and no pressure. I will wait with a full heart.",
+    "Thank you for being you."
+  ],
+  feelings: ["Happy", "Emotional", "Loved", "Shy", "Missing you", "Need a hug"]
+};
+
+/* ============================================================
+   Setup
+   ============================================================ */
+gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.config({ ignoreMobileResize: true });
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const rand = gsap.utils.random;
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const S = { planted: 0, petals: 0, seeds: 0 };
+
+$$('[data-her]').forEach(e => e.textContent = CONFIG.her);
+$$('[data-you]').forEach(e => e.textContent = CONFIG.you);
+$('#fTotal').textContent = CONFIG.reasons.length;
+$('#pTotal').textContent = CONFIG.petalLines.length;
+
+/* sunflower symbol */
+(function buildSymbol() {
+  let s = ''; const N = 20;
+  for (let i = 0; i < N; i++) s += `<path d="M100 80 C85 60 87 28 100 4 C113 28 115 60 100 80Z" fill="#e39a00" transform="rotate(${i * 360 / N} 100 100)"/>`;
+  for (let i = 0; i < N; i++) s += `<path d="M100 78 C88 62 90 34 100 12 C110 34 112 62 100 78Z" fill="#ffc61a" transform="rotate(${(i + .5) * 360 / N} 100 100)"/>`;
+  s += `<circle cx="100" cy="100" r="37" fill="#33200d"/><circle cx="100" cy="100" r="33" fill="url(#seedg)"/>`;
+  const g = Math.PI * (3 - Math.sqrt(5));
+  for (let i = 1; i <= 120; i++) {
+    const r = 2.85 * Math.sqrt(i), t = i * g;
+    s += `<circle cx="${(100 + r * Math.cos(t)).toFixed(1)}" cy="${(100 + r * Math.sin(t)).toFixed(1)}" r="${(.8 + i / 120 * .9).toFixed(2)}" fill="${i % 3 ? '#8a5522' : '#25150a'}"/>`;
+  }
+  $('#sf').innerHTML = s;
+})();
+const flower = (cls = '') => `<svg viewBox="0 0 200 200" class="${cls}" aria-hidden="true"><use href="#sf"/></svg>`;
+
+/* ring of names around a flower */
+function ring(id) {
+  const txt = ('Mahii · Mahima · ').repeat(5);
+  return `<svg viewBox="0 0 400 400" class="w-full h-full overflow-visible" aria-hidden="true">
+    <path id="${id}" d="M 200,200 m -170,0 a 170,170 0 1,1 340,0 a 170,170 0 1,1 -340,0" fill="none"/>
+    <text font-family="Caveat, cursive" font-size="26" fill="#f5b301"><textPath href="#${id}" textLength="1060" lengthAdjust="spacing">${txt}</textPath></text></svg>`;
+}
+
+/* floating hearts-of-sunflowers helpers (on the fixed fx layer) */
+const fx = $('#fx');
+function spawnFlower(x, y, s = rand(14, 26)) {
+  const e = document.createElement('div');
+  e.style.cssText = `position:absolute;left:${x}px;top:${y}px;width:${s}px;height:${s}px`;
+  e.innerHTML = flower('w-full h-full');
+  fx.appendChild(e);
+  gsap.fromTo(e, { xPercent: -50, yPercent: -50, scale: 0, rotation: rand(-90, 90) }, { scale: 1, rotation: '+=120', duration: .5, ease: 'back.out(2)' });
+  gsap.to(e, { y: rand(-120, -60), x: rand(-30, 30), opacity: 0, duration: 1.4, delay: .4, ease: 'power1.in', onComplete: () => e.remove() });
+}
+function spawnName(x, y) {
+  const e = document.createElement('div');
+  e.className = 'font-hand text-sun text-2xl whitespace-nowrap';
+  e.textContent = Math.random() < .5 ? CONFIG.nick : CONFIG.her;
+  const px = Math.min(Math.max(x, 50), innerWidth - 50);
+  e.style.cssText += `;position:absolute;left:${px}px;top:${y}px;text-shadow:0 0 18px rgba(245,179,1,.6)`;
+  fx.appendChild(e);
+  gsap.fromTo(e, { xPercent: -50, yPercent: -50, scale: .6, opacity: 0 }, { scale: 1, opacity: 1, duration: .4, ease: 'back.out(2)' });
+  gsap.to(e, { y: -90, opacity: 0, duration: 1.8, delay: .5, ease: 'power1.in', onComplete: () => e.remove() });
+}
+function burst(x, y, n = 5) { for (let i = 0; i < n; i++) spawnFlower(x + rand(-40, 40), y + rand(-30, 30)); spawnName(x, y - 30); }
+
+/* ============================================================
+   Hero + marquee
+   ============================================================ */
+$('#heroRingBox').innerHTML = ring('rp1');
+$('#heroSpin').innerHTML = flower('w-full h-full');
+gsap.from('.hero-in', { y: 24, opacity: 0, duration: 1.1, stagger: .2, ease: 'power3.out' });
+gsap.to('#cue', { scaleY: .3, transformOrigin: 'top', repeat: -1, yoyo: true, duration: 1, ease: 'sine.inOut' });
+if (!REDUCED) {
+  gsap.to('#heroSpin', { rotation: 360, duration: 120, repeat: -1, ease: 'none' });
+  gsap.to('#heroRingBox', { rotation: -360, duration: 90, repeat: -1, ease: 'none' });
+}
+(function tilt() {
+  gsap.set('#heroFlower', { transformPerspective: 700 });
+  const rx = gsap.quickTo('#heroFlower', 'rotationX', { duration: .8, ease: 'power3.out' });
+  const ry = gsap.quickTo('#heroFlower', 'rotationY', { duration: .8, ease: 'power3.out' });
+  window.addEventListener('pointermove', e => { ry((e.clientX / innerWidth - .5) * 40); rx(-(e.clientY / innerHeight - .5) * 40); });
+})();
+
+(function marquee() {
+  const unit = (a, b) => `<span class="outline font-display italic text-6xl md:text-8xl px-4 leading-tight">${a}</span>${flower('w-10 h-10 md:w-14 md:h-14 shrink-0')}<span class="font-display italic text-6xl md:text-8xl px-4 leading-tight text-sun">${b}</span>${flower('w-10 h-10 md:w-14 md:h-14 shrink-0')}`;
+  const group = (a, b) => `<div class="flex items-center shrink-0">${unit(a, b).repeat(4)}</div>`;
+  $('#mq1').innerHTML = group(CONFIG.nick, CONFIG.her) + group(CONFIG.nick, CONFIG.her);
+  $('#mq2').innerHTML = group(CONFIG.her, CONFIG.nick) + group(CONFIG.her, CONFIG.nick);
+})();
+
+/* ============================================================
+   Growing sunflower (pinned, scroll-scrubbed)
+   ============================================================ */
+(function grow() {
+  $('#growHead').innerHTML = flower('w-full h-full');
+  gsap.set('#growHead', { xPercent: -50, yPercent: -50, scale: 0, opacity: 0, rotation: -200 });
+  gsap.set('#gLeafL', { scale: 0, rotation: -12 });
+  gsap.set('#gLeafR', { scale: 0, rotation: 12 });
+  const tl = gsap.timeline({ defaults: { ease: 'none' } });
+  tl.to('#growStem', { scaleY: 1, duration: 3 }, 0)
+    .to('#gLeafL', { scale: 1, duration: 1 }, 1.4)
+    .to('#gLeafR', { scale: 1, duration: 1 }, 1.9)
+    .to('#growHead', { opacity: 1, scale: 1, rotation: 0, duration: 2, ease: 'power1.out' }, 2.8)
+    .to('#growHead', { rotation: 30, duration: 1.4 }, 4.8);
+
+  const caps = CONFIG.growCaptions, ranges = [[0, .22], [.24, .5], [.52, .76], [.78, 1.01]];
+  const txt = $('#growText'); let active = -1;
+  const show = i => {
+    active = i;
+    gsap.to(txt, { opacity: 0, y: 10, duration: .25, overwrite: true, onComplete: () => {
+      if (i < 0) return;
+      txt.textContent = caps[i] || '';
+      gsap.fromTo(txt, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .6, ease: 'power2.out' });
+    } });
+  };
+  ScrollTrigger.create({
+    trigger: '#grow', start: 'top top', end: '+=2600', pin: true, scrub: .6, animation: tl,
+    onUpdate: self => { const i = ranges.findIndex(([a, b]) => self.progress >= a && self.progress < b); if (i !== active) show(i); }
+  });
+})();
+
+/* ============================================================
+   Plant a sunflower
+   ============================================================ */
+(function field() {
+  const box = $('#fieldBox'), plants = $('#plants'), msg = $('#fieldMsg'), count = $('#fCount');
+  const GROUND = 18, total = CONFIG.reasons.length;
+  let idx = 0, done = false;
+
+  function plant(x, y, size, label) {
+    const H = box.clientHeight, W = box.clientWidth;
+    const hy = Math.min(Math.max(y, 100), H - GROUND - 50);
+    const stemH = H - GROUND - hy;
+    const el = document.createElement('div');
+    el.style.cssText = `position:absolute;left:${x}px;bottom:${GROUND}px;width:0;height:${stemH}px`;
+    const right = x < W / 2;
+    el.innerHTML = `<i class="stem"></i><i class="leaf l"></i><i class="leaf r"></i>
+      <div class="head" style="position:absolute;left:0;top:0;width:${size}px;height:${size}px">${flower('w-full h-full')}</div>
+      <span class="font-hand text-sun text-xl whitespace-nowrap" style="position:absolute;top:${-size / 2 - 6}px;${right ? 'left' : 'right'}:${size / 2 - 4}px;opacity:0">${label}</span>`;
+    plants.appendChild(el);
+    const stem = el.querySelector('.stem'), head = el.querySelector('.head'), lf = el.querySelectorAll('.leaf'), tag = el.querySelector('span');
+    const r0 = rand(-8, 8);
+    gsap.set(head, { xPercent: -50, yPercent: -50, scale: 0, rotation: -180 });
+    gsap.set(lf[0], { scale: 0, rotation: -20 }); gsap.set(lf[1], { scale: 0, rotation: 20 });
+    gsap.timeline()
+      .fromTo(stem, { scaleY: 0 }, { scaleY: 1, duration: .7, ease: 'power2.out' })
+      .to(lf, { scale: 1, duration: .4, stagger: .1 }, .35)
+      .to(head, { scale: 1, rotation: r0, duration: .8, ease: 'back.out(1.6)', onComplete: () => {
+        if (!REDUCED) gsap.to(head, { rotation: r0 + rand(5, 9) * (Math.random() < .5 ? 1 : -1), duration: rand(2, 3.5), repeat: -1, yoyo: true, ease: 'sine.inOut' });
+      } }, .45)
+      .to(tag, { opacity: 1, duration: .5 }, 1)
+      .to(tag, { opacity: 0, duration: .8 }, 3.2);
+  }
+
+  function say(t) {
+    gsap.killTweensOf(msg);
+    gsap.fromTo(msg, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' });
+    msg.textContent = t;
+  }
+
+  box.addEventListener('click', e => {
+    const r = box.getBoundingClientRect();
+    const x = Math.min(Math.max(e.clientX - r.left, 30), r.width - 30), y = e.clientY - r.top;
+    plant(x, y, rand(58, 86), CONFIG.nick);
+    if (idx < total) {
+      say(CONFIG.reasons[idx]); idx++; S.planted = idx; count.textContent = idx;
+      if (idx === total) { done = true; setTimeout(() => say(CONFIG.fieldDone), 3400); burst(e.clientX, e.clientY, 8); }
+    } else say(CONFIG.reasons[Math.floor(rand(0, total))]);
+  });
+
+  /* scenery planted when the field scrolls into view */
+  ScrollTrigger.create({ trigger: box, start: 'top 80%', once: true, onEnter: () => {
+    const H = box.clientHeight, W = box.clientWidth;
+    [.1, .24, .4, .58, .74, .9].forEach((p, i) => gsap.delayedCall(i * .25, () => plant(W * p, H * rand(.42, .66), rand(44, 64), '')));
+  } });
+})();
+
+/* ============================================================
+   Notes
+   ============================================================ */
+(function notes() {
+  const wrap = $('#notesList');
+  CONFIG.notes.forEach((n, i) => {
+    const c = document.createElement('article');
+    c.className = 'relative overflow-hidden bg-ink border border-line rounded-3xl p-6 md:p-9';
+    c.innerHTML = `
+      <span class="absolute -right-3 -bottom-8 font-display italic text-[7rem] leading-none text-sun/10 select-none pointer-events-none">${i % 2 ? CONFIG.her : CONFIG.nick}</span>
+      <div class="relative">
+        <div class="flex items-center gap-3 mb-3">${flower('w-8 h-8 shrink-0')}<p class="font-hand text-3xl text-sun leading-none">${n.t}</p></div>
+        <p class="font-display text-2xl md:text-3xl leading-relaxed text-white/90">${n.b}</p>
+      </div>`;
+    wrap.appendChild(c);
+    ScrollTrigger.create({ trigger: c, start: 'top 92%', once: true, onEnter: () => gsap.from(c, { opacity: 0, y: 50, duration: 1, ease: 'power3.out' }) });
+  });
+})();
+
+/* ============================================================
+   Pluck the petals
+   ============================================================ */
+(function petalGame() {
+  const svg = $('#petalSvg'), text = $('#petalText'), cnt = $('#pCount'), reset = $('#petalReset');
+  const lines = CONFIG.petalLines, N = lines.length;
+  let n = 0, html = '';
+  for (let i = 0; i < N; i++) {
+    html += `<g class="pg" data-i="${i}"><g transform="rotate(${i * 360 / N} 150 150)"><path d="M150 112 C133 86 135 40 150 10 C165 40 167 86 150 112 Z" fill="#ffc61a" stroke="#e39a00" stroke-width="1.5"/></g></g>`;
+  }
+  html += `<circle cx="150" cy="150" r="46" fill="#33200d"/><circle cx="150" cy="150" r="41" fill="url(#seedg)" pointer-events="none"/>`;
+  const g = Math.PI * (3 - Math.sqrt(5));
+  for (let i = 1; i <= 100; i++) { const r = 3.9 * Math.sqrt(i), t = i * g; html += `<circle cx="${(150 + r * Math.cos(t)).toFixed(1)}" cy="${(150 + r * Math.sin(t)).toFixed(1)}" r="${(1 + i / 100 * 1.1).toFixed(2)}" fill="${i % 3 ? '#8a5522' : '#25150a'}" pointer-events="none"/>`; }
+  svg.innerHTML = html;
+  const groups = $$('.pg', svg);
+
+  groups.forEach(pg => pg.addEventListener('click', ev => {
+    if (pg.dataset.gone) return;
+    pg.dataset.gone = '1'; n++; S.petals = Math.max(S.petals, n); cnt.textContent = n;
+    const a = pg.dataset.i * 360 / N * Math.PI / 180;
+    gsap.to(pg, { x: Math.sin(a) * 190, y: -Math.cos(a) * 190, rotation: rand(-220, 220), opacity: 0, duration: 1.1, ease: 'power2.in' });
+    gsap.fromTo(text, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .45 });
+    text.textContent = lines[n - 1];
+    if (n === N) {
+      setTimeout(() => { text.textContent = CONFIG.petalDone; gsap.fromTo(text, { opacity: 0 }, { opacity: 1, duration: .6 }); }, 1800);
+      reset.classList.remove('hidden');
+      const r = svg.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, 8);
+    }
+  }));
+  reset.addEventListener('click', () => {
+    n = 0; cnt.textContent = 0; text.textContent = 'Tap a petal.'; reset.classList.add('hidden');
+    groups.forEach(pg => { delete pg.dataset.gone; gsap.to(pg, { x: 0, y: 0, rotation: 0, opacity: 1, duration: .6, ease: 'back.out(1.4)' }); });
+  });
+  ScrollTrigger.create({ trigger: '#petalSvg', start: 'top 90%', once: true, onEnter: () => gsap.from('#petalSvg', { opacity: 0, scale: .85, duration: 1, ease: 'power3.out' }) });
+})();
+
+/* ============================================================
+   Seeds
+   ============================================================ */
+(function seeds() {
+  const grid = $('#seedGrid');
+  const seedSVG = `<svg viewBox="0 0 48 48" class="w-12 h-12 mx-auto"><ellipse cx="24" cy="26" rx="10" ry="15" fill="#3a220d" transform="rotate(20 24 26)"/><path d="M20 14 Q22 26 19 38" stroke="#8a5522" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M26 13 Q29 26 27 38" stroke="#8a5522" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`;
+  const sproutSVG = `<svg viewBox="0 0 48 48" class="w-12 h-12 mx-auto"><path d="M24 44 V22" stroke="#5c8f31" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M24 30 C14 30 10 22 10 16 C18 16 24 22 24 30Z" fill="#4d7c2f"/><path d="M24 24 C34 24 38 16 38 10 C30 10 24 16 24 24Z" fill="#5a8f35"/></svg>`;
+  CONFIG.promises.forEach(p => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'relative bg-ink border border-line rounded-2xl p-4 sm:p-5 text-center transition hover:border-sun flex flex-col items-center justify-center';
+    b.style.minHeight = '170px';
+    b.innerHTML = `<div class="c">${seedSVG}<p class="font-hand text-xl text-mist mt-2">Tap to plant</p></div>
+      <div class="o hidden">${sproutSVG}<p class="font-display italic text-xl sm:text-2xl leading-snug mt-2 text-white/90">${p}</p></div>`;
+    grid.appendChild(b);
+    b.addEventListener('click', () => {
+      if (b.dataset.open) return;
+      b.dataset.open = '1'; S.seeds++;
+      $('.c', b).classList.add('hidden'); const o = $('.o', b); o.classList.remove('hidden');
+      gsap.fromTo(o, { opacity: 0, y: 12, scale: .9 }, { opacity: 1, y: 0, scale: 1, duration: .6, ease: 'back.out(1.6)' });
+      b.classList.add('border-sun/60');
+      const r = b.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + 20, 3);
+    });
+  });
+  ScrollTrigger.create({ trigger: '#seedGrid', start: 'top 92%', once: true, onEnter: () => gsap.from('#seedGrid > button', { opacity: 0, y: 30, stagger: .1, duration: .7, clearProps: 'opacity,transform' }) });
+})();
+
+/* ============================================================
+   Final + reply
+   ============================================================ */
+(function finalPart() {
+  $('#finalRingBox').innerHTML = ring('rp2');
+  $('#finalFlower').innerHTML = flower('w-full h-full');
+  if (!REDUCED) {
+    gsap.to('#finalRingBox', { rotation: 360, duration: 90, repeat: -1, ease: 'none' });
+    gsap.to('#finalFlower', { rotation: -360, duration: 120, repeat: -1, ease: 'none' });
+  }
+  const box = $('#finalLines');
+  CONFIG.finalLines.forEach(l => { const p = document.createElement('p'); p.className = 'reveal'; p.textContent = l; box.appendChild(p); });
+
+  const picked = new Set(), chips = $('#chips');
+  CONFIG.feelings.forEach(f => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = f;
+    b.addEventListener('click', () => { picked.has(f) ? picked.delete(f) : picked.add(f); b.classList.toggle('on', picked.has(f)); });
+    chips.appendChild(b);
+  });
+
+  const fileName = CONFIG.her.toLowerCase() + '_sunflower_reply.json';
+  const payload = () => JSON.stringify({
+    from: CONFIG.her, to: CONFIG.you, sentAt: new Date().toISOString(),
+    feelings: [...picked], note: $('#replyText').value.trim(),
+    played: { sunflowersPlanted: S.planted, petalsPlucked: S.petals, seedsPlanted: S.seeds }
+  }, null, 2);
+  const thanks = () => {
+    const d = $('#replyDone'); d.textContent = 'Thank you, ' + CONFIG.nick + '. Now send that file to ' + CONFIG.you + '.';
+    gsap.to(d, { opacity: 1, y: -4, duration: .7 });
+    const r = d.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 8);
+  };
+  $('#replySend').addEventListener('click', () => {
+    const blob = new Blob([payload()], { type: 'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = fileName;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    thanks();
+  });
+  try {
+    const probe = new File(['{}'], fileName, { type: 'application/json' });
+    if (navigator.canShare && navigator.canShare({ files: [probe] })) {
+      const sb = $('#replyShare'); sb.classList.remove('hidden');
+      sb.addEventListener('click', async () => {
+        try { await navigator.share({ files: [new File([payload()], fileName, { type: 'application/json' })], title: 'My reply' }); thanks(); } catch (e) {}
+      });
+    }
+  } catch (e) {}
+})();
+
+/* ============================================================
+   Everywhere: reveal, progress, falling petals, name trail
+   ============================================================ */
+$$('.reveal').forEach(el => ScrollTrigger.create({ trigger: el, start: 'top 94%', once: true, onEnter: () => gsap.from(el, { opacity: 0, y: 36, duration: 1, ease: 'power3.out' }) }));
+gsap.to('#progBar', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: true } });
+
+if (!REDUCED) {
+  const layer = $('#petals');
+  for (let i = 0; i < 14; i++) {
+    const p = document.createElement('div'), s = rand(9, 15);
+    p.style.cssText = `position:absolute;left:${rand(0, 100)}%;top:0;width:${s}px;height:${s * 1.7}px;border-radius:50% 50% 50% 50% / 70% 70% 30% 30%;background:linear-gradient(#ffd23f,#e39a00);opacity:${rand(.25, .5)}`;
+    layer.appendChild(p);
+    gsap.fromTo(p, { y: -40, rotation: rand(0, 360) }, { y: innerHeight + 40, rotation: '+=' + rand(180, 420), duration: rand(16, 28), repeat: -1, ease: 'none', delay: -rand(0, 20) });
+    gsap.to(p, { x: rand(-50, 50), duration: rand(3, 5), repeat: -1, yoyo: true, ease: 'sine.inOut' });
+  }
+  /* names drifting up now and then */
+  setInterval(() => { if (!document.hidden) spawnName(rand(60, innerWidth - 60), innerHeight - rand(40, 160)); }, 4200);
+  /* mouse trail */
+  let lx = -999, ly = -999, c = 0;
+  window.addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse') return;
+    if (Math.hypot(e.clientX - lx, e.clientY - ly) < 70) return;
+    lx = e.clientX; ly = e.clientY; c++;
+    c % 5 === 0 ? spawnName(lx, ly) : spawnFlower(lx, ly, rand(12, 20));
+  });
+}
+/* tap anywhere (outside the interactive bits) for a little burst */
+document.addEventListener('click', e => {
+  if (e.target.closest('button,input,textarea,a,label,#fieldBox,#petalSvg')) return;
+  burst(e.clientX, e.clientY, 4);
+});
+
+window.addEventListener('load', () => ScrollTrigger.refresh());
+</script>
 </body>
 </html>
