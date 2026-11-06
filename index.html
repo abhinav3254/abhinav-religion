@@ -32,6 +32,14 @@
   ::selection { background: #f5b301; color: #0b0a10; }
   input, textarea, button { font-family: inherit; }
   textarea { font-size: 16px; }
+  /* song card */
+  #song { top: 10px; left: 10px; right: 10px; max-width: 420px; }
+  @media (min-width: 768px) { #song { left: auto; right: 18px; } }
+  .eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 14px; }
+  .eq i { display: block; width: 3px; height: 4px; background: #f5b301; border-radius: 1px; }
+  .playing .eq i { animation: eq .9s ease-in-out infinite alternate; }
+  .playing .eq i:nth-child(2) { animation-delay: -.3s; } .playing .eq i:nth-child(3) { animation-delay: -.6s; }
+  @keyframes eq { from { height: 3px; } to { height: 14px; } }
   .chip { padding: .6rem 1rem; border-radius: 9999px; border: 1px solid #2a2436; color: #b3abc0; font-size: .95rem; transition: all .2s; }
   .chip:hover { border-color: #f5b301; color: #fff; }
   .chip.on { background: #f5b301; color: #0b0a10; border-color: #f5b301; font-weight: 500; }
@@ -91,6 +99,32 @@
 <div id="topProg" class="fixed top-0 left-0 right-0 h-[3px] z-[75] pointer-events-none"><div id="topBar" class="h-full bg-sun origin-left" style="transform:scaleX(0)"></div></div>
 <div id="fx" class="fixed inset-0 overflow-hidden pointer-events-none z-[65]"></div>
 
+<!-- song card -->
+<div id="song" class="fixed z-[72] hidden">
+  <div class="rounded-2xl border border-line bg-black/85 backdrop-blur overflow-hidden">
+    <div class="flex items-center gap-3 p-2.5">
+      <div class="w-11 h-11 rounded-lg shrink-0 flex items-center justify-center text-ink" style="background:linear-gradient(135deg,#f5b301,#fb7185)">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      </div>
+      <div class="min-w-0 flex-1">
+        <p class="text-[10px] tracking-[0.22em] uppercase text-mist truncate"><span id="songMeta">Our song</span></p>
+        <p id="songLine" class="font-display italic text-lg leading-snug text-white"></p>
+      </div>
+      <span class="eq shrink-0" aria-hidden="true"><i></i><i></i><i></i></span>
+      <button id="songPlay" type="button" aria-label="Play or pause the song" class="w-9 h-9 rounded-full border border-line text-sun flex items-center justify-center shrink-0 hover:border-sun transition"></button>
+      <button id="songToggle" type="button" aria-label="Show or hide the player" class="w-8 h-9 text-mist flex items-center justify-center shrink-0">
+        <svg id="songChev" class="w-4 h-4 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+    </div>
+    <div id="songDrawer" style="overflow:hidden">
+      <div id="songEmbed"></div>
+      <p class="px-3 pb-2.5 pt-1 text-[11px] text-mist/80">If it does not start by itself, tap play in the player. <a id="songLink" href="#" target="_blank" rel="noopener" class="underline text-sun">Open on Spotify</a></p>
+    </div>
+  </div>
+</div>
+<script>window.onSpotifyIframeApiReady = function (a) { window.__spotifyApi = a; if (window.__spotifyReady) window.__spotifyReady(a); };</script>
+<script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+
 <!-- bottom film bar -->
 <div id="bar">
   <span id="barLabel">Prologue</span>
@@ -108,7 +142,7 @@
     <button id="btnAuto" type="button" class="px-7 py-3.5 rounded-full bg-sun text-ink font-medium hover:scale-105 transition">Watch it for me</button>
     <button id="btnSelf" type="button" class="px-7 py-3.5 rounded-full border border-line text-white hover:border-sun transition">I'll scroll myself</button>
   </div>
-  <p class="s-in relative mt-6 text-xs text-mist/70">Sound is off. Feelings are on.</p>
+  <p class="s-in relative mt-6 text-xs text-mist/70">Best with sound on. A song plays along.</p>
 </div>
 
 <main>
@@ -117,7 +151,7 @@
     <div class="absolute inset-0" style="background:linear-gradient(to bottom,#070812 0%,#15142b 60%,#2a1f3d 100%)"></div>
     <div id="introStars" class="absolute inset-0"></div>
     <div class="absolute inset-x-0 bottom-0" style="height:calc(var(--bar) + 40px);background:linear-gradient(to bottom,#171326,#0b0a14)"></div>
-    <div id="introCap" class="absolute inset-x-0 text-center px-6" style="top:20svh;height:30svh">
+    <div id="introCap" class="absolute inset-x-0 text-center px-6" style="top:31svh;height:30svh">
       <p class="il absolute inset-x-6 font-hand text-3xl text-sun opacity-0">a short film</p>
       <p class="il absolute inset-x-6 font-display italic text-6xl sm:text-7xl text-white opacity-0">For Mahima</p>
       <p class="il absolute inset-x-6 font-display italic text-3xl sm:text-4xl text-white/90 opacity-0">Starring Mahima<br>and Abhinav</p>
@@ -173,6 +207,22 @@
    ============================================================ */
 const CONFIG = {
   intro: ["a short film", "For Mahima", "Starring Mahima and Abhinav", "Two little travellers. One long road."],
+
+  /* the song. spotifyId is the track id from the Spotify link (open.spotify.com/track/<id>).
+     lines are YOUR words (not lyrics). They change as she scrolls through the film. */
+  song: {
+    title: "Perfect", artist: "Ed Sheeran", spotifyId: "0tgVpDi06FyKpA1z0VMD4v",
+    lines: [
+      "This one is for you, Mahii.",
+      "Some songs sound like a person. This one sounds like you.",
+      "You do not have to be perfect to be perfect for me.",
+      "Play it slow, and think of us.",
+      "Every chapter, every road, still you.",
+      "I would walk anywhere with you.",
+      "Stay a little longer, Mahii.",
+      "I love you, Mahima."
+    ]
+  },
 
   timeline: [
     { k: "The beginning",    t: "Hello",              b: "A friend in common, a first message, and somehow it never stopped.", img: "" },
@@ -254,6 +304,7 @@ const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const seeded = seed => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 const words = t => (t || '').split(/\s+/).filter(Boolean).length;
 const startChoices = [];   /* what she pressed on the start screen: { choice, label, at } */
+const song = { played: false, ctrl: null, api: null, open: true, userToggled: false, playing: false };
 const HEART = "M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.700-8 11-8 11z";
 
 /* sunflower symbol */
@@ -531,6 +582,7 @@ CONFIG.chapters.forEach(buildChapter);
     startChoice: startChoices.length ? startChoices[startChoices.length - 1].label : null,
     startChoiceKey: startChoices.length ? startChoices[startChoices.length - 1].choice : null,
     startChoiceHistory: startChoices,
+    songPlayed: song.played,
     feelings: [...picked], note: $('#replyText').value.trim()
   }, null, 2);
   const thanks = () => { const d = $('#replyDone'); d.textContent = 'Thank you, Mahii. Now send that file to Abhinav.'; gsap.to(d, { opacity: 1, y: -4, duration: .7 }); heartsAt(d, 6); };
@@ -568,12 +620,66 @@ function loop(t) {
 }
 function startAuto() { if (auto) return; auto = true; pos = scrollY; last = performance.now(); raf = requestAnimationFrame(loop); paintBtn(); }
 function stopAuto() { auto = false; cancelAnimationFrame(raf); paintBtn(); }
-['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(ev => window.addEventListener(ev, e => { if (auto && !(e.target && e.target.closest && e.target.closest('#playBtn'))) stopAuto(); }, { passive: true }));
+['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(ev => window.addEventListener(ev, e => { if (auto && !(e.target && e.target.closest && e.target.closest('#playBtn,#song'))) stopAuto(); }, { passive: true }));
 $('#playBtn').addEventListener('click', () => { auto ? stopAuto() : startAuto(); });
 paintBtn();
 
+/* ============================================================
+   Song card (Spotify embed + lines that change while she scrolls)
+   ============================================================ */
+(function songCard() {
+  const S = CONFIG.song, card = $('#song'), line = $('#songLine'), btn = $('#songPlay'), drawer = $('#songDrawer'), chev = $('#songChev');
+  $('#songMeta').textContent = S.title + ' / ' + S.artist;
+  $('#songLink').href = 'https://open.spotify.com/track/' + S.spotifyId;
+  const paint = () => { btn.innerHTML = song.playing ? ICON_PAUSE : ICON_PLAY; card.classList.toggle('playing', song.playing); };
+  paint();
+
+  /* lines that change with the page scroll */
+  let li = -1;
+  function setLine(i) {
+    if (i === li) return; li = i;
+    gsap.to(line, { opacity: 0, y: 6, duration: .2, overwrite: true, onComplete: () => { line.textContent = S.lines[i]; gsap.fromTo(line, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .5 }); } });
+  }
+  setLine(0);
+  ScrollTrigger.create({ trigger: document.body, start: 'top top', end: 'bottom bottom', onUpdate: self => setLine(Math.min(S.lines.length - 1, Math.floor(self.progress * S.lines.length))) });
+
+  /* drawer open / close */
+  function setDrawer(open, byUser) {
+    song.open = open; if (byUser) song.userToggled = true;
+    gsap.to(drawer, { height: open ? 'auto' : 0, duration: .35, ease: 'power2.inOut' });
+    gsap.to(chev, { rotation: open ? 180 : 0, duration: .3 });
+  }
+  $('#songToggle').addEventListener('click', () => setDrawer(!song.open, true));
+
+  /* spotify controller */
+  function create() {
+    if (song.ctrl || !song.api || card.classList.contains('hidden')) return;
+    song.api.createController($('#songEmbed'), { uri: 'spotify:track:' + S.spotifyId, width: '100%', height: 80 }, ctrl => {
+      song.ctrl = ctrl;
+      ctrl.addListener('playback_update', e => {
+        song.playing = !!(e.data && !e.data.isPaused);
+        if (song.playing) { song.played = true; if (!song.userToggled && song.open) setTimeout(() => { if (!song.userToggled) setDrawer(false, false); }, 3500); }
+        paint();
+      });
+      ctrl.addListener('ready', () => { if (song.wantPlay) ctrl.play(); });
+      if (song.wantPlay) setTimeout(() => ctrl.play(), 600);
+    });
+  }
+  window.__spotifyReady = api => { song.api = api; create(); };
+  if (window.__spotifyApi) song.api = window.__spotifyApi;
+  gsap.set(chev, { rotation: 180 });
+
+  btn.addEventListener('click', () => {
+    if (!song.ctrl) { song.wantPlay = true; setDrawer(true, true); return; }
+    song.ctrl.togglePlay();
+  });
+
+  song.show = () => { card.classList.remove('hidden'); gsap.fromTo(card, { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: .7, ease: 'power2.out' }); song.wantPlay = true; create(); };
+})();
+
 let introTl = null;
 function begin(withAuto) {
+  song.show && song.show();
   startChoices.push(withAuto
     ? { choice: 'watch_it_for_me', label: 'Watch it for me', at: new Date().toISOString() }
     : { choice: 'scroll_myself', label: "I'll scroll myself", at: new Date().toISOString() });
