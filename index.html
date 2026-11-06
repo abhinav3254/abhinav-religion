@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>For Mahii</title>
+<title>A Little Film For Mahima</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@300;400;500&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
   tailwind.config = {
     theme: {
       extend: {
-        colors: { ink: '#0c0a07', panel: '#15110b', line: '#2b2417', sun: '#f5b301', sun2: '#ffd23f', mist: '#b8ab94', leaf: '#4d7c2f' },
+        colors: { ink: '#0b0a10', panel: '#14111b', line: '#2a2436', sun: '#f5b301', sun2: '#ffd23f', rose: '#fb7185', mist: '#b3abc0' },
         fontFamily: {
           display: ['"Cormorant Garamond"', 'serif'],
           hand: ['Caveat', 'cursive'],
@@ -25,28 +25,62 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
-  html { background: #0c0a07; overflow-x: hidden; overflow-x: clip; max-width: 100%; }
-  body { background: #0c0a07; color: #f3ecdc; font-family: Inter, system-ui, sans-serif; overflow-x: hidden; overflow-x: clip; max-width: 100%; position: relative; -webkit-tap-highlight-color: transparent; }
-  ::selection { background: #f5b301; color: #0c0a07; }
+  :root { --bar: 46px; --cw: min(62vw, 250px); }
+  html { background: #0b0a10; overflow-x: hidden; overflow-x: clip; max-width: 100%; }
+  body { background: #0b0a10; color: #f3ecdc; font-family: Inter, system-ui, sans-serif; overflow-x: hidden; overflow-x: clip; max-width: 100%; position: relative; -webkit-tap-highlight-color: transparent; }
+  html.lock, html.lock body { overflow: hidden !important; height: 100%; }
+  ::selection { background: #f5b301; color: #0b0a10; }
   input, textarea, button { font-family: inherit; }
-  input[type=text], textarea { font-size: 16px; }
-  .outline { color: transparent; -webkit-text-stroke: 1px rgba(245,179,1,.6); }
-  .marquee { display: flex; width: max-content; animation: mq 42s linear infinite; }
-  .marquee.rev { animation-direction: reverse; animation-duration: 55s; }
-  @keyframes mq { to { transform: translateX(-50%); } }
-  @media (prefers-reduced-motion: reduce) { .marquee { animation: none; } }
-
-  .stem { position: absolute; left: -2px; bottom: 0; width: 4px; height: 100%; border-radius: 4px; background: linear-gradient(to top, #2f5d1f, #5c8f31); transform-origin: 50% 100%; }
-  .leaf { position: absolute; width: 18px; height: 9px; background: #4d7c2f; }
-  .leaf.l { left: -17px; bottom: 30%; border-radius: 100% 0 100% 0; transform-origin: 100% 100%; }
-  .leaf.r { left: 2px; bottom: 46%; border-radius: 0 100% 0 100%; transform-origin: 0 100%; }
-  .chip { padding: .6rem 1rem; border-radius: 9999px; border: 1px solid #2b2417; color: #b8ab94; font-size: .95rem; transition: all .2s; }
+  textarea { font-size: 16px; }
+  .chip { padding: .6rem 1rem; border-radius: 9999px; border: 1px solid #2a2436; color: #b3abc0; font-size: .95rem; transition: all .2s; }
   .chip:hover { border-color: #f5b301; color: #fff; }
-  .chip.on { background: #f5b301; color: #0c0a07; border-color: #f5b301; font-weight: 500; }
-  .pg { cursor: pointer; }
+  .chip.on { background: #f5b301; color: #0b0a10; border-color: #f5b301; font-weight: 500; }
+
+  /* cinematic bar */
+  #bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; height: calc(var(--bar) + env(safe-area-inset-bottom, 0px)); padding: 0 14px env(safe-area-inset-bottom, 0px); background: #000; border-top: 1px solid #1c1826; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  #barLabel { font-size: .7rem; letter-spacing: .28em; text-transform: uppercase; color: #b3abc0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #playBtn { width: 36px; height: 36px; border-radius: 9999px; border: 1px solid #2a2436; color: #f5b301; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color .2s; }
+  #playBtn:hover { border-color: #f5b301; }
+
+  /* stage */
+  .actors { position: absolute; left: 50%; transform: translateX(-50%); bottom: calc(var(--bar) + 6px + env(safe-area-inset-bottom, 0px)); width: var(--cw); z-index: 5; }
+  .dlg { position: absolute; left: 14px; right: 14px; top: 56px; bottom: calc(var(--bar) + 6px + var(--cw) * .96 + 22px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: flex-end; justify-content: center; pointer-events: none; z-index: 6; }
+  .bub { position: relative; width: 100%; max-width: 560px; min-width: min(100%, 300px); padding: 16px 18px 18px; border-radius: 22px; opacity: 0; text-align: left; }
+  .bub .who { font-family: Caveat, cursive; font-size: 1.5rem; line-height: 1; margin-bottom: 6px; }
+  .bub .who:empty { display: none; }
+  .bub .txt { font-family: "Cormorant Garamond", serif; font-size: 1.4rem; line-height: 1.38; }
+  .bub.m, .bub.a { background: rgba(10, 8, 16, .78); backdrop-filter: blur(6px); }
+  .bub.m { border: 1px solid rgba(251, 113, 133, .6); }
+  .bub.m .who { color: #fb7185; }
+  .bub.a { border: 1px solid rgba(245, 179, 1, .6); }
+  .bub.a .who { color: #f5b301; }
+  .bub.m::after, .bub.a::after { content: ""; position: absolute; bottom: -9px; width: 16px; height: 16px; background: rgba(10, 8, 16, .95); transform: rotate(45deg); }
+  .bub.m::after { left: clamp(14px, calc(50% + var(--cw) * .192 - 8px), calc(100% - 30px)); border-right: 1px solid rgba(251, 113, 133, .6); border-bottom: 1px solid rgba(251, 113, 133, .6); }
+  .bub.a::after { left: clamp(14px, calc(50% - var(--cw) * .192 - 8px), calc(100% - 30px)); border-right: 1px solid rgba(245, 179, 1, .6); border-bottom: 1px solid rgba(245, 179, 1, .6); }
+  .bub.n { text-align: center; padding: 8px 6px; text-shadow: 0 2px 16px #000; }
+  .bub.n .who { font-size: 1.15rem; color: #b3abc0; letter-spacing: .12em; }
+  .bub.n .txt { font-style: italic; font-size: 1.5rem; color: rgba(255, 255, 255, .92); }
+  .bub.b { text-align: center; padding: 14px 6px; text-shadow: 0 2px 18px #000; }
+  .bub.b .txt { font-style: italic; font-weight: 600; font-size: clamp(1.5rem, 6.2vw, 2.2rem); color: #ffd23f; line-height: 1.25; }
+  .bub.l { text-align: center; padding: 0; }
+  .bub.l .txt { font-style: italic; font-weight: 600; line-height: 1.05; text-shadow: 0 0 40px rgba(251, 113, 133, .6), 0 3px 20px #000; }
+  .bub.l .l1 { display: block; font-size: clamp(2.2rem, 11vw, 4rem); color: #fff; }
+  .bub.l .l2 { display: block; font-size: clamp(2.8rem, 14vw, 5.5rem); color: #ffd23f; }
+  .bub.l .l3 { display: block; font-size: clamp(3rem, 15vw, 6rem); color: #fb7185; }
+  .chT { position: absolute; left: 0; right: 0; z-index: 6; }
+
+  .st { position: absolute; border-radius: 9999px; background: #fff; animation: tw 3s ease-in-out infinite alternate; }
+  @keyframes tw { from { opacity: .12; } to { opacity: .9; } }
+  .ff { position: absolute; width: 5px; height: 5px; border-radius: 9999px; background: #ffd23f; box-shadow: 0 0 10px 3px rgba(255, 210, 63, .55); animation: fl 7s ease-in-out infinite alternate; }
+  @keyframes fl { 0% { transform: translate(0, 0); opacity: .2; } 50% { opacity: 1; } 100% { transform: translate(40px, -60px); opacity: .3; } }
+  .bob { animation: bob 3.2s ease-in-out infinite; }
+  .gHeadW .bob { animation-delay: -1.6s; }
+  @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2.5px); } }
+  .bob { transform-box: fill-box; }
+  @media (prefers-reduced-motion: reduce) { .bob, .st, .ff { animation: none; } }
 </style>
 </head>
-<body>
+<body class="">
 
 <!-- sunflower symbol (built in JS) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -54,199 +88,162 @@
   <symbol id="sf" viewBox="0 0 200 200"></symbol>
 </svg>
 
-<!-- global layers -->
-<div id="prog" class="fixed top-0 left-0 right-0 h-[3px] z-[70] pointer-events-none overflow-hidden"><div id="progBar" class="h-full bg-sun origin-left" style="transform:scaleX(0)"></div></div>
-<div id="petals" class="fixed inset-0 overflow-hidden pointer-events-none z-[5]"></div>
-<div id="fx" class="fixed inset-0 overflow-hidden pointer-events-none z-[60]"></div>
+<div id="topProg" class="fixed top-0 left-0 right-0 h-[3px] z-[75] pointer-events-none"><div id="topBar" class="h-full bg-sun origin-left" style="transform:scaleX(0)"></div></div>
+<div id="fx" class="fixed inset-0 overflow-hidden pointer-events-none z-[65]"></div>
 
-<!-- 1. HERO -->
-<section id="hero" class="relative min-h-[100svh] flex flex-col items-center justify-center text-center px-5 py-20 overflow-hidden">
-  <div class="absolute inset-0" style="background: radial-gradient(ellipse at 50% 38%, rgba(245,179,1,.16) 0%, rgba(12,10,7,0) 55%), radial-gradient(ellipse at 50% 120%, #2a1d08 0%, #0c0a07 60%)"></div>
-  <p class="hero-in relative font-hand text-2xl text-sun">for my favourite person</p>
-  <div class="hero-in relative mx-auto mt-4 mb-3" style="width:min(84vw,400px);height:min(84vw,400px)">
-    <div id="heroRingBox" class="absolute inset-0"></div>
-    <div id="heroFlower" class="absolute" style="inset:17%"><div id="heroSpin" class="w-full h-full"></div></div>
-  </div>
-  <h1 class="hero-in relative font-display italic text-6xl sm:text-7xl md:text-8xl leading-none text-white">Mahima</h1>
-  <p class="hero-in relative font-hand text-4xl text-sun mt-1">my Mahii</p>
-  <p class="hero-in relative mt-5 max-w-sm text-mist font-light">Scroll slowly. I planted something for you.</p>
-  <div class="hero-in absolute bottom-7 flex flex-col items-center text-mist text-xs tracking-[0.3em] uppercase">
-    <span>scroll</span><span id="cue" class="block w-px h-9 bg-gradient-to-b from-sun to-transparent mt-3"></span>
-  </div>
-</section>
+<!-- bottom film bar -->
+<div id="bar">
+  <span id="barLabel">Prologue</span>
+  <button id="playBtn" type="button" aria-label="Play or pause"></button>
+</div>
 
-<!-- 2. NAMES MARQUEE -->
-<section id="names" class="relative py-12 overflow-hidden border-y border-line bg-panel/60 select-none" aria-hidden="true">
-  <div id="mq1" class="marquee mb-2"></div>
-  <div id="mq2" class="marquee rev"></div>
-</section>
-
-<!-- 3. GROWING SUNFLOWER (pinned) -->
-<section id="grow" class="relative overflow-hidden" style="height:100vh;height:100svh;background:linear-gradient(to bottom,#0c0a07 0%,#17110a 55%,#2a1b09 100%)">
-  <div class="absolute inset-0" style="background:radial-gradient(ellipse at 50% 45%, rgba(245,179,1,.12), transparent 60%)"></div>
-  <div class="absolute top-[11svh] inset-x-0 px-6 text-center z-10 h-28">
-    <p id="growText" class="font-display italic text-3xl md:text-5xl text-white opacity-0"></p>
+<!-- START SCREEN -->
+<div id="start" class="fixed inset-0 z-[90] flex flex-col items-center justify-center text-center px-6" style="background:radial-gradient(ellipse at 50% 30%, #241a3a 0%, #0b0a10 65%)">
+  <div id="startStars" class="absolute inset-0 pointer-events-none"></div>
+  <p class="s-in relative font-hand text-2xl text-sun">a little film</p>
+  <div id="startCouple" class="s-in relative w-56 sm:w-64 my-3"></div>
+  <h1 class="s-in relative font-display italic text-5xl sm:text-6xl leading-tight text-white">For Mahima</h1>
+  <p class="s-in relative mt-2 text-mist font-light text-sm">Starring Mahima and Abhinav</p>
+  <div class="s-in relative mt-8 flex flex-col gap-3 w-full max-w-xs">
+    <button id="btnAuto" type="button" class="px-7 py-3.5 rounded-full bg-sun text-ink font-medium hover:scale-105 transition">Watch it for me</button>
+    <button id="btnSelf" type="button" class="px-7 py-3.5 rounded-full border border-line text-white hover:border-sun transition">I'll scroll myself</button>
   </div>
-  <div class="absolute left-1/2 w-0" style="bottom:6svh;height:50svh">
-    <div id="growStem" class="absolute rounded-full" style="left:-3px;bottom:0;width:6px;height:100%;background:linear-gradient(to top,#2f5d1f,#5c8f31);transform-origin:50% 100%;transform:scaleY(0)"></div>
-    <div id="gLeafL" class="absolute" style="left:-64px;bottom:30%;width:64px;height:30px;background:#4d7c2f;border-radius:100% 0 100% 0;transform-origin:100% 100%"></div>
-    <div id="gLeafR" class="absolute" style="left:3px;bottom:46%;width:56px;height:26px;background:#5a8f35;border-radius:0 100% 0 100%;transform-origin:0 100%"></div>
-    <div id="growHead" class="absolute w-40 sm:w-56" style="left:0;top:0"></div>
-  </div>
-  <div class="absolute bottom-0 inset-x-0" style="height:6svh;background:linear-gradient(to bottom,#2a1b09,#120d06)"></div>
-</section>
+  <p class="s-in relative mt-6 text-xs text-mist/70">Sound is off. Feelings are on.</p>
+</div>
 
-<!-- 4. PLANT A SUNFLOWER -->
-<section id="field" class="relative px-4 py-24">
-  <div class="max-w-3xl mx-auto text-center">
-    <p class="reveal font-hand text-2xl text-sun">your turn</p>
-    <h2 class="reveal font-display italic text-5xl md:text-6xl mb-3">Plant a Sunflower</h2>
-    <p class="reveal text-mist font-light mb-2 text-sm md:text-base">Tap anywhere in the field. Each one grows from something I love about you.</p>
-    <p class="reveal text-xs tracking-[0.25em] uppercase text-mist mb-6"><span id="fCount">0</span> / <span id="fTotal">12</span> found</p>
-    <div id="fieldBox" class="relative mx-auto w-full overflow-hidden rounded-3xl border border-line select-none" style="height:62svh;min-height:430px;touch-action:manipulation;background:linear-gradient(to top,#24180a 0%,#16110a 20%,#0f0c08 100%);cursor:pointer">
-      <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at 50% 0%, rgba(245,179,1,.14), transparent 60%)"></div>
-      <p id="fieldMsg" class="absolute top-4 inset-x-5 text-center font-display italic text-xl md:text-2xl text-sun2 pointer-events-none z-10" style="min-height:3.2rem">Tap anywhere to plant your first one.</p>
-      <div id="plants" class="absolute inset-0 pointer-events-none"></div>
-      <div class="absolute bottom-0 inset-x-0 pointer-events-none" style="height:18px;background:linear-gradient(to bottom,#3a2610,#1a1008)"></div>
+<main>
+  <!-- 1. INTRO -->
+  <section id="intro" class="relative overflow-hidden" style="height:100vh;height:100svh">
+    <div class="absolute inset-0" style="background:linear-gradient(to bottom,#070812 0%,#15142b 60%,#2a1f3d 100%)"></div>
+    <div id="introStars" class="absolute inset-0"></div>
+    <div class="absolute inset-x-0 bottom-0" style="height:calc(var(--bar) + 40px);background:linear-gradient(to bottom,#171326,#0b0a14)"></div>
+    <div id="introCap" class="absolute inset-x-0 text-center px-6" style="top:20svh;height:30svh">
+      <p class="il absolute inset-x-6 font-hand text-3xl text-sun opacity-0">a short film</p>
+      <p class="il absolute inset-x-6 font-display italic text-6xl sm:text-7xl text-white opacity-0">For Mahima</p>
+      <p class="il absolute inset-x-6 font-display italic text-3xl sm:text-4xl text-white/90 opacity-0">Starring Mahima<br>and Abhinav</p>
+      <p class="il absolute inset-x-6 font-display italic text-3xl sm:text-4xl text-white/90 opacity-0">Two little travellers.<br>One long road.</p>
     </div>
-  </div>
-</section>
+    <div id="introCouple" class="actors"></div>
+    <div id="introCue" class="absolute inset-x-0 text-center text-mist text-xs tracking-[0.3em] uppercase opacity-0" style="bottom:calc(var(--bar) + var(--cw) * .96 + 40px)">scroll</div>
+  </section>
 
-<!-- 5. NOTES -->
-<section id="notes" class="relative px-4 sm:px-6 py-24 bg-panel/60 border-y border-line overflow-hidden">
-  <div class="max-w-2xl mx-auto">
-    <p class="reveal font-hand text-2xl text-sun text-center">read slowly</p>
-    <h2 class="reveal font-display italic text-5xl md:text-6xl text-center mb-12">Letters in the Sun</h2>
-    <div id="notesList" class="space-y-6"></div>
-  </div>
-</section>
-
-<!-- 6. PETALS -->
-<section id="petalGame" class="relative px-4 py-24">
-  <div class="max-w-md mx-auto text-center">
-    <p class="reveal font-hand text-2xl text-sun">an old game</p>
-    <h2 class="reveal font-display italic text-5xl md:text-6xl mb-3">Pluck the Petals</h2>
-    <p class="reveal text-mist font-light mb-6 text-sm md:text-base">You know how this goes. Tap the petals. (This one has no wrong ending.)</p>
-    <div class="relative mx-auto" style="width:min(86vw,360px)">
-      <svg id="petalSvg" viewBox="0 0 300 300" class="w-full h-auto overflow-visible"></svg>
+  <!-- 2. JOURNEY / TIMELINE -->
+  <section id="journey" class="relative px-5 py-24 overflow-hidden" style="background:linear-gradient(to bottom,#2a1f3d 0%,#14111b 18%,#14111b 100%)">
+    <div class="max-w-3xl mx-auto">
+      <p class="font-hand text-2xl text-sun text-center">before the story</p>
+      <h2 class="font-display italic text-5xl md:text-6xl text-center mb-16">Our Journey</h2>
+      <div id="tlWrap" class="relative">
+        <div class="absolute top-0 bottom-0 left-[34px] md:left-1/2 w-px bg-line"></div>
+        <div id="tlFill" class="absolute top-0 bottom-0 left-[34px] md:left-1/2 w-px bg-sun origin-top" style="transform:scaleY(0)"></div>
+        <div id="walker" class="absolute left-[34px] md:left-1/2 top-0 w-14 md:w-16 z-10"></div>
+        <div id="tlItems" class="relative pt-8"></div>
+      </div>
     </div>
-    <p id="petalText" class="font-display italic text-2xl md:text-3xl text-sun2 mt-4" style="min-height:4.5rem">Tap a petal.</p>
-    <p class="text-xs tracking-[0.25em] uppercase text-mist"><span id="pCount">0</span> / <span id="pTotal">13</span></p>
-    <button id="petalReset" class="hidden mt-5 chip">Pluck again</button>
-  </div>
-</section>
+  </section>
 
-<!-- 7. SEEDS -->
-<section id="seeds" class="relative px-4 py-24 bg-panel/60 border-y border-line">
-  <div class="max-w-3xl mx-auto text-center">
-    <p class="reveal font-hand text-2xl text-sun">small promises</p>
-    <h2 class="reveal font-display italic text-5xl md:text-6xl mb-3">Seeds For Us</h2>
-    <p class="reveal text-mist font-light mb-10 text-sm md:text-base">Tap a seed to plant it.</p>
-    <div id="seedGrid" class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4"></div>
-  </div>
-</section>
+  <div id="chapters"></div>
 
-<!-- 8. FINAL -->
-<section id="final" class="relative px-5 py-28 text-center overflow-hidden">
-  <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at 50% 18%, rgba(245,179,1,.14), transparent 55%)"></div>
-  <div class="relative max-w-xl mx-auto">
-    <div class="reveal relative mx-auto mb-6" style="width:min(70vw,300px);height:min(70vw,300px)">
-      <div id="finalRingBox" class="absolute inset-0"></div>
-      <div id="finalFlower" class="absolute" style="inset:17%"></div>
-    </div>
-    <h2 class="reveal font-display italic text-5xl md:text-7xl leading-tight">Mahima,<br><span class="text-sun">my Mahii.</span></h2>
-    <div id="finalLines" class="mt-8 space-y-5 font-display text-2xl md:text-3xl leading-relaxed text-white/90"></div>
-    <p class="reveal font-hand text-3xl text-sun mt-8">Always yours, Abhinav</p>
+  <!-- CREDITS -->
+  <section id="credits" class="relative px-5 py-28 text-center" style="background:linear-gradient(to bottom,#07060d,#0b0a10)">
+    <div id="creditLines" class="max-w-xl mx-auto space-y-10"></div>
+    <p class="cr font-display italic text-4xl md:text-5xl text-sun mt-16">To be continued...</p>
 
-    <div class="reveal mt-16 text-left bg-panel border border-line rounded-3xl p-5 sm:p-7">
-      <p class="font-display italic text-3xl mb-1">Send a sunflower back</p>
-      <p class="text-mist text-sm font-light mb-5">Optional. Tell me how this felt. It takes a few seconds.</p>
+    <div class="cr mt-16 max-w-xl mx-auto text-left bg-panel border border-line rounded-3xl p-5 sm:p-7">
+      <p class="font-display italic text-3xl mb-1">Tell me how it felt</p>
+      <p class="text-mist text-sm font-light mb-5">Optional. It takes a few seconds.</p>
       <div id="chips" class="flex flex-wrap gap-2 mb-4"></div>
       <textarea id="replyText" rows="3" class="w-full bg-ink border border-line rounded-xl px-4 py-3 outline-none focus:border-sun resize-none" placeholder="Anything you want to tell me?"></textarea>
-      <p class="text-xs text-mist/70 mt-3">The file has your feelings, your note, and which little games you tried. Nothing else.</p>
+      <p class="text-xs text-mist/70 mt-3">The file has only your feelings, your note, and how you chose to watch.</p>
       <div class="flex flex-col sm:flex-row gap-3 mt-5">
-        <button id="replySend" class="px-6 py-3 rounded-full bg-sun text-ink font-medium hover:scale-105 transition">Download my reply</button>
-        <button id="replyShare" class="hidden px-6 py-3 rounded-full border border-line text-white hover:border-sun transition">Share with <span data-you></span></button>
+        <button id="replySend" type="button" class="px-6 py-3 rounded-full bg-sun text-ink font-medium hover:scale-105 transition">Download my reply</button>
+        <button id="replyShare" type="button" class="hidden px-6 py-3 rounded-full border border-line text-white hover:border-sun transition">Share with Abhinav</button>
       </div>
       <p id="replyDone" class="font-display italic text-2xl mt-5 opacity-0"></p>
     </div>
-  </div>
-</section>
-
-<footer class="py-10 text-center text-xs tracking-[0.3em] uppercase text-mist">
-  Made by <span data-you></span>, for <span data-her></span>
-</footer>
+    <button id="replay" type="button" class="cr mt-12 chip">Watch it again</button>
+    <p class="mt-14 text-xs tracking-[0.3em] uppercase text-mist">Made by Abhinav, for Mahima</p>
+  </section>
+</main>
 
 <script>
 /* ============================================================
    EDIT THIS BLOCK. Everything personal lives here.
+   beat types:  m = Mahima speaks   a = Abhinav speaks
+                n = voice-over      b = big line      l = finale
    ============================================================ */
 const CONFIG = {
-  her: "Mahima",
-  nick: "Mahii",
-  you: "Abhinav",
+  intro: ["a short film", "For Mahima", "Starring Mahima and Abhinav", "Two little travellers. One long road."],
 
-  growCaptions: [
-    "It started so quietly, Mahii.",
-    "And slowly, everything in me began to turn toward you.",
-    "The way sunflowers turn toward the light.",
-    "You are that light. Thank you for letting me love you."
+  timeline: [
+    { k: "The beginning",    t: "Hello",              b: "A friend in common, a first message, and somehow it never stopped.", img: "" },
+    { k: "Little by little", t: "Our own language",   b: "Somewhere between booking and cooking the tickets, we invented a joke only we understand.", img: "" },
+    { k: "Our trip",         t: "Together",           b: "Miles, snacks, and you beside me. My favourite way to travel.", img: "" },
+    { k: "The words",        t: "I love you, more",   b: "You said it back. I am still smiling about it.", img: "" },
+    { k: "Today",            t: "Still choosing you", b: "A little more, every single day.", img: "" },
+    { k: "Someday soon",     t: "Mall Road, Darjeeling", b: "You, me, and a very long evening walk.", img: "" }
   ],
 
-  // one appears each time she plants a sunflower
-  reasons: [
-    "Because you feel everything so deeply, and I think that is beautiful.",
-    "Because you love your family so much.",
-    "Because your smile changes the whole mood of my day.",
-    "Because you trust me with the real you, not a performance.",
-    "Because you keep working hard, even when nobody sees it.",
-    "Because your laugh is my favourite sound.",
-    "Because you remember the little things.",
-    "Because you stay kind even when you are hurt.",
-    "Because you make me want to be better.",
-    "Because talking to you feels like coming home.",
-    "Because you are stronger than you give yourself credit for.",
-    "Because you are you, Mahii. Just that."
+  chapters: [
+    { kicker: "Chapter one", title: "Your Karma", sub: "feeling different", label: "Chapter 1 / Your Karma", beats: [
+      { s: "m", t: "You've spent so much of your life feeling like you were born on a different wavelength from everyone else." },
+      { s: "m", t: "No matter how hard you tried to fit in, there was always a part of you that felt misunderstood, unseen, or somehow out of place." },
+      { s: "a", t: "But I want you to look at this differently. What if you were never meant to think like everyone else?" },
+      { s: "a", t: "You notice things people overlook, question things people blindly accept, and often see situations from perspectives others cannot even imagine." },
+      { s: "a", t: "Maybe the problem was never that you were different. Maybe you've spent too many years trying to find belonging in places that couldn't appreciate your way of thinking." },
+      { s: "m", t: "But when people keep making you feel different, eventually you start wondering whether something is wrong with you." },
+      { s: "a", t: "And that's where the real wound begins. When you repeatedly feel misunderstood, you can start protecting yourself before anyone even gets the chance to hurt you." },
+      { s: "a", t: "You might hide your thoughts, pretend not to care, or distance yourself from people you actually want close to you." },
+      { s: "a", t: "You don't necessarily want to be alone. You just don't want to experience that feeling of not belonging again." }
+    ] },
+    { kicker: "Chapter two", title: "Your Lesson", sub: "what to remember", label: "Chapter 2 / Your Lesson", beats: [
+      { s: "m", t: "So what am I supposed to do? I've spent so much time trying to understand where I fit in." },
+      { s: "a", t: "Stop making yourself smaller just to fit into someone else's understanding of you." },
+      { s: "n", t: "Your biggest lesson is learning that being misunderstood doesn't mean you're unlovable." },
+      { s: "n", t: "You don't have to become quieter, simpler, less ambitious, or more predictable to deserve genuine connections." },
+      { s: "n", t: "But there's something else you need to recognize: sometimes, your fear of being misunderstood can prevent people from actually getting to know you." },
+      { s: "n", t: "You cannot keep expecting others to understand parts of yourself that you never allow them to see." },
+      { s: "n", t: "Give people a chance to know the real you. Stop assuming everyone will disappoint you just because some people did." },
+      { s: "n", t: "The right connections won't require you to abandon your individuality. They'll give you the freedom to express it." },
+      { s: "b", t: "You don't need to belong everywhere. You need to stop rejecting yourself just because not everyone understands you." }
+    ] },
+    { kicker: "Chapter three", title: "Your Gift", sub: "what makes you, you", label: "Chapter 3 / Your Gift", beats: [
+      { s: "m", t: "But what if the very things that make me different are also the reasons I struggle so much?" },
+      { s: "a", t: "Then perhaps it's time you stopped looking at those qualities as weaknesses." },
+      { s: "n", t: "Your mind has a natural ability to look beyond what is immediately visible." },
+      { s: "n", t: "While others see a problem, you start thinking about possibilities. While others accept things as they are, you wonder how they could be better." },
+      { s: "n", t: "You have the ability to connect ideas, recognize patterns, challenge old ways of thinking, and imagine solutions that others might overlook." },
+      { s: "n", t: "And here's what I really want you to understand: your greatest strength isn't simply that you think differently. It's that you can turn those different thoughts into something meaningful." },
+      { s: "n", t: "You can become the person who finds a way forward when everyone else feels stuck. You can inspire people to question their limitations and help them see opportunities they never considered." },
+      { s: "n", t: "You may have spent years wondering why your mind doesn't work like everyone else's. But perhaps you should start asking what you can create with the way it does work." },
+      { s: "b", t: "Your difference is your perspective. Your perspective is your power. And your ability to turn that perspective into solutions is your gift." },
+      { s: "n", t: "One day, you may look back and realize that the very qualities you once tried to hide were the ones that helped you build a life that felt truly yours." },
+      { s: "b", t: "The world doesn't need another woman trying to be like everyone else. It needs a woman who is brave enough to think differently, solve differently, and create something that didn't exist before." }
+    ] },
+    { kicker: "Epilogue", title: "For You", sub: "one last thing", label: "The End", beats: [
+      { s: "n", t: "You were never too much." },
+      { s: "n", t: "You were never too different." },
+      { s: "n", t: "You were simply waiting for someone who would stay long enough to understand you." },
+      { s: "b", t: "I'm staying, Mahii." },
+      { s: "n", t: "Not because it's easy. Because it's you." },
+      { s: "l", t: "" }
+    ] }
   ],
-  fieldDone: "That is all twelve. And I could plant a thousand more.",
+  love: ["I love you,", "Mahima,", "Mahii...."],
 
-  notes: [
-    { t: "You are my sunshine", b: "Mahii, some people light up a room. You light up my ordinary days. I did not know how much I needed that until you came." },
-    { t: "Your heart is not too much", b: "You feel things deeply, and I have never seen that as a weakness. It is why you love so fully and notice so much. I will always handle it with care." },
-    { t: "You never have to guess", b: "If you ever wonder where you stand with me, ask me. I will tell you honestly and gently. You should never have to carry that doubt alone." },
-    { t: "On your cloudy days", b: "You do not have to shine every day. On the heavy days, the tired days and the quiet days, you can just rest. I will be the one turning toward you." },
-    { t: "What I want to give you", b: "A safe place. A person who remembers, who shows up, and who says sorry first when it is needed. A love that is calm and never makes you feel small." },
-    { t: "I choose you", b: "Not because it is easy, but because it is you. On ordinary days, on far-apart days, and after hard days. I keep choosing you." }
+  credits: [
+    ["Starring", "Mahima (Mahii), as the girl who thinks differently", "Abhinav, as the boy who is lucky to know her"],
+    ["Written and directed by", "Abhinav"],
+    ["Cinematography", "Every sunset we have shared"],
+    ["Original soundtrack", "Your laugh"],
+    ["Filmed on location", "Everywhere you were. Soon, Mall Road, Darjeeling"],
+    ["Special thanks", "Chai, momos, and the tickets we cooked"],
+    ["No feelings were faked in the making of this film."]
   ],
-
-  petalLines: [
-    "He loves me.", "He loves me, quietly.", "He loves me, loudly.", "He loves me on busy days.",
-    "He loves me on bad days.", "He loves me when I am tired.", "He loves me when I am quiet.",
-    "He loves me when we are far apart.", "He loves me every single day.", "He loves me more than he says.",
-    "He is not going anywhere.", "He chose me, and he keeps choosing me.", "He loves me. Always."
-  ],
-  petalDone: "Every petal says the same thing.",
-
-  promises: [
-    "I will say sorry first when I am the one who got it wrong.",
-    "I will listen to the whole story before I answer.",
-    "I will make time for you, even on my busiest days.",
-    "I will never make you chase my love or guess it.",
-    "I will cheer for your dreams as loudly as for mine.",
-    "I will be gentle with your heart, especially on heavy days."
-  ],
-
-  finalLines: [
-    "I made this because a chat window felt too small for what I wanted to say.",
-    "You are the person I want beside me, on the sunny days and the cloudy ones.",
-    "One day, if you want it too, I would love to build a life with you. No rush and no pressure. I will wait with a full heart.",
-    "Thank you for being you."
-  ],
-  feelings: ["Happy", "Emotional", "Loved", "Shy", "Missing you", "Need a hug"]
+  feelings: ["Happy", "Emotional", "Loved", "Understood", "Shy", "Need a hug"]
 };
 
 /* ============================================================
-   Setup
+   Setup + helpers
    ============================================================ */
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({ ignoreMobileResize: true });
@@ -254,264 +251,273 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const rand = gsap.utils.random;
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const S = { planted: 0, petals: 0, seeds: 0 };
-
-$$('[data-her]').forEach(e => e.textContent = CONFIG.her);
-$$('[data-you]').forEach(e => e.textContent = CONFIG.you);
-$('#fTotal').textContent = CONFIG.reasons.length;
-$('#pTotal').textContent = CONFIG.petalLines.length;
+const seeded = seed => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const words = t => (t || '').split(/\s+/).filter(Boolean).length;
+const startChoices = [];   /* what she pressed on the start screen: { choice, label, at } */
+const HEART = "M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.700-8 11-8 11z";
 
 /* sunflower symbol */
-(function buildSymbol() {
+(function () {
   let s = ''; const N = 20;
   for (let i = 0; i < N; i++) s += `<path d="M100 80 C85 60 87 28 100 4 C113 28 115 60 100 80Z" fill="#e39a00" transform="rotate(${i * 360 / N} 100 100)"/>`;
   for (let i = 0; i < N; i++) s += `<path d="M100 78 C88 62 90 34 100 12 C110 34 112 62 100 78Z" fill="#ffc61a" transform="rotate(${(i + .5) * 360 / N} 100 100)"/>`;
   s += `<circle cx="100" cy="100" r="37" fill="#33200d"/><circle cx="100" cy="100" r="33" fill="url(#seedg)"/>`;
   const g = Math.PI * (3 - Math.sqrt(5));
-  for (let i = 1; i <= 120; i++) {
-    const r = 2.85 * Math.sqrt(i), t = i * g;
-    s += `<circle cx="${(100 + r * Math.cos(t)).toFixed(1)}" cy="${(100 + r * Math.sin(t)).toFixed(1)}" r="${(.8 + i / 120 * .9).toFixed(2)}" fill="${i % 3 ? '#8a5522' : '#25150a'}"/>`;
-  }
+  for (let i = 1; i <= 100; i++) { const r = 3.1 * Math.sqrt(i), t = i * g; s += `<circle cx="${(100 + r * Math.cos(t)).toFixed(1)}" cy="${(100 + r * Math.sin(t)).toFixed(1)}" r="${(.8 + i / 100 * .9).toFixed(2)}" fill="${i % 3 ? '#8a5522' : '#25150a'}"/>`; }
   $('#sf').innerHTML = s;
 })();
 const flower = (cls = '') => `<svg viewBox="0 0 200 200" class="${cls}" aria-hidden="true"><use href="#sf"/></svg>`;
 
-/* ring of names around a flower */
-function ring(id) {
-  const txt = ('Mahii · Mahima · ').repeat(5);
-  return `<svg viewBox="0 0 400 400" class="w-full h-full overflow-visible" aria-hidden="true">
-    <path id="${id}" d="M 200,200 m -170,0 a 170,170 0 1,1 340,0 a 170,170 0 1,1 -340,0" fill="none"/>
-    <text font-family="Caveat, cursive" font-size="26" fill="#f5b301"><textPath href="#${id}" textLength="1060" lengthAdjust="spacing">${txt}</textPath></text></svg>`;
+/* the two little travellers */
+function coupleSVG() {
+  return `<svg viewBox="0 0 260 250" class="couple w-full h-auto overflow-visible" aria-hidden="true">
+  <ellipse cx="80" cy="233" rx="40" ry="6" fill="#000" opacity=".35"/><ellipse cx="180" cy="233" rx="40" ry="6" fill="#000" opacity=".35"/>
+  <!-- him -->
+  <rect x="38" y="112" width="84" height="66" rx="18" fill="#8a5a35"/><rect x="46" y="104" width="68" height="16" rx="8" fill="#a8703f"/>
+  <g class="bLegL"><rect x="63" y="194" width="14" height="30" rx="6" fill="#2c3b5c"/><ellipse cx="70" cy="226" rx="12" ry="6.5" fill="#f3ead9"/></g>
+  <g class="bLegR"><rect x="83" y="194" width="14" height="30" rx="6" fill="#2c3b5c"/><ellipse cx="90" cy="226" rx="12" ry="6.5" fill="#f3ead9"/></g>
+  <rect x="52" y="128" width="56" height="74" rx="22" fill="#3d5a8c"/>
+  <rect x="54" y="122" width="52" height="15" rx="7.5" fill="#f5b301"/><rect x="88" y="132" width="12" height="26" rx="5" fill="#f5b301"/>
+  <rect x="43" y="140" width="14" height="42" rx="7" fill="#3d5a8c"/><circle cx="50" cy="185" r="7.5" fill="#f3cfae"/>
+  <path d="M104 148 L127 177" stroke="#3d5a8c" stroke-width="14" stroke-linecap="round"/>
+  <g class="bHeadW"><g class="bob">
+    <ellipse cx="38" cy="92" rx="8" ry="13" fill="#2a1d14"/><ellipse cx="122" cy="92" rx="8" ry="13" fill="#2a1d14"/>
+    <circle cx="80" cy="84" r="44" fill="#f3cfae"/>
+    <path d="M36 80 C36 28 124 28 124 80 Q80 66 36 80Z" fill="#fb7185"/><rect x="34" y="72" width="92" height="16" rx="8" fill="#e1566c"/><circle cx="80" cy="30" r="11" fill="#f7efe0"/>
+    <circle cx="64" cy="98" r="5.5" fill="#1b1410"/><circle cx="96" cy="98" r="5.5" fill="#1b1410"/><circle cx="66" cy="96" r="1.8" fill="#fff"/><circle cx="98" cy="96" r="1.8" fill="#fff"/>
+    <circle cx="53" cy="110" r="7" fill="#fb7185" opacity=".45"/><circle cx="107" cy="110" r="7" fill="#fb7185" opacity=".45"/>
+    <path d="M72 111 Q80 119 88 111" stroke="#7a2b3a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <ellipse class="bMouth" cx="80" cy="113" rx="6" ry="1.5" fill="#7a2b3a" opacity="0"/>
+  </g></g>
+  <!-- her -->
+  <rect x="136" y="114" width="88" height="62" rx="16" fill="#fb7185"/>
+  <path d="M132 84 C132 36 228 36 228 84 L233 152 C233 172 216 178 210 172 L210 122 L150 122 L150 172 C144 178 127 172 127 152 Z" fill="#1a1420"/>
+  <g class="gLegL"><rect x="164" y="194" width="14" height="30" rx="6" fill="#3a2a3f"/><ellipse cx="171" cy="226" rx="12" ry="6.5" fill="#f3ead9"/></g>
+  <g class="gLegR"><rect x="182" y="194" width="14" height="30" rx="6" fill="#3a2a3f"/><ellipse cx="189" cy="226" rx="12" ry="6.5" fill="#f3ead9"/></g>
+  <rect x="152" y="128" width="56" height="74" rx="22" fill="#f5b301"/>
+  <rect x="154" y="122" width="52" height="15" rx="7.5" fill="#f7efe0"/><rect x="160" y="132" width="12" height="26" rx="5" fill="#f7efe0"/>
+  <rect x="203" y="140" width="14" height="42" rx="7" fill="#f5b301"/><circle cx="210" cy="185" r="7.5" fill="#f3cfae"/>
+  <path d="M156 148 L133 177" stroke="#f5b301" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="130" cy="181" r="8" fill="#f3cfae"/>
+  <path class="heartBeat" d="${HEART}" transform="translate(121 156) scale(.7)" fill="#fb7185"/>
+  <circle cx="222" cy="172" r="7" fill="#8a5a35"/><circle cx="217" cy="166" r="3" fill="#8a5a35"/><circle cx="227" cy="166" r="3" fill="#8a5a35"/>
+  <g class="gHeadW"><g class="bob">
+    <circle cx="180" cy="84" r="44" fill="#f3cfae"/>
+    <path d="M134 82 C134 20 226 20 226 82 C208 64 194 68 180 58 C166 68 152 64 134 82Z" fill="#1a1420"/>
+    <ellipse cx="141" cy="98" rx="9" ry="22" fill="#1a1420"/><ellipse cx="219" cy="98" rx="9" ry="22" fill="#1a1420"/>
+    <use href="#sf" x="194" y="46" width="28" height="28"/>
+    <circle cx="164" cy="98" r="6" fill="#1b1410"/><circle cx="196" cy="98" r="6" fill="#1b1410"/><circle cx="166" cy="96" r="2" fill="#fff"/><circle cx="198" cy="96" r="2" fill="#fff"/>
+    <circle cx="153" cy="110" r="7" fill="#fb7185" opacity=".5"/><circle cx="207" cy="110" r="7" fill="#fb7185" opacity=".5"/>
+    <path d="M172 111 Q180 119 188 111" stroke="#7a2b3a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <ellipse class="gMouth" cx="180" cy="113" rx="6" ry="1.5" fill="#7a2b3a" opacity="0"/>
+  </g></g></svg>`;
+}
+const legsOf = root => $$('.bLegL,.bLegR,.gLegL,.gLegR', root);
+function swing(root, a) {
+  const L = legsOf(root); if (L.length < 4) return;
+  gsap.set(L[0], { rotation: a, transformOrigin: '50% 0%' }); gsap.set(L[1], { rotation: -a, transformOrigin: '50% 0%' });
+  gsap.set(L[2], { rotation: -a, transformOrigin: '50% 0%' }); gsap.set(L[3], { rotation: a, transformOrigin: '50% 0%' });
+}
+function talk(root, who) {
+  if (who !== 'a' && who !== 'm') return;
+  const mouth = $(who === 'a' ? '.bMouth' : '.gMouth', root), head = $(who === 'a' ? '.bHeadW' : '.gHeadW', root);
+  if (!mouth) return;
+  gsap.killTweensOf([mouth, head]);
+  gsap.set(mouth, { opacity: 1 });
+  gsap.fromTo(mouth, { attr: { ry: 1.5 } }, { attr: { ry: 5.5 }, duration: .16, repeat: 15, yoyo: true, onComplete: () => gsap.set(mouth, { opacity: 0 }) });
+  gsap.fromTo(head, { y: 0 }, { y: -4, duration: .2, repeat: 7, yoyo: true, ease: 'sine.inOut', onComplete: () => gsap.set(head, { y: 0 }) });
 }
 
-/* floating hearts-of-sunflowers helpers (on the fixed fx layer) */
+/* fx on the fixed layer */
 const fx = $('#fx');
-function spawnFlower(x, y, s = rand(14, 26)) {
+function spawnHeart(x, y, s = rand(14, 26)) {
   const e = document.createElement('div');
-  e.style.cssText = `position:absolute;left:${x}px;top:${y}px;width:${s}px;height:${s}px`;
-  e.innerHTML = flower('w-full h-full');
+  e.style.cssText = `position:absolute;left:${x}px;top:${y}px;width:${s}px;height:${s}px;color:${Math.random() < .5 ? '#fb7185' : '#ffd23f'}`;
+  e.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="${HEART}"/></svg>`;
   fx.appendChild(e);
-  gsap.fromTo(e, { xPercent: -50, yPercent: -50, scale: 0, rotation: rand(-90, 90) }, { scale: 1, rotation: '+=120', duration: .5, ease: 'back.out(2)' });
-  gsap.to(e, { y: rand(-120, -60), x: rand(-30, 30), opacity: 0, duration: 1.4, delay: .4, ease: 'power1.in', onComplete: () => e.remove() });
+  gsap.fromTo(e, { xPercent: -50, yPercent: -50, scale: 0, rotation: rand(-30, 30) }, { scale: 1, duration: .4, ease: 'back.out(2)' });
+  gsap.to(e, { y: rand(-170, -90), x: rand(-40, 40), opacity: 0, duration: rand(1.6, 2.4), delay: .3, ease: 'power1.in', onComplete: () => e.remove() });
 }
-function spawnName(x, y) {
-  const e = document.createElement('div');
-  e.className = 'font-hand text-sun text-2xl whitespace-nowrap';
-  e.textContent = Math.random() < .5 ? CONFIG.nick : CONFIG.her;
-  const px = Math.min(Math.max(x, 50), innerWidth - 50);
-  e.style.cssText += `;position:absolute;left:${px}px;top:${y}px;text-shadow:0 0 18px rgba(245,179,1,.6)`;
-  fx.appendChild(e);
-  gsap.fromTo(e, { xPercent: -50, yPercent: -50, scale: .6, opacity: 0 }, { scale: 1, opacity: 1, duration: .4, ease: 'back.out(2)' });
-  gsap.to(e, { y: -90, opacity: 0, duration: 1.8, delay: .5, ease: 'power1.in', onComplete: () => e.remove() });
+function heartsAt(el, n = 4) { const r = el.getBoundingClientRect(); for (let i = 0; i < n; i++) spawnHeart(r.left + r.width * rand(.2, .8), r.top - 4); }
+function starfield(el, n, h = 100) {
+  let s = ''; const r = seeded(n * 13 + 5);
+  for (let i = 0; i < n; i++) { const z = 1 + r() * 1.6; s += `<i class="st" style="left:${(r() * 100).toFixed(1)}%;top:${(r() * h).toFixed(1)}%;width:${z.toFixed(1)}px;height:${z.toFixed(1)}px;animation-delay:${(r() * 3).toFixed(1)}s"></i>`; }
+  el.innerHTML = s;
 }
-function burst(x, y, n = 5) { for (let i = 0; i < n; i++) spawnFlower(x + rand(-40, 40), y + rand(-30, 30)); spawnName(x, y - 30); }
+
+/* bottom bar label */
+const setLabel = t => { $('#barLabel').textContent = t; };
 
 /* ============================================================
-   Hero + marquee
+   Scenes for each chapter
    ============================================================ */
-$('#heroRingBox').innerHTML = ring('rp1');
-$('#heroSpin').innerHTML = flower('w-full h-full');
-gsap.from('.hero-in', { y: 24, opacity: 0, duration: 1.1, stagger: .2, ease: 'power3.out' });
-gsap.to('#cue', { scaleY: .3, transformOrigin: 'top', repeat: -1, yoyo: true, duration: 1, ease: 'sine.inOut' });
-if (!REDUCED) {
-  gsap.to('#heroSpin', { rotation: 360, duration: 120, repeat: -1, ease: 'none' });
-  gsap.to('#heroRingBox', { rotation: -360, duration: 90, repeat: -1, ease: 'none' });
-}
-(function tilt() {
-  gsap.set('#heroFlower', { transformPerspective: 700 });
-  const rx = gsap.quickTo('#heroFlower', 'rotationX', { duration: .8, ease: 'power3.out' });
-  const ry = gsap.quickTo('#heroFlower', 'rotationY', { duration: .8, ease: 'power3.out' });
-  window.addEventListener('pointermove', e => { ry((e.clientX / innerWidth - .5) * 40); rx(-(e.clientY / innerHeight - .5) * 40); });
-})();
-
-(function marquee() {
-  const unit = (a, b) => `<span class="outline font-display italic text-6xl md:text-8xl px-4 leading-tight">${a}</span>${flower('w-10 h-10 md:w-14 md:h-14 shrink-0')}<span class="font-display italic text-6xl md:text-8xl px-4 leading-tight text-sun">${b}</span>${flower('w-10 h-10 md:w-14 md:h-14 shrink-0')}`;
-  const group = (a, b) => `<div class="flex items-center shrink-0">${unit(a, b).repeat(4)}</div>`;
-  $('#mq1').innerHTML = group(CONFIG.nick, CONFIG.her) + group(CONFIG.nick, CONFIG.her);
-  $('#mq2').innerHTML = group(CONFIG.her, CONFIG.nick) + group(CONFIG.her, CONFIG.nick);
-})();
-
-/* ============================================================
-   Growing sunflower (pinned, scroll-scrubbed)
-   ============================================================ */
-(function grow() {
-  $('#growHead').innerHTML = flower('w-full h-full');
-  gsap.set('#growHead', { xPercent: -50, yPercent: -50, scale: 0, opacity: 0, rotation: -200 });
-  gsap.set('#gLeafL', { scale: 0, rotation: -12 });
-  gsap.set('#gLeafR', { scale: 0, rotation: 12 });
-  const tl = gsap.timeline({ defaults: { ease: 'none' } });
-  tl.to('#growStem', { scaleY: 1, duration: 3 }, 0)
-    .to('#gLeafL', { scale: 1, duration: 1 }, 1.4)
-    .to('#gLeafR', { scale: 1, duration: 1 }, 1.9)
-    .to('#growHead', { opacity: 1, scale: 1, rotation: 0, duration: 2, ease: 'power1.out' }, 2.8)
-    .to('#growHead', { rotation: 30, duration: 1.4 }, 4.8);
-
-  const caps = CONFIG.growCaptions, ranges = [[0, .22], [.24, .5], [.52, .76], [.78, 1.01]];
-  const txt = $('#growText'); let active = -1;
-  const show = i => {
-    active = i;
-    gsap.to(txt, { opacity: 0, y: 10, duration: .25, overwrite: true, onComplete: () => {
-      if (i < 0) return;
-      txt.textContent = caps[i] || '';
-      gsap.fromTo(txt, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .6, ease: 'power2.out' });
-    } });
+const SCENES = [
+  { sky: ['#070812', '#15142b', '#2a1f3d'], moon: true, stars: 70, far: '#14142b', near: '#0e0e20', ff: 6 },
+  { sky: ['#1a1230', '#4a2a4f', '#f08a5d'], sun: 'low', stars: 22, far: '#2b1d3d', near: '#1c1228', trees: true, ff: 10 },
+  { sky: ['#2b1a0c', '#8a4b12', '#f5b301'], sun: 'rise', stars: 0, far: '#5a3410', near: '#3b220d', flowers: true, ff: 0 },
+  { sky: ['#05060d', '#0f1226', '#241a3a'], moon: true, stars: 95, far: '#0f1124', near: '#0a0b18', ff: 12 }
+];
+function sceneHTML(c, seed) {
+  const r = seeded(seed);
+  const ridge = (color, amp, base) => {
+    let pts = '0,100';
+    for (let x = 0; x <= 1000; x += 25) pts += ` ${x},${(base - r() * amp - Math.sin(x / 110) * amp * .3).toFixed(1)}`;
+    return `<svg viewBox="0 0 1000 100" preserveAspectRatio="none" class="absolute inset-0 w-full h-full"><polygon points="${pts} 1000,100" fill="${color}"/></svg>`;
   };
+  let h = `<div class="absolute inset-0" style="background:linear-gradient(to bottom,${c.sky[0]} 0%,${c.sky[1]} 55%,${c.sky[2]} 100%)"></div>`;
+  if (c.moon) h += `<div class="absolute rounded-full" style="right:14%;top:9svh;width:54px;height:54px;background:#f4efe1;box-shadow:0 0 70px 14px rgba(244,239,225,.22)"></div>`;
+  if (c.sun === 'low') h += `<div class="absolute rounded-full" style="left:50%;bottom:30svh;width:220px;height:220px;margin-left:-110px;background:radial-gradient(circle,#ffd98a 0%,#ff9a5a 45%,transparent 70%)"></div>`;
+  if (c.sun === 'rise') h += `<div class="absolute rounded-full" style="left:50%;bottom:24svh;width:340px;height:340px;margin-left:-170px;background:radial-gradient(circle,#fff0b8 0%,#ffd23f 30%,rgba(245,179,1,.35) 52%,transparent 72%)"></div>`;
+  if (c.stars) { let s = ''; for (let i = 0; i < c.stars; i++) { const z = 1 + r() * 1.6; s += `<i class="st" style="left:${(r() * 100).toFixed(1)}%;top:${(r() * 42).toFixed(1)}%;width:${z.toFixed(1)}px;height:${z.toFixed(1)}px;animation-delay:${(r() * 3).toFixed(1)}s"></i>`; } h += `<div class="absolute inset-0">${s}</div>`; }
+  h += `<div class="par absolute left-0 w-[200vw]" data-par="14" style="bottom:calc(var(--bar) + 16svh);height:34svh">${ridge(c.far, 40, 58)}</div>`;
+  h += `<div class="par absolute left-0 w-[200vw]" data-par="30" style="bottom:calc(var(--bar) + 8svh);height:26svh">${ridge(c.near, 28, 64)}</div>`;
+  if (c.trees) {
+    let t = '';
+    for (let k = 0; k < 44; k++) { const w = 34 + r() * 40, hh = w * 2.2; t += `<svg viewBox="0 0 40 100" style="position:absolute;left:${(k * 2.3 + r() * 1.2).toFixed(1)}%;bottom:0;width:${w.toFixed(0)}px;height:${hh.toFixed(0)}px"><polygon points="20,0 38,45 28,45 40,80 0,80 12,45 2,45" fill="#150e1c"/><rect x="18" y="80" width="4" height="20" fill="#150e1c"/></svg>`; }
+    h += `<div class="par absolute left-0 w-[260vw]" data-par="60" style="bottom:calc(var(--bar) + 22px);height:200px">${t}</div>`;
+  }
+  if (c.flowers) {
+    let t = '';
+    for (let k = 0; k < 40; k++) { const s = 34 + r() * 26, st = 36 + r() * 70; t += `<div style="position:absolute;left:${(k * 2.5 + r()).toFixed(1)}%;bottom:0"><i style="position:absolute;left:-2px;bottom:0;width:4px;height:${st.toFixed(0)}px;background:#3c6b25"></i><svg viewBox="0 0 200 200" style="position:absolute;left:${(-s / 2).toFixed(0)}px;bottom:${(st - s / 2).toFixed(0)}px;width:${s.toFixed(0)}px;height:${s.toFixed(0)}px"><use href="#sf"/></svg></div>`; }
+    h += `<div class="par absolute left-0 w-[260vw]" data-par="60" style="bottom:calc(var(--bar) + 22px);height:180px">${t}</div>`;
+  }
+  if (c.ff) { let f = ''; for (let i = 0; i < c.ff; i++) f += `<i class="ff" style="left:${(r() * 100).toFixed(0)}%;top:${(30 + r() * 50).toFixed(0)}%;animation-delay:${(-r() * 7).toFixed(1)}s"></i>`; h += `<div class="absolute inset-0">${f}</div>`; }
+  h += `<div class="absolute inset-x-0 bottom-0" style="height:calc(var(--bar) + 8svh + 4px);background:linear-gradient(to bottom,${c.near},#07060d)"></div>`;
+  h += `<div class="absolute inset-x-0" style="bottom:calc(var(--bar) + 22px);height:2px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.22) 0 14px,transparent 14px 28px)"></div>`;
+  return h;
+}
+
+/* ============================================================
+   Start screen + intro
+   ============================================================ */
+$('#startCouple').innerHTML = coupleSVG();
+starfield($('#startStars'), 60, 70);
+starfield($('#introStars'), 70, 60);
+$('#introCouple').innerHTML = coupleSVG();
+$$('.il').forEach((el, i) => { el.innerHTML = CONFIG.intro[i].replace(/(Mahima and Abhinav)/, 'Mahima<br>and Abhinav').replace('. One', '.<br>One'); });
+gsap.from('.s-in', { y: 22, opacity: 0, duration: 1, stagger: .15, ease: 'power3.out' });
+gsap.set('#startCouple .couple', { transformOrigin: '50% 100%' });
+if (!REDUCED) {
+  const sw = { a: 0 };
+  gsap.to(sw, { a: 1, duration: .6, repeat: -1, yoyo: true, ease: 'sine.inOut', onUpdate: () => { swing($('#startCouple'), (sw.a - .5) * 22); swing($('#introCouple'), (sw.a - .5) * 22); } });
+}
+document.documentElement.classList.add('lock');
+
+/* ============================================================
+   Journey timeline
+   ============================================================ */
+(function journey() {
+  const wrap = $('#tlItems');
+  CONFIG.timeline.forEach((t, i) => {
+    const row = document.createElement('div');
+    row.className = 'tl-row relative pl-[72px] md:pl-0 mb-14 md:flex ' + (i % 2 ? 'md:justify-end' : '');
+    const media = t.img ? `<img src="${t.img}" alt="" class="w-full h-44 object-cover rounded-xl mb-4 border border-line">` : '';
+    row.innerHTML = `<span class="absolute top-6 left-[34px] md:left-1/2 w-6 h-6" style="margin-left:-12px">${flower('w-full h-full')}</span>
+      <div class="tl-card md:w-[calc(50%-48px)] bg-panel border border-line rounded-2xl p-5 ${i % 2 ? 'md:text-left' : 'md:text-right'}">
+        ${media}<p class="font-hand text-2xl text-sun leading-none">${t.k}</p>
+        <h3 class="font-display italic text-3xl mt-1 mb-1">${t.t}</h3>
+        <p class="text-mist font-light text-sm leading-relaxed">${t.b}</p></div>`;
+    wrap.appendChild(row);
+    ScrollTrigger.create({ trigger: row, start: 'top 92%', once: true, onEnter: () => gsap.from($('.tl-card', row), { opacity: 0, y: 40, x: innerWidth > 768 ? (i % 2 ? 50 : -50) : 0, duration: .9, ease: 'power3.out' }) });
+  });
+  const walker = $('#walker'); walker.innerHTML = coupleSVG();
+  gsap.set(walker, { xPercent: -50, yPercent: -88 });
+  const wrapEl = $('#tlWrap');
   ScrollTrigger.create({
-    trigger: '#grow', start: 'top top', end: '+=2600', pin: true, scrub: .6, animation: tl,
-    onUpdate: self => { const i = ranges.findIndex(([a, b]) => self.progress >= a && self.progress < b); if (i !== active) show(i); }
-  });
-})();
-
-/* ============================================================
-   Plant a sunflower
-   ============================================================ */
-(function field() {
-  const box = $('#fieldBox'), plants = $('#plants'), msg = $('#fieldMsg'), count = $('#fCount');
-  const GROUND = 18, total = CONFIG.reasons.length;
-  let idx = 0, done = false;
-
-  function plant(x, y, size, label) {
-    const H = box.clientHeight, W = box.clientWidth;
-    const hy = Math.min(Math.max(y, 100), H - GROUND - 50);
-    const stemH = H - GROUND - hy;
-    const el = document.createElement('div');
-    el.style.cssText = `position:absolute;left:${x}px;bottom:${GROUND}px;width:0;height:${stemH}px`;
-    const right = x < W / 2;
-    el.innerHTML = `<i class="stem"></i><i class="leaf l"></i><i class="leaf r"></i>
-      <div class="head" style="position:absolute;left:0;top:0;width:${size}px;height:${size}px">${flower('w-full h-full')}</div>
-      <span class="font-hand text-sun text-xl whitespace-nowrap" style="position:absolute;top:${-size / 2 - 6}px;${right ? 'left' : 'right'}:${size / 2 - 4}px;opacity:0">${label}</span>`;
-    plants.appendChild(el);
-    const stem = el.querySelector('.stem'), head = el.querySelector('.head'), lf = el.querySelectorAll('.leaf'), tag = el.querySelector('span');
-    const r0 = rand(-8, 8);
-    gsap.set(head, { xPercent: -50, yPercent: -50, scale: 0, rotation: -180 });
-    gsap.set(lf[0], { scale: 0, rotation: -20 }); gsap.set(lf[1], { scale: 0, rotation: 20 });
-    gsap.timeline()
-      .fromTo(stem, { scaleY: 0 }, { scaleY: 1, duration: .7, ease: 'power2.out' })
-      .to(lf, { scale: 1, duration: .4, stagger: .1 }, .35)
-      .to(head, { scale: 1, rotation: r0, duration: .8, ease: 'back.out(1.6)', onComplete: () => {
-        if (!REDUCED) gsap.to(head, { rotation: r0 + rand(5, 9) * (Math.random() < .5 ? 1 : -1), duration: rand(2, 3.5), repeat: -1, yoyo: true, ease: 'sine.inOut' });
-      } }, .45)
-      .to(tag, { opacity: 1, duration: .5 }, 1)
-      .to(tag, { opacity: 0, duration: .8 }, 3.2);
-  }
-
-  function say(t) {
-    gsap.killTweensOf(msg);
-    gsap.fromTo(msg, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' });
-    msg.textContent = t;
-  }
-
-  box.addEventListener('click', e => {
-    const r = box.getBoundingClientRect();
-    const x = Math.min(Math.max(e.clientX - r.left, 30), r.width - 30), y = e.clientY - r.top;
-    plant(x, y, rand(58, 86), CONFIG.nick);
-    if (idx < total) {
-      say(CONFIG.reasons[idx]); idx++; S.planted = idx; count.textContent = idx;
-      if (idx === total) { done = true; setTimeout(() => say(CONFIG.fieldDone), 3400); burst(e.clientX, e.clientY, 8); }
-    } else say(CONFIG.reasons[Math.floor(rand(0, total))]);
-  });
-
-  /* scenery planted when the field scrolls into view */
-  ScrollTrigger.create({ trigger: box, start: 'top 80%', once: true, onEnter: () => {
-    const H = box.clientHeight, W = box.clientWidth;
-    [.1, .24, .4, .58, .74, .9].forEach((p, i) => gsap.delayedCall(i * .25, () => plant(W * p, H * rand(.42, .66), rand(44, 64), '')));
-  } });
-})();
-
-/* ============================================================
-   Notes
-   ============================================================ */
-(function notes() {
-  const wrap = $('#notesList');
-  CONFIG.notes.forEach((n, i) => {
-    const c = document.createElement('article');
-    c.className = 'relative overflow-hidden bg-ink border border-line rounded-3xl p-6 md:p-9';
-    c.innerHTML = `
-      <span class="absolute -right-3 -bottom-8 font-display italic text-[7rem] leading-none text-sun/10 select-none pointer-events-none">${i % 2 ? CONFIG.her : CONFIG.nick}</span>
-      <div class="relative">
-        <div class="flex items-center gap-3 mb-3">${flower('w-8 h-8 shrink-0')}<p class="font-hand text-3xl text-sun leading-none">${n.t}</p></div>
-        <p class="font-display text-2xl md:text-3xl leading-relaxed text-white/90">${n.b}</p>
-      </div>`;
-    wrap.appendChild(c);
-    ScrollTrigger.create({ trigger: c, start: 'top 92%', once: true, onEnter: () => gsap.from(c, { opacity: 0, y: 50, duration: 1, ease: 'power3.out' }) });
-  });
-})();
-
-/* ============================================================
-   Pluck the petals
-   ============================================================ */
-(function petalGame() {
-  const svg = $('#petalSvg'), text = $('#petalText'), cnt = $('#pCount'), reset = $('#petalReset');
-  const lines = CONFIG.petalLines, N = lines.length;
-  let n = 0, html = '';
-  for (let i = 0; i < N; i++) {
-    html += `<g class="pg" data-i="${i}"><g transform="rotate(${i * 360 / N} 150 150)"><path d="M150 112 C133 86 135 40 150 10 C165 40 167 86 150 112 Z" fill="#ffc61a" stroke="#e39a00" stroke-width="1.5"/></g></g>`;
-  }
-  html += `<circle cx="150" cy="150" r="46" fill="#33200d"/><circle cx="150" cy="150" r="41" fill="url(#seedg)" pointer-events="none"/>`;
-  const g = Math.PI * (3 - Math.sqrt(5));
-  for (let i = 1; i <= 100; i++) { const r = 3.9 * Math.sqrt(i), t = i * g; html += `<circle cx="${(150 + r * Math.cos(t)).toFixed(1)}" cy="${(150 + r * Math.sin(t)).toFixed(1)}" r="${(1 + i / 100 * 1.1).toFixed(2)}" fill="${i % 3 ? '#8a5522' : '#25150a'}" pointer-events="none"/>`; }
-  svg.innerHTML = html;
-  const groups = $$('.pg', svg);
-
-  groups.forEach(pg => pg.addEventListener('click', ev => {
-    if (pg.dataset.gone) return;
-    pg.dataset.gone = '1'; n++; S.petals = Math.max(S.petals, n); cnt.textContent = n;
-    const a = pg.dataset.i * 360 / N * Math.PI / 180;
-    gsap.to(pg, { x: Math.sin(a) * 190, y: -Math.cos(a) * 190, rotation: rand(-220, 220), opacity: 0, duration: 1.1, ease: 'power2.in' });
-    gsap.fromTo(text, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .45 });
-    text.textContent = lines[n - 1];
-    if (n === N) {
-      setTimeout(() => { text.textContent = CONFIG.petalDone; gsap.fromTo(text, { opacity: 0 }, { opacity: 1, duration: .6 }); }, 1800);
-      reset.classList.remove('hidden');
-      const r = svg.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, 8);
+    trigger: wrapEl, start: 'top 65%', end: 'bottom 65%',
+    onUpdate: self => {
+      const p = self.progress;
+      gsap.set(walker, { y: p * wrapEl.offsetHeight });
+      gsap.set('#tlFill', { scaleY: p });
+      swing(walker, Math.sin(p * 90) * 24);
     }
-  }));
-  reset.addEventListener('click', () => {
-    n = 0; cnt.textContent = 0; text.textContent = 'Tap a petal.'; reset.classList.add('hidden');
-    groups.forEach(pg => { delete pg.dataset.gone; gsap.to(pg, { x: 0, y: 0, rotation: 0, opacity: 1, duration: .6, ease: 'back.out(1.4)' }); });
   });
-  ScrollTrigger.create({ trigger: '#petalSvg', start: 'top 90%', once: true, onEnter: () => gsap.from('#petalSvg', { opacity: 0, scale: .85, duration: 1, ease: 'power3.out' }) });
+  ScrollTrigger.create({ trigger: '#journey', start: 'top 60%', end: 'bottom 40%', onToggle: s => { if (s.isActive) setLabel('Our Journey'); } });
 })();
 
 /* ============================================================
-   Seeds
+   Chapters (pinned scenes with the dialogue)
    ============================================================ */
-(function seeds() {
-  const grid = $('#seedGrid');
-  const seedSVG = `<svg viewBox="0 0 48 48" class="w-12 h-12 mx-auto"><ellipse cx="24" cy="26" rx="10" ry="15" fill="#3a220d" transform="rotate(20 24 26)"/><path d="M20 14 Q22 26 19 38" stroke="#8a5522" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M26 13 Q29 26 27 38" stroke="#8a5522" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`;
-  const sproutSVG = `<svg viewBox="0 0 48 48" class="w-12 h-12 mx-auto"><path d="M24 44 V22" stroke="#5c8f31" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M24 30 C14 30 10 22 10 16 C18 16 24 22 24 30Z" fill="#4d7c2f"/><path d="M24 24 C34 24 38 16 38 10 C30 10 24 16 24 24Z" fill="#5a8f35"/></svg>`;
-  CONFIG.promises.forEach(p => {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'relative bg-ink border border-line rounded-2xl p-4 sm:p-5 text-center transition hover:border-sun flex flex-col items-center justify-center';
-    b.style.minHeight = '170px';
-    b.innerHTML = `<div class="c">${seedSVG}<p class="font-hand text-xl text-mist mt-2">Tap to plant</p></div>
-      <div class="o hidden">${sproutSVG}<p class="font-display italic text-xl sm:text-2xl leading-snug mt-2 text-white/90">${p}</p></div>`;
-    grid.appendChild(b);
-    b.addEventListener('click', () => {
-      if (b.dataset.open) return;
-      b.dataset.open = '1'; S.seeds++;
-      $('.c', b).classList.add('hidden'); const o = $('.o', b); o.classList.remove('hidden');
-      gsap.fromTo(o, { opacity: 0, y: 12, scale: .9 }, { opacity: 1, y: 0, scale: 1, duration: .6, ease: 'back.out(1.6)' });
-      b.classList.add('border-sun/60');
-      const r = b.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + 20, 3);
-    });
-  });
-  ScrollTrigger.create({ trigger: '#seedGrid', start: 'top 92%', once: true, onEnter: () => gsap.from('#seedGrid > button', { opacity: 0, y: 30, stagger: .1, duration: .7, clearProps: 'opacity,transform' }) });
-})();
+function buildChapter(c, i) {
+  const sec = document.createElement('section');
+  sec.id = 'ch' + i; sec.className = 'relative overflow-hidden';
+  sec.style.cssText = 'height:100vh;height:100svh';
+  const beats = [{ s: 't' }].concat(c.beats);
+  sec.innerHTML = `<div class="absolute inset-0 overflow-hidden">${sceneHTML(SCENES[i], 30 + i * 11)}</div>
+    <div class="chT" style="top:20svh"><div class="text-center px-6"><p class="font-hand text-3xl text-sun">${c.kicker}</p>
+      <h2 class="font-display italic text-6xl md:text-8xl text-white leading-none my-2">${c.title}</h2>
+      <p class="text-mist font-light text-xs tracking-[0.25em] uppercase">${c.sub}</p></div></div>
+    <div class="dlg"><div class="bub"><p class="who"></p><p class="txt"></p></div></div>
+    <div class="actors">${coupleSVG()}</div>`;
+  $('#chapters').appendChild(sec);
 
-/* ============================================================
-   Final + reply
-   ============================================================ */
-(function finalPart() {
-  $('#finalRingBox').innerHTML = ring('rp2');
-  $('#finalFlower').innerHTML = flower('w-full h-full');
-  if (!REDUCED) {
-    gsap.to('#finalRingBox', { rotation: 360, duration: 90, repeat: -1, ease: 'none' });
-    gsap.to('#finalFlower', { rotation: -360, duration: 120, repeat: -1, ease: 'none' });
+  const bub = $('.bub', sec), who = $('.who', sec), txt = $('.txt', sec), chT = $('.chT', sec), couple = $('.actors', sec);
+  const par = $$('.par', sec);
+  const weights = beats.map(b => b.s === 't' ? 300 : b.s === 'l' ? 1500 : 230 + words(b.t) * 17);
+  const total = weights.reduce((a, b) => a + b, 0);
+  let acc = 0; const cum = weights.map(w => (acc += w) / total);
+  const idxFor = p => { let k = 0; while (k < cum.length - 1 && p >= cum[k]) k++; return k; };
+  let cur = -1, typeTween = null;
+
+  function typeLove() {
+    txt.innerHTML = CONFIG.love.map((_, n) => `<span class="l${n + 1}"></span>`).join('');
+    const spans = $$('span', txt), totalChars = CONFIG.love.join('').length, o = { n: 0 };
+    if (typeTween) typeTween.kill();
+    typeTween = gsap.to(o, { n: totalChars, duration: 3.4, ease: 'none', onUpdate: () => {
+      let left = Math.floor(o.n);
+      CONFIG.love.forEach((line, k) => { const take = Math.max(0, Math.min(line.length, left)); spans[k].textContent = line.slice(0, take); left -= line.length; });
+    }, onComplete: () => { for (let k = 0; k < 6; k++) gsap.delayedCall(k * .25, () => heartsAt(couple, 5)); } });
   }
-  const box = $('#finalLines');
-  CONFIG.finalLines.forEach(l => { const p = document.createElement('p'); p.className = 'reveal'; p.textContent = l; box.appendChild(p); });
+  function show(k) {
+    const b = beats[k];
+    gsap.killTweensOf(bub);
+    if (b.s === 't') { gsap.to(bub, { opacity: 0, duration: .2 }); gsap.to(chT, { opacity: 1, y: 0, duration: .6 }); return; }
+    gsap.to(chT, { opacity: 0, y: -12, duration: .3 });
+    gsap.to(bub, { opacity: 0, y: 8, duration: .15, onComplete: () => {
+      bub.className = 'bub ' + b.s;
+      who.textContent = b.s === 'm' ? 'Mahima' : b.s === 'a' ? 'Abhinav' : b.s === 'n' ? 'voice-over' : '';
+      if (b.s === 'l') typeLove(); else txt.textContent = b.t;
+      gsap.fromTo(bub, { opacity: 0, y: 14, scale: .97 }, { opacity: 1, y: 0, scale: 1, duration: .5, ease: 'power2.out' });
+      talk(couple, b.s);
+      if (b.s === 'b') heartsAt(couple, 4);
+    } });
+  }
+  gsap.set(chT, { opacity: 1 }); gsap.set(bub, { opacity: 0 });
+
+  ScrollTrigger.create({
+    trigger: sec, start: 'top top', end: '+=' + total, pin: true, anticipatePin: 1,
+    onToggle: self => {
+      if (self.isActive) setLabel(c.label);
+      if (i === CONFIG.chapters.length - 1) {
+        clearInterval(self._hi);
+        if (self.isActive) self._hi = setInterval(() => { if (!document.hidden) spawnHeart(rand(30, innerWidth - 30), innerHeight - 70, rand(10, 20)); }, 900);
+      }
+    },
+    onUpdate: self => {
+      const p = self.progress;
+      par.forEach(el => gsap.set(el, { x: (-(+el.dataset.par) * p) + 'vw' }));
+      swing(couple, Math.sin(p * total / 24) * 13);
+      const k = idxFor(p);
+      if (k !== cur) { cur = k; show(k); }
+    }
+  });
+  cur = 0;
+}
+CONFIG.chapters.forEach(buildChapter);
+
+/* ============================================================
+   Credits + reply
+   ============================================================ */
+(function credits() {
+  const box = $('#creditLines');
+  CONFIG.credits.forEach(c => {
+    const d = document.createElement('div'); d.className = 'cr';
+    d.innerHTML = c.length === 1 ? `<p class="font-display italic text-2xl text-mist">${c[0]}</p>`
+      : `<p class="text-xs tracking-[0.3em] uppercase text-sun mb-3">${c[0]}</p>` + c.slice(1).map(x => `<p class="font-display text-2xl md:text-3xl text-white/90 leading-snug">${x}</p>`).join('');
+    box.appendChild(d);
+  });
+  ScrollTrigger.create({ trigger: '#credits', start: 'top 60%', onToggle: s => { if (s.isActive) setLabel('Credits'); } });
+  $$('.cr').forEach(el => ScrollTrigger.create({ trigger: el, start: 'top 92%', once: true, onEnter: () => gsap.from(el, { opacity: 0, y: 30, duration: 1, ease: 'power3.out' }) }));
 
   const picked = new Set(), chips = $('#chips');
   CONFIG.feelings.forEach(f => {
@@ -519,67 +525,79 @@ if (!REDUCED) {
     b.addEventListener('click', () => { picked.has(f) ? picked.delete(f) : picked.add(f); b.classList.toggle('on', picked.has(f)); });
     chips.appendChild(b);
   });
-
-  const fileName = CONFIG.her.toLowerCase() + '_sunflower_reply.json';
+  const fileName = 'mahima_film_reply.json';
   const payload = () => JSON.stringify({
-    from: CONFIG.her, to: CONFIG.you, sentAt: new Date().toISOString(),
-    feelings: [...picked], note: $('#replyText').value.trim(),
-    played: { sunflowersPlanted: S.planted, petalsPlucked: S.petals, seedsPlanted: S.seeds }
+    from: 'Mahima', to: 'Abhinav', sentAt: new Date().toISOString(),
+    startChoice: startChoices.length ? startChoices[startChoices.length - 1].label : null,
+    startChoiceKey: startChoices.length ? startChoices[startChoices.length - 1].choice : null,
+    startChoiceHistory: startChoices,
+    feelings: [...picked], note: $('#replyText').value.trim()
   }, null, 2);
-  const thanks = () => {
-    const d = $('#replyDone'); d.textContent = 'Thank you, ' + CONFIG.nick + '. Now send that file to ' + CONFIG.you + '.';
-    gsap.to(d, { opacity: 1, y: -4, duration: .7 });
-    const r = d.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 8);
-  };
+  const thanks = () => { const d = $('#replyDone'); d.textContent = 'Thank you, Mahii. Now send that file to Abhinav.'; gsap.to(d, { opacity: 1, y: -4, duration: .7 }); heartsAt(d, 6); };
   $('#replySend').addEventListener('click', () => {
     const blob = new Blob([payload()], { type: 'application/json' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = fileName;
-    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
-    thanks();
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); thanks();
   });
   try {
     const probe = new File(['{}'], fileName, { type: 'application/json' });
     if (navigator.canShare && navigator.canShare({ files: [probe] })) {
       const sb = $('#replyShare'); sb.classList.remove('hidden');
-      sb.addEventListener('click', async () => {
-        try { await navigator.share({ files: [new File([payload()], fileName, { type: 'application/json' })], title: 'My reply' }); thanks(); } catch (e) {}
-      });
+      sb.addEventListener('click', async () => { try { await navigator.share({ files: [new File([payload()], fileName, { type: 'application/json' })], title: 'My reply' }); thanks(); } catch (e) {} });
     }
   } catch (e) {}
 })();
 
+gsap.to('#topBar', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: true } });
+
 /* ============================================================
-   Everywhere: reveal, progress, falling petals, name trail
+   Play / pause (auto scroll) + start + replay
    ============================================================ */
-$$('.reveal').forEach(el => ScrollTrigger.create({ trigger: el, start: 'top 94%', once: true, onEnter: () => gsap.from(el, { opacity: 0, y: 36, duration: 1, ease: 'power3.out' }) }));
-gsap.to('#progBar', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: true } });
-
-if (!REDUCED) {
-  const layer = $('#petals');
-  for (let i = 0; i < 14; i++) {
-    const p = document.createElement('div'), s = rand(9, 15);
-    p.style.cssText = `position:absolute;left:${rand(0, 100)}%;top:0;width:${s}px;height:${s * 1.7}px;border-radius:50% 50% 50% 50% / 70% 70% 30% 30%;background:linear-gradient(#ffd23f,#e39a00);opacity:${rand(.25, .5)}`;
-    layer.appendChild(p);
-    gsap.fromTo(p, { y: -40, rotation: rand(0, 360) }, { y: innerHeight + 40, rotation: '+=' + rand(180, 420), duration: rand(16, 28), repeat: -1, ease: 'none', delay: -rand(0, 20) });
-    gsap.to(p, { x: rand(-50, 50), duration: rand(3, 5), repeat: -1, yoyo: true, ease: 'sine.inOut' });
-  }
-  /* names drifting up now and then */
-  setInterval(() => { if (!document.hidden) spawnName(rand(60, innerWidth - 60), innerHeight - rand(40, 160)); }, 4200);
-  /* mouse trail */
-  let lx = -999, ly = -999, c = 0;
-  window.addEventListener('pointermove', e => {
-    if (e.pointerType !== 'mouse') return;
-    if (Math.hypot(e.clientX - lx, e.clientY - ly) < 70) return;
-    lx = e.clientX; ly = e.clientY; c++;
-    c % 5 === 0 ? spawnName(lx, ly) : spawnFlower(lx, ly, rand(12, 20));
-  });
+const ICON_PLAY = `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg>`;
+const ICON_PAUSE = `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>`;
+const SPEED = 58;
+let auto = false, raf = 0, last = 0, pos = 0;
+function paintBtn() { $('#playBtn').innerHTML = auto ? ICON_PAUSE : ICON_PLAY; }
+function loop(t) {
+  if (!auto) return;
+  const dt = Math.min(.05, (t - last) / 1000); last = t; pos += SPEED * dt;
+  const max = document.documentElement.scrollHeight - innerHeight;
+  if (pos >= max) { window.scrollTo(0, max); stopAuto(); return; }
+  const y = Math.round(pos); if (y !== Math.round(scrollY)) window.scrollTo(0, y);
+  raf = requestAnimationFrame(loop);
 }
-/* tap anywhere (outside the interactive bits) for a little burst */
-document.addEventListener('click', e => {
-  if (e.target.closest('button,input,textarea,a,label,#fieldBox,#petalSvg')) return;
-  burst(e.clientX, e.clientY, 4);
-});
+function startAuto() { if (auto) return; auto = true; pos = scrollY; last = performance.now(); raf = requestAnimationFrame(loop); paintBtn(); }
+function stopAuto() { auto = false; cancelAnimationFrame(raf); paintBtn(); }
+['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(ev => window.addEventListener(ev, e => { if (auto && !(e.target && e.target.closest && e.target.closest('#playBtn'))) stopAuto(); }, { passive: true }));
+$('#playBtn').addEventListener('click', () => { auto ? stopAuto() : startAuto(); });
+paintBtn();
 
+let introTl = null;
+function begin(withAuto) {
+  startChoices.push(withAuto
+    ? { choice: 'watch_it_for_me', label: 'Watch it for me', at: new Date().toISOString() }
+    : { choice: 'scroll_myself', label: "I'll scroll myself", at: new Date().toISOString() });
+  gsap.to('#start', { opacity: 0, duration: .8, onComplete: () => { $('#start').style.display = 'none'; } });
+  document.documentElement.classList.remove('lock');
+  window.scrollTo(0, 0); ScrollTrigger.refresh();
+  setLabel('Prologue');
+  const lines = $$('.il');
+  introTl = gsap.timeline({ delay: .6 });
+  lines.forEach((el, i) => {
+    introTl.fromTo(el, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 1 });
+    if (i < lines.length - 1) introTl.to(el, { opacity: 0, duration: .6 }, '+=1.1');
+  });
+  introTl.to('#introCue', { opacity: 1, duration: .8 }, '+=.6');
+  if (withAuto) introTl.add(() => startAuto(), '+=1.2');
+}
+$('#btnAuto').addEventListener('click', () => begin(true));
+$('#btnSelf').addEventListener('click', () => begin(false));
+$('#replay').addEventListener('click', () => {
+  stopAuto(); window.scrollTo(0, 0);
+  $$('.il').forEach(el => gsap.set(el, { opacity: 0 })); gsap.set('#introCue', { opacity: 0 });
+  document.documentElement.classList.add('lock');
+  const s = $('#start'); s.style.display = ''; gsap.set(s, { opacity: 0 }); gsap.to(s, { opacity: 1, duration: .6 });
+});
 window.addEventListener('load', () => ScrollTrigger.refresh());
 </script>
 </body>
