@@ -1,1 +1,1107 @@
-live soon
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#150e17">
+<title>For Mahima</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: { ink: '#150e17', panel: '#1e1522', line: '#3b2a42', pink: '#f6a6cc', rose: '#f472b6', cream: '#f7eef3', mist: '#b9a6c0' },
+        fontFamily: {
+          serif: ['Newsreader', 'Georgia', 'serif'],
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+          script: ['Caveat', 'cursive']
+        }
+      }
+    }
+  };
+</script>
+<style>
+  :root { --ink:#150e17; --panel:#1e1522; --panel2:#271b2c; --line:#3b2a42; --pink:#f6a6cc; --rose:#f472b6; --cream:#f7eef3; --mist:#b9a6c0; }
+  html, body { background: var(--ink); }
+  body {
+    background:
+      radial-gradient(800px 480px at 50% -120px, rgba(244,114,182,.16), transparent 62%),
+      radial-gradient(600px 400px at 100% 100%, rgba(246,166,204,.07), transparent 60%),
+      var(--ink);
+    color: var(--cream);
+    -webkit-tap-highlight-color: transparent;
+  }
+  :focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; border-radius: 14px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 24px; }
+  .label { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--mist); }
+  .pinktext { color: var(--pink); }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    min-height: 54px; padding: 0 1.5rem; border-radius: 999px; font-weight: 600; font-size: .98rem;
+    transition: transform .15s ease, opacity .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .btn:active { transform: scale(.97); }
+  .btn-primary { background: linear-gradient(135deg, #f9b4d6, #f472b6); color: #2a0f1f; box-shadow: 0 10px 30px -12px rgba(244,114,182,.6); }
+  .btn-primary:disabled { opacity: .35; cursor: not-allowed; box-shadow: none; }
+  .btn-ghost { border: 1px solid var(--line); color: var(--cream); background: transparent; }
+  .btn-ghost:hover:not(:disabled) { border-color: #5a4163; }
+  .btn-ghost:disabled { opacity: .4; cursor: not-allowed; }
+  .btn-icon { min-height: 44px; min-width: 44px; padding: 0; }
+
+  .opt {
+    width: 100%; text-align: left; padding: 1rem 1.15rem; min-height: 58px;
+    border: 1px solid var(--line); border-radius: 18px; background: #1a121d;
+    font-size: 1.02rem; line-height: 1.45; transition: border-color .2s, background .2s, opacity .2s;
+  }
+  .opt:hover:not(:disabled) { border-color: #5a4163; }
+  .opt.sel { border-color: var(--pink); background: rgba(246,166,204,.10); }
+  .opt.ok { border-color: rgba(246,166,204,.9); background: rgba(246,166,204,.16); }
+  .opt.pk { border-color: rgba(180,160,255,.7); background: rgba(150,130,255,.10); }
+  .opt.dim { opacity: .45; }
+
+  .chip {
+    padding: .7rem 1.1rem; min-height: 48px; border: 1px solid var(--line); border-radius: 999px;
+    background: #1a121d; font-size: 1rem; transition: opacity .2s, border-color .2s;
+  }
+  .chip:hover:not(:disabled) { border-color: #5a4163; }
+  .chip.used { opacity: .3; }
+  .chip:disabled { opacity: .35; }
+
+  .slot {
+    display: inline-flex; align-items: center; justify-content: center; vertical-align: baseline;
+    min-width: 6.4rem; height: 2.4rem; padding: 0 .8rem; margin: 0 .2rem;
+    border-bottom: 2px dashed var(--pink); border-radius: 10px 10px 0 0; background: rgba(246,166,204,.08);
+    color: var(--pink); font-weight: 600;
+  }
+  .slot.ok { border-bottom: 2px solid var(--pink); background: rgba(246,166,204,.16); }
+
+  .fb { border-radius: 18px; padding: 1.05rem 1.15rem; line-height: 1.6; font-size: .98rem; }
+  .fb-yes { background: rgba(246,166,204,.12); border: 1px solid rgba(246,166,204,.45); color: #ffe3f0; }
+  .fb-ans { background: rgba(150,130,255,.10); border: 1px solid rgba(180,160,255,.35); color: #e6e0ff; }
+  .fb-soft { background: rgba(255,255,255,.04); border: 1px solid var(--line); color: var(--cream); }
+
+  .vocab { font: inherit; color: var(--pink); background: none; padding: 0; cursor: pointer; border-bottom: 1.5px dotted rgba(246,166,204,.85); }
+  .vocab:hover { background: rgba(246,166,204,.14); }
+
+  .letter { font-family: 'Newsreader', Georgia, serif; font-size: 1.24rem; line-height: 2.05rem; }
+  .script { font-family: 'Caveat', cursive; }
+
+  textarea {
+    width: 100%; background: #1a121d; border: 1px solid var(--line); border-radius: 18px;
+    padding: .95rem 1.05rem; font-size: 1rem; line-height: 1.5; color: var(--cream); resize: vertical; min-height: 96px;
+  }
+  textarea::placeholder { color: #6e5a76; }
+  textarea:focus { outline: none; border-color: var(--pink); }
+  input[type=range] { width: 100%; height: 40px; accent-color: #f472b6; background: transparent; }
+
+  audio { width: 100%; height: 44px; }
+  #sheetBack { background: rgba(10,5,12,.66); backdrop-filter: blur(3px); }
+  #petals { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+  #app { position: relative; z-index: 1; }
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+</head>
+<body class="font-sans antialiased min-h-screen">
+<noscript><p style="padding:2rem">Please turn on JavaScript to open this page.</p></noscript>
+
+<div id="petals" aria-hidden="true"></div>
+<div id="app" class="mx-auto w-full max-w-xl px-4 pb-24" style="padding-top:max(1rem, env(safe-area-inset-top))"></div>
+
+<!-- word meaning sheet -->
+<div id="sheetBack" class="fixed inset-0 z-40 hidden" data-close="1"></div>
+<div id="sheet" class="fixed inset-x-0 bottom-0 z-50 hidden mx-auto w-full max-w-xl px-3" style="padding-bottom:max(.75rem, env(safe-area-inset-bottom))">
+  <div class="card p-5">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <p class="label">Word</p>
+        <h3 id="shWord" class="font-serif text-3xl mt-1 pinktext"></h3>
+      </div>
+      <button class="btn btn-ghost" style="min-height:40px;padding:0 1rem" data-close="1">Close</button>
+    </div>
+    <p id="shHi" class="mt-3 text-lg"></p>
+    <p id="shEg" class="mt-2 font-serif italic text-mist text-lg leading-7"></p>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   CONFIG
+   ========================================================= */
+const CONFIG = { student: 'Mahima', teacher: 'Abhinav', minSeconds: 60, goalSeconds: 120 };
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+const LETTER = [
+  "Some people are like a quiet morning: calm, luminous, and kind without even trying. That is how I see you.",
+  "I made this little place for you because I cherish you, and because I want to watch you flourish.",
+  "I will always be steadfast beside you. I will never judge you, and I will never let the world make you feel small. Your dreams are valid, your pace is perfect, and your resilience is already bigger than you think.",
+  "English is only a tool, like a pen. It does not decide your worth. You are eloquent in your own way, and with a little practice, everyone will hear how brilliant you are.",
+  "So today, let us take one small, graceful step together. I have unwavering faith in you."
+];
+const VOCAB = [
+  { w: 'luminous', hi: 'roshan, chamakta hua', eg: 'The moon looked luminous in the dark sky.' },
+  { w: 'cherish', hi: 'dil se keemti maanna, bahut pyaar karna', eg: 'I cherish every memory with my family.' },
+  { w: 'flourish', hi: 'khilna, tarakki karna', eg: 'Flowers flourish when they get love and sunlight.' },
+  { w: 'steadfast', hi: 'atal, hamesha saath rehne wala', eg: 'She was a steadfast friend in hard times.' },
+  { w: 'resilience', hi: 'himmat, girke phir uth jaane ki taakat', eg: 'Her resilience helped her try again.' },
+  { w: 'eloquent', hi: 'achhi tarah, asar ke saath bolne wala', eg: 'He gave an eloquent speech.' },
+  { w: 'graceful', hi: 'sundar aur shaant tareeke se', eg: 'She walked with a graceful smile.' },
+  { w: 'unwavering', hi: 'bina dagmagaye, pakka', eg: 'I have unwavering trust in you.' }
+];
+
+const CHEER = [
+  'You are doing great. Keep going.',
+  'Slow and clear is perfect.',
+  'Take a breath. There is no wrong way to do this.',
+  'Smile while you speak. Your voice will smile too.',
+  'Every line you read makes you stronger.',
+  'Do not worry about mistakes. Just keep your voice going.',
+  'I am proud of you for trying.',
+  'Two minutes of English out loud is a big deal.'
+];
+
+const REC1 = {
+  n: 1, title: 'The Little Lantern',
+  lines: [
+    'Once upon a time, there was a girl named Anaya.',
+    'She lived in a small town full of flowers and old stories.',
+    'Anaya loved books, but she felt shy about speaking English.',
+    'One evening, she found a tiny lantern on her window.',
+    'The lantern said, "I will glow as long as you keep trying."',
+    'So every day, Anaya read one line aloud, slowly and softly.',
+    'At first, her voice felt small and her words felt heavy.',
+    'But the lantern glowed a little brighter each time.',
+    'Soon she was speaking with a smile and a steady voice.',
+    'People in the town began to listen, because her words were kind.',
+    'Anaya understood something beautiful that day.',
+    'Courage is not speaking perfectly. Courage is speaking anyway.'
+  ]
+};
+const REC2 = {
+  n: 2, title: 'A Message for Abhinav',
+  lines: [
+    'Hello Abhinav. Today I learned some new words.',
+    'I practised how to say things in a better way.',
+    'My favourite new word is... (say your own favourite word here).',
+    'I will use it in our chats this week.',
+    'Learning English can feel hard, but I am not giving up.',
+    'I am proud of myself for trying today.',
+    'Thank you for being patient with me.',
+    'I will practise a little every day, even for five minutes.',
+    'My dream is... (say one dream you have for your future).',
+    'English will help me reach it, step by step.',
+    'I am growing, and I am just getting started.',
+    'Thank you for listening. I will talk to you soon.'
+  ]
+};
+
+/* Question helpers */
+const MCQ = (q, options, answer, why) => ({ type: 'mcq', q, options, answer, why });
+const BLANK = (before, after, bank, answer, why) => ({ type: 'blank', before, after, bank, answer, why });
+
+const STEPDEFS = [
+  { name: 'A note for you', screens: [{ type: 'letter' }] },
+
+  { name: 'What you understood', screens: [
+    MCQ('Why did Abhinav make this place for you?',
+      ['Because he cherishes you and wants to see you flourish', 'Because he wants to plan a trip', 'Because he wants to teach you cooking'], 0,
+      'The letter says he made it because he cherishes you and wants to watch you flourish. To flourish means to grow beautifully.'),
+    MCQ('What does the letter say about English?',
+      ['English is a tool, like a pen. It does not decide your worth.', 'English is the only thing that matters.', 'English is too hard to learn.'], 0,
+      'A pen helps you write, but it does not make you who you are. English is the same: a helpful tool, not a measure of your worth.'),
+    MCQ('In this letter, what does "steadfast" mean?',
+      ['Always staying beside you', 'Very fast', 'Very far away'], 0,
+      'Steadfast means firm and loyal, someone who stays beside you. It has nothing to do with speed.'),
+    MCQ('How does Abhinav see you in the letter?',
+      ['Like a quiet, luminous morning', 'Like a loud storm', 'Like a closed door'], 0,
+      'He writes that you are like a quiet morning: calm, luminous (glowing), and kind.'),
+    { type: 'rate' }
+  ] },
+
+  { name: 'Words for our chats', screens: [
+    { type: 'teach', title: 'Warmer check-ins', lead: 'Use these with me in our chats. Same meaning, a more graceful sound.',
+      items: [
+        { plain: 'How are you doing?', better: ['How has your day been?', 'How are you feeling today?'], note: 'Shows you care about the whole day, not only this moment.' },
+        { plain: "I'm fine.", better: ["I'm doing well, thank you.", "I'm doing great today."], note: 'A little fuller and warmer than "fine".' },
+        { plain: 'What are you doing?', better: ['What are you up to?', 'What have you been working on?'], note: 'Natural and friendly.' },
+        { plain: 'Did you eat?', better: ['Have you eaten yet?'], note: 'Caring and very natural in English.' },
+        { plain: 'Good night.', better: ['Sleep well, and sweet dreams.'], note: 'A soft way to end the day.' }
+      ] },
+    { type: 'teach', title: 'Say your feelings better', lead: 'Bigger feelings need bigger words. Try one of these today.',
+      items: [
+        { plain: "I'm happy.", better: ["I'm delighted.", "I'm thrilled."], note: '"Thrilled" means very happy and excited.' },
+        { plain: "I'm very tired.", better: ["I'm exhausted.", "I'm worn out."], note: 'Perfect after a long day.' },
+        { plain: "I'm sad.", better: ["I'm feeling a bit low.", "I'm feeling down today."], note: 'Gentle, and easier to share with someone you trust.' },
+        { plain: "I'm angry.", better: ["I'm frustrated.", "I'm upset."], note: 'Softer and clearer than "angry".' },
+        { plain: "I'm worried.", better: ["I'm a little anxious."], note: '"Anxious" means worried and nervous about what will happen.' },
+        { plain: "I'm excited.", better: ["I'm really looking forward to it."], note: 'Use it for something good that is coming.' }
+      ] },
+    { type: 'teach', title: 'Polite and professional', lead: 'These phrases work in chats, in college, and one day at work.',
+      items: [
+        { plain: 'Okay.', better: ['Sounds good.', 'That works for me.'], note: 'Friendly and confident.' },
+        { plain: 'Thanks.', better: ['I really appreciate it.', 'Thank you so much for your help.'], note: '"Appreciate" is a lovely word to own.' },
+        { plain: 'Sorry.', better: ['I apologise for that.', 'That was my mistake, I am sorry.'], note: 'Calm and mature.' },
+        { plain: "I don't know.", better: ["I'm not sure yet.", 'Let me think about it.'], note: 'Gives you time, and sounds thoughtful.' },
+        { plain: 'Wait.', better: ['Give me a moment, please.'], note: 'Polite and clear.' },
+        { plain: 'Tell me again.', better: ['Could you please repeat that?', 'Could you explain that once more?'], note: 'Never be shy to say this. Smart people ask.' }
+      ] },
+    { type: 'teach', title: 'Sweet words for me', lead: 'A few lovely phrases you can use with me. Choose the ones that feel like you.',
+      items: [
+        { plain: 'You are good.', better: ['You are wonderful.', 'You are remarkable.'], note: '"Remarkable" means special, worth noticing.' },
+        { plain: 'I am happy for you.', better: ['I am so proud of you.'], note: 'A strong, warm sentence.' },
+        { plain: 'Thank you for being there.', better: ['I am grateful to have you.'], note: '"Grateful" means thankful from the heart.' },
+        { plain: 'You make me happy.', better: ['You make my day better.'], note: 'Simple and sweet.' },
+        { plain: 'I like talking to you.', better: ['I really enjoy talking to you.'], note: '"Enjoy" is richer than "like".' },
+        { plain: 'Take care.', better: ['Take care of yourself, and message me when you reach.'], note: 'Caring, and very natural.' }
+      ] },
+    { type: 'grammar', title: 'Four tiny grammar tips', lead: 'Not heavy. Just four small tools that fix most sentences.',
+      items: [
+        { title: 'Right now: am, is, are', rule: 'Use am with I, is with one person, are with more than one.', ex: ['I am happy.', 'She is busy.', 'We are late.'] },
+        { title: 'Yesterday: add -ed, or use a special word', rule: 'Many past words end in -ed. Some change: go becomes went, eat becomes ate, see becomes saw.', ex: ['I called you.', 'Yesterday I went to the market.', 'We ate together.'] },
+        { title: 'Tomorrow: use will', rule: 'Put will before the action word. It stays the same for everyone.', ex: ['I will call you tonight.', 'She will try again.'] },
+        { title: 'Polite asking: Could you...?', rule: 'Start with Could you, then add please. It sounds gentle and professional.', ex: ['Could you send it again, please?', 'Could you speak a little slowly?'] }
+      ],
+      tip: 'Clear and kind beats perfect. You never need perfect grammar to be understood.' },
+
+    MCQ('Which is a warmer way to ask "How are you doing?"',
+      ['How has your day been?', 'Where are you?', 'What is your name?'], 0,
+      'It shows you care about the whole day, not only the moment.'),
+    MCQ('Which word is stronger than "very tired"?',
+      ['exhausted', 'excited', 'early'], 0,
+      'Exhausted means extremely tired, a good word after a long day.'),
+    MCQ('Instead of "Okay", you can say...',
+      ['Sounds good', 'Good morning', 'Take care'], 0,
+      '"Sounds good" means "yes, that is fine with me" in a friendly way.'),
+    BLANK('I really', 'your help.', ['appreciate', 'forget', 'hide', 'wait'], 'appreciate',
+      'I really appreciate your help is a warm, professional way to say thank you.'),
+    BLANK('Could you please', 'that?', ['repeat', 'sleep', 'wear', 'drive'], 'repeat',
+      'Could you please repeat that? is the polite way to ask someone to say it again.'),
+    BLANK('I am', 'to hear that!', ['delighted', 'tired', 'anxious', 'restless'], 'delighted',
+      'Delighted means very happy, a lovely upgrade from "happy".'),
+    BLANK('I', 'call you tonight.', ['will', 'was', 'did', 'am'], 'will',
+      'Use will for the future: I will call you tonight.'),
+    BLANK('Yesterday I', 'to the market.', ['went', 'go', 'going', 'goes'], 'went',
+      'Went is the past of go. Yesterday means the past, so we say went.'),
+    MCQ('Which sounds the most polite?',
+      ['Give me a moment, please.', 'Wait.', 'Hurry up.'], 0,
+      'Adding "please" and a soft sentence makes it polite.'),
+    BLANK('You are', '! (a big compliment)', ['remarkable', 'ordinary', 'hungry', 'late'], 'remarkable',
+      'Remarkable means special enough to be noticed and admired.'),
+    MCQ('"I apologise for the delay" means...',
+      ['I am sorry for being late.', 'I am happy to wait.', 'I am going away.'], 0,
+      'Apologise means say sorry. A delay is a late arrival or a wait.'),
+    MCQ('"I\'m not sure yet" means...',
+      ['I have not decided, or do not know, yet.', 'I am very sure.', 'I am leaving now.'], 0,
+      'It buys you time and sounds thoughtful, a good way to say you are still thinking.')
+  ] },
+
+  { name: 'Recording one', screens: [{ type: 'rec', story: REC1 }] },
+
+  { name: 'Your career', screens: [{ type: 'career' }] },
+
+  { name: 'Recording two', screens: [{ type: 'rec', story: REC2 }, { type: 'closing' }, { type: 'send' }] }
+];
+
+/* flatten screens */
+const SCREENS = [];
+const STEP_FIRST = [];
+let QTOTAL = 0;
+STEPDEFS.forEach((sd, si) => {
+  STEP_FIRST[si] = SCREENS.length;
+  sd.screens.forEach(sc => {
+    const o = Object.assign({}, sc, { step: si });
+    if (o.type === 'mcq' || o.type === 'blank') { o.qn = ++QTOTAL; o.id = 'q' + o.qn; }
+    SCREENS.push(o);
+  });
+});
+const WEIGHT = { letter: 3, mcq: .7, blank: .8, rate: 1, teach: 2.2, grammar: 3, rec: 5, career: 3, closing: 1, send: 1 };
+
+const PRAISE = ['Yes, lovely!', 'Right answer. You read that beautifully.', 'Exactly. Well done!', 'You got it.', 'Perfect. That is how it works.'];
+const OWN = ['This one is yours now. You will remember it.', 'Every answer like this is a new word in your pocket.', 'Now you know it, and that is what counts.', 'Learning happens right here. You are doing well.'];
+
+/* =========================================================
+   ICONS
+   ========================================================= */
+const ICONS = {
+  heart: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+  lock: '<rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  check: '<path d="M20 6 9 17l-5-5"/>',
+  arrowR: '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+  arrowL: '<path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>',
+  volume: '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>',
+  mic: '<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/>',
+  stop: '<rect x="6" y="6" width="12" height="12" rx="2"/>',
+  download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/>',
+  send: '<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+  bulb: '<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>',
+  redo: '<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/>',
+  next: '<path d="m9 18 6-6-6-6"/>',
+  spark: '<path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>'
+};
+const icon = (n, c = 'w-5 h-5', fill = 'none') =>
+  `<svg class="${c}" viewBox="0 0 24 24" fill="${fill}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n]}</svg>`;
+
+/* =========================================================
+   STATE
+   ========================================================= */
+const KEY = 'for-mahima-v1';
+let memState = null;
+function load() { try { const r = localStorage.getItem(KEY); if (r) return JSON.parse(r); } catch (e) {} return memState; }
+let S = load() || { i: 0, answers: {}, rating: null, dream: '', rec: {}, startedAt: new Date().toISOString(), finishedAt: null, sent: false };
+function save() { memState = S; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+if (S.i >= SCREENS.length) S.i = SCREENS.length - 1;
+let V = { i: S.i, order: null, orderFor: -1, q: null };
+const R = {};            /* in-memory audio results: { 1: {blob,url,mime,ext,seconds}, 2: {...} } */
+let REC = null;          /* active recording */
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+const app = $('#app');
+const RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const hasGsap = () => typeof window.gsap !== 'undefined' && !RM;
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const norm = s => String(s == null ? '' : s).trim().toLowerCase();
+const shuffle = a => { const r = a.slice(); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } return r; };
+const rnd = a => a[Math.floor(Math.random() * a.length)];
+const fmt = s => { s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+
+function enter(targets, opts = {}) {
+  if (!hasGsap()) return;
+  gsap.fromTo(targets, { opacity: 0, y: 16 }, Object.assign({ opacity: 1, y: 0, duration: .6, stagger: .08, ease: 'power2.out', clearProps: 'transform,opacity' }, opts));
+}
+const canSpeak = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+function say(text) {
+  if (!canSpeak) return;
+  try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text.replace(/\.\.\./g, '')); u.lang = 'en-IN'; u.rate = .85; speechSynthesis.speak(u); } catch (e) {}
+}
+const speakBtn = text => canSpeak ? `<button class="btn btn-ghost btn-icon shrink-0" data-a="say" data-t="${esc(text)}" aria-label="Listen">${icon('volume')}</button>` : '';
+
+/* floating hearts */
+function startPetals() {
+  const host = $('#petals');
+  if (!hasGsap() || !host) return;
+  for (let i = 0; i < 12; i++) {
+    const s = document.createElement('span');
+    const size = 10 + Math.random() * 18;
+    s.style.cssText = `position:absolute;left:${Math.random() * 100}%;top:0;width:${size}px;height:${size}px;color:#f472b6;opacity:0;`;
+    s.innerHTML = icon('heart', 'w-full h-full', 'currentColor');
+    host.appendChild(s);
+    gsap.set(s, { y: window.innerHeight + 40 });
+    gsap.to(s, { y: -60, duration: 16 + Math.random() * 16, delay: Math.random() * 14, repeat: -1, ease: 'none' });
+    gsap.to(s, { opacity: .1 + Math.random() * .14, duration: 3, delay: Math.random() * 6, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+    gsap.to(s, { x: (Math.random() < .5 ? -1 : 1) * (20 + Math.random() * 40), rotation: (Math.random() < .5 ? -1 : 1) * 25, duration: 5 + Math.random() * 4, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+  }
+}
+
+/* word sheet */
+function openSheet(v) {
+  $('#shWord').textContent = v.w; $('#shHi').textContent = v.hi; $('#shEg').textContent = '"' + v.eg + '"';
+  $('#sheetBack').classList.remove('hidden');
+  const sh = $('#sheet'); sh.classList.remove('hidden');
+  if (hasGsap()) gsap.fromTo(sh, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: .35, ease: 'power3.out', clearProps: 'transform' });
+}
+function closeSheet() { $('#sheetBack').classList.add('hidden'); $('#sheet').classList.add('hidden'); }
+document.addEventListener('click', e => { if (e.target.closest('[data-close]')) closeSheet(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
+
+/* =========================================================
+   STEPPER
+   ========================================================= */
+const stepOfIndex = i => SCREENS[i].step;
+function minutesLeft() {
+  let m = 0;
+  for (let i = S.i; i < SCREENS.length; i++) m += WEIGHT[SCREENS[i].type] || 1;
+  return Math.max(1, Math.round(m));
+}
+function stepper() {
+  const cur = stepOfIndex(V.i), maxStep = stepOfIndex(S.i);
+  const dots = STEPDEFS.map((sd, si) => {
+    const locked = si > maxStep, done = si < maxStep, isCur = si === cur;
+    const cls = isCur ? 'background:linear-gradient(135deg,#f9b4d6,#f472b6);color:#2a0f1f;border-color:transparent'
+      : done ? 'background:rgba(246,166,204,.16);color:var(--pink);border-color:rgba(246,166,204,.5)'
+      : 'background:#1a121d;color:#6e5a76;border-color:var(--line)';
+    return `<button ${locked ? 'disabled' : ''} data-a="goto-step" data-s="${si}" aria-label="Step ${si + 1}: ${esc(sd.name)}${locked ? ' (locked)' : ''}"
+      class="grid h-9 w-9 shrink-0 place-items-center rounded-full border text-sm font-semibold" style="${cls}">
+      ${locked ? icon('lock', 'w-3.5 h-3.5') : (done ? icon('check', 'w-4 h-4') : si + 1)}</button>`;
+  });
+  return `
+  <div class="sticky top-0 z-30 -mx-4 px-4 pb-3 pt-3" style="background:linear-gradient(var(--ink) 78%, transparent)">
+    <div class="flex items-center justify-between gap-3">
+      <span class="label">Step ${cur + 1} of ${STEPDEFS.length} &middot; ${esc(STEPDEFS[cur].name)}</span>
+      <span class="label shrink-0">About ${minutesLeft()} min left</span>
+    </div>
+    <div class="mt-3 flex items-center justify-between gap-1">${dots.join('<span class="h-px flex-1" style="background:var(--line)"></span>')}</div>
+  </div>`;
+}
+
+/* =========================================================
+   NAVIGATION + GATES
+   ========================================================= */
+function recDone(n) { const r = S.rec[n]; return !!(r && (r.fallback || (r.seconds >= CONFIG.minSeconds && r.saved))); }
+function canAdvance(sc) {
+  switch (sc.type) {
+    case 'mcq': case 'blank': return !!S.answers[sc.id];
+    case 'rate': return S.rating != null;
+    case 'rec': return recDone(sc.story.n);
+    default: return true;
+  }
+}
+const contBtn = (label = 'Continue', enabled = true, id = 'btnNext') =>
+  `<div class="mt-7"><button id="${id}" class="btn btn-primary w-full" data-a="next" ${enabled ? '' : 'disabled'}>${label} ${icon('arrowR')}</button></div>`;
+
+function leaveScreen() {
+  if (REC) stopRecording();
+  if (canSpeak) try { speechSynthesis.cancel(); } catch (e) {}
+}
+function go(i) {
+  leaveScreen();
+  V.i = Math.max(0, Math.min(i, S.i));
+  render(); window.scrollTo({ top: 0 });
+}
+function next() {
+  const sc = SCREENS[V.i];
+  if (V.i === S.i && !canAdvance(sc)) return;
+  leaveScreen();
+  const ni = Math.min(V.i + 1, SCREENS.length - 1);
+  if (ni > S.i) S.i = ni;
+  V.i = ni; save(); render(); window.scrollTo({ top: 0 });
+}
+function gotoStep(si) {
+  if (si > stepOfIndex(S.i)) return;
+  const target = si === stepOfIndex(S.i) ? S.i : STEP_FIRST[si];
+  go(target);
+}
+
+/* =========================================================
+   RENDER ROUTER
+   ========================================================= */
+function render() {
+  const sc = SCREENS[V.i];
+  const fn = { letter: renderLetter, mcq: renderQuestion, blank: renderQuestion, rate: renderRate, teach: renderTeach, grammar: renderGrammar, rec: renderRecord, career: renderCareer, closing: renderClosing, send: renderSend }[sc.type];
+  fn(sc);
+}
+
+/* ----- letter ----- */
+function withVocab(text) {
+  let html = esc(text);
+  VOCAB.forEach((v, i) => {
+    const re = new RegExp('\\b' + v.w + '\\b', 'i');
+    html = html.replace(re, m => `<button type="button" class="vocab" data-v="${i}">${m}</button>`);
+  });
+  return html;
+}
+function renderLetter() {
+  app.innerHTML = `
+    ${stepper()}
+    <section class="mt-2 text-center" id="hero">
+      <div id="bigheart" class="mx-auto h-20 w-20 pinktext" style="filter:drop-shadow(0 0 22px rgba(244,114,182,.55))">${icon('heart', 'w-full h-full', 'currentColor')}</div>
+      <p class="label mt-5">A little place, made for you</p>
+      <h1 class="script mt-1 text-[4rem] leading-none pinktext">For Mahima</h1>
+    </section>
+
+    <section class="mt-5 flex flex-wrap justify-center gap-2" id="chips">
+      ${['6 small steps', 'About 40 minutes', 'Two voice recordings'].map(t => `<span class="rounded-full border px-3.5 py-1.5 text-sm text-mist" style="border-color:var(--line);background:rgba(255,255,255,.03)">${t}</span>`).join('')}
+    </section>
+
+    <section class="card mt-6 p-6" id="letterCard" style="background:linear-gradient(160deg,#291a2e,#1c1220)">
+      <p class="label mb-4 flex items-center gap-2" style="color:var(--pink)">${icon('spark', 'w-4 h-4')} A letter for you</p>
+      <p class="font-serif text-[1.4rem] leading-snug">Dear Mahima,</p>
+      <div class="letter mt-4 grid gap-4">
+        ${LETTER.map(p => `<p class="para">${withVocab(p)}</p>`).join('')}
+      </div>
+      <p class="mt-6 font-serif italic text-mist">Always yours,</p>
+      <p class="script text-[2.6rem] leading-tight pinktext">${CONFIG.teacher}</p>
+    </section>
+
+    <p class="mt-4 text-center text-sm text-mist">Tap any dotted pink word to see what it means.</p>
+
+    <div class="fb fb-soft mt-5 flex gap-3" id="honest">${icon('bulb', 'w-5 h-5 mt-0.5 shrink-0 pinktext')}
+      <p>At the end, you will send me your answers file and two voice recordings. You choose when and what to send.</p>
+    </div>
+
+    <div class="mt-7"><button class="btn btn-primary w-full" data-a="next">I have read it ${icon('arrowR')}</button></div>`;
+  if (hasGsap()) {
+    gsap.fromTo('#bigheart', { scale: .6, opacity: 0 }, { scale: 1, opacity: 1, duration: .9, ease: 'back.out(1.8)' });
+    gsap.to('#bigheart', { scale: 1.08, duration: 1.1, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: .9 });
+    enter(['#hero h1', '#hero p', '#chips', '#letterCard .para', '#honest'], { delay: .15, stagger: .1 });
+  }
+}
+
+/* ----- questions (ONE attempt) ----- */
+function renderQuestion(q) {
+  const ans = S.answers[q.id];
+  if (q.type === 'mcq' && (V.orderFor !== V.i || !V.order)) { V.order = shuffle(q.options.map((_, k) => k)); V.orderFor = V.i; }
+  if (!V.q || V.q.i !== V.i) V.q = { i: V.i, picked: null, word: null };
+
+  let body;
+  if (q.type === 'mcq') {
+    body = `
+      <h2 class="font-serif text-[1.55rem] leading-snug">${esc(q.q)}</h2>
+      <div id="opts" class="mt-5 grid gap-3">
+        ${V.order.map(k => `<button class="opt" data-a="pick" data-k="${k}">${esc(q.options[k])}</button>`).join('')}
+      </div>`;
+  } else {
+    body = `
+      <p class="label">Fill in the blank</p>
+      <h2 class="mt-3 font-serif text-[1.55rem] leading-[2.7rem]">${esc(q.before)} <button id="slot" class="slot" data-a="clear-slot" aria-label="blank">&nbsp;</button> ${esc(q.after)}</h2>
+      <p class="mt-5 text-sm text-mist">Tap a word to place it in the blank.</p>
+      <div id="bank" class="mt-3 flex flex-wrap gap-2.5">
+        ${shuffle(q.bank).map(w => `<button class="chip" data-a="chip" data-w="${esc(w)}">${esc(w)}</button>`).join('')}
+      </div>`;
+  }
+  app.innerHTML = `
+    ${stepper()}
+    <section class="card mt-3 p-5 sm:p-6" id="qcard">
+      <p class="label mb-4 pinktext">Question ${q.qn} of ${QTOTAL}</p>
+      ${body}
+      <div id="fb" class="mt-5"></div>
+      <div class="mt-6" id="qbtns">
+        ${ans ? '' : `<button id="btnCheck" class="btn btn-primary w-full" data-a="check" disabled>Lock in my answer</button>
+        <p class="mt-3 text-center text-xs text-mist">One try for each question. Take your time.</p>`}
+      </div>
+    </section>
+    <div id="contWrap">${ans ? contBtn(V.i === S.i ? 'Continue' : 'Next') : ''}</div>`;
+  if (ans) showAnswered(q, ans, true);
+  enter('#qcard');
+}
+function pickOption(k) {
+  if (S.answers[SCREENS[V.i].id]) return;
+  V.q.picked = k;
+  $$('#opts .opt').forEach(b => b.classList.toggle('sel', +b.dataset.k === k));
+  $('#btnCheck').disabled = false;
+}
+function pickChip(w) {
+  if (S.answers[SCREENS[V.i].id]) return;
+  V.q.word = w;
+  $('#slot').textContent = w;
+  $$('#bank .chip').forEach(c => c.classList.toggle('used', c.dataset.w === w));
+  $('#btnCheck').disabled = false;
+  if (hasGsap()) gsap.fromTo('#slot', { scale: .92 }, { scale: 1, duration: .25, ease: 'back.out(2)' });
+}
+function clearSlot() {
+  if (S.answers[SCREENS[V.i].id]) return;
+  V.q.word = null; $('#slot').innerHTML = '&nbsp;';
+  $$('#bank .chip').forEach(c => c.classList.remove('used'));
+  $('#btnCheck').disabled = true;
+}
+function checkAnswer() {
+  const q = SCREENS[V.i];
+  if (S.answers[q.id]) return;
+  const given = q.type === 'mcq' ? q.options[V.q.picked] : V.q.word;
+  if (given == null) return;
+  const correct = q.type === 'mcq' ? q.options[q.answer] : q.answer;
+  const rec = { pick: given, correct, isCorrect: norm(given) === norm(correct), at: new Date().toISOString() };
+  S.answers[q.id] = rec; save();
+  showAnswered(q, rec, false);
+  $('#qbtns').innerHTML = '';
+  $('#contWrap').innerHTML = contBtn('Continue');
+  const nx = $('#btnNext'); if (nx) setTimeout(() => nx.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'nearest' }), 100);
+}
+function showAnswered(q, rec, review) {
+  /* lock the controls and show answer state */
+  if (q.type === 'mcq') {
+    $$('#opts .opt').forEach(b => {
+      const t = q.options[+b.dataset.k];
+      b.disabled = true; b.classList.remove('sel');
+      if (norm(t) === norm(rec.correct)) b.classList.add('ok');
+      else if (norm(t) === norm(rec.pick)) b.classList.add('pk');
+      else b.classList.add('dim');
+    });
+  } else {
+    const slot = $('#slot'); slot.textContent = rec.correct; slot.classList.add('ok'); slot.disabled = true;
+    $$('#bank .chip').forEach(c => { c.disabled = true; c.classList.toggle('used', norm(c.dataset.w) === norm(rec.correct)); });
+  }
+  const fb = $('#fb');
+  fb.innerHTML = rec.isCorrect
+    ? `<div class="fb fb-yes"><p class="flex items-center gap-2 font-semibold">${icon('spark', 'w-4 h-4')} ${esc(review ? 'You got this one.' : rnd(PRAISE))}</p><p class="mt-2">${esc(q.why)}</p></div>`
+    : `<div class="fb fb-ans">
+         <p class="flex items-center gap-2 font-semibold">${icon('bulb', 'w-4 h-4')} Here is the answer, and why it works</p>
+         <p class="mt-3 text-[.93rem] opacity-90">You picked: <b>${esc(rec.pick)}</b></p>
+         <p class="mt-1 text-[.93rem]">The answer: <b>${esc(rec.correct)}</b></p>
+         <p class="mt-3">${esc(q.why)}</p>
+         <p class="mt-3 text-[.93rem] opacity-90">${esc(review ? 'This one is yours now.' : rnd(OWN))}</p>
+       </div>`;
+  if (!review) enter(fb.firstElementChild, { y: 10, duration: .45 });
+}
+
+/* ----- self rating ----- */
+function ratingReply(n) {
+  if (n <= 3) return 'Thank you for being honest. That is a brave place to begin, and it is exactly where learning starts. Today you will see how much you can grow.';
+  if (n <= 6) return 'A good start! You understood more than you think, and today we will make it stronger, one small step at a time.';
+  return 'Wonderful! You are already reading well. Today we will make your words even richer.';
+}
+function renderRate() {
+  const done = S.rating != null;
+  const val = done ? S.rating : 5;
+  app.innerHTML = `
+    ${stepper()}
+    <section class="card mt-3 p-6 text-center" id="rcard">
+      <p class="label pinktext">Just for you</p>
+      <h2 class="mt-2 font-serif text-[1.7rem] leading-snug">How much of the letter did you understand?</h2>
+      <p class="mt-2 text-sm text-mist">Pick the number that feels true. There is no right number, and nobody is grading you.</p>
+      <p id="rnum" class="mt-6 script text-[5rem] leading-none pinktext">${val}</p>
+      <p class="text-sm text-mist">out of 10</p>
+      <input id="rslider" type="range" min="1" max="10" step="1" value="${val}" class="mt-4" ${done ? 'disabled' : ''} aria-label="Your rating out of 10">
+      <div class="flex justify-between text-xs text-mist"><span>A little</span><span>Almost everything</span></div>
+      <div id="rreply" class="mt-5">${done ? `<div class="fb fb-yes text-left"><p>${esc(ratingReply(S.rating))}</p></div>` : ''}</div>
+      ${done ? '' : `<button id="rconfirm" class="btn btn-primary mt-6 w-full" data-a="rate-confirm">This is my number</button>`}
+    </section>
+    <div id="contWrap">${done ? contBtn(V.i === S.i ? 'Continue' : 'Next') : ''}</div>`;
+  enter('#rcard');
+}
+function confirmRating() {
+  S.rating = +$('#rslider').value; save();
+  $('#rslider').disabled = true;
+  $('#rconfirm').remove();
+  $('#rreply').innerHTML = `<div class="fb fb-yes text-left"><p>${esc(ratingReply(S.rating))}</p></div>`;
+  enter($('#rreply').firstElementChild, { y: 10, duration: .45 });
+  $('#contWrap').innerHTML = contBtn('Continue');
+}
+
+/* ----- teach ----- */
+function renderTeach(sc) {
+  app.innerHTML = `
+    ${stepper()}
+    <section class="mt-3" id="head">
+      <p class="label pinktext">Words for our chats</p>
+      <h1 class="mt-1 font-serif text-[2rem] leading-tight">${esc(sc.title)}</h1>
+      <p class="mt-2 text-[.98rem] leading-7 text-mist">${esc(sc.lead)}</p>
+    </section>
+    <section class="mt-5 grid gap-3" id="items">
+      ${sc.items.map(it => `
+        <div class="card item p-4">
+          <p class="text-[.95rem] text-mist"><span class="label mr-2">Instead of</span><span style="text-decoration:line-through;text-decoration-color:rgba(185,166,192,.4)">${esc(it.plain)}</span></p>
+          <div class="mt-3 grid gap-2">
+            ${it.better.map(b => `
+              <div class="flex items-center justify-between gap-3">
+                <p class="font-serif text-[1.35rem] leading-snug pinktext">${esc(b)}</p>
+                ${speakBtn(b)}
+              </div>`).join('')}
+          </div>
+          <p class="mt-3 border-t pt-3 text-[.93rem] leading-6 text-mist" style="border-color:var(--line)">${esc(it.note)}</p>
+        </div>`).join('')}
+    </section>
+    <div class="fb fb-soft mt-5 flex gap-3" id="tip">${icon('bulb', 'w-5 h-5 mt-0.5 shrink-0 pinktext')}<p>Pick one phrase from this page and use it with me today. That is how new words stay.</p></div>
+    ${contBtn(nextLabel())}`;
+  enter(['#head', '.item', '#tip']);
+}
+function nextLabel() {
+  const n = SCREENS[V.i + 1], c = SCREENS[V.i];
+  if (n && (n.type === 'mcq' || n.type === 'blank') && c.type !== 'mcq' && c.type !== 'blank') return "Let's practise";
+  return 'Continue';
+}
+
+/* ----- grammar ----- */
+function renderGrammar(sc) {
+  app.innerHTML = `
+    ${stepper()}
+    <section class="mt-3" id="head">
+      <p class="label pinktext">A little grammar</p>
+      <h1 class="mt-1 font-serif text-[2rem] leading-tight">${esc(sc.title)}</h1>
+      <p class="mt-2 text-[.98rem] leading-7 text-mist">${esc(sc.lead)}</p>
+    </section>
+    <section class="mt-5 grid gap-3" id="items">
+      ${sc.items.map((it, k) => `
+        <div class="card item p-5">
+          <p class="label pinktext">Tip ${k + 1}</p>
+          <p class="mt-1 font-serif text-[1.4rem] leading-snug">${esc(it.title)}</p>
+          <p class="mt-2 text-[.95rem] leading-6 text-mist">${esc(it.rule)}</p>
+          <div class="mt-3 grid gap-2">
+            ${it.ex.map(e => `<div class="flex items-center justify-between gap-3"><p class="font-serif text-[1.2rem] italic pinktext">"${esc(e)}"</p>${speakBtn(e)}</div>`).join('')}
+          </div>
+        </div>`).join('')}
+    </section>
+    <div class="fb fb-yes mt-5 flex gap-3" id="tip">${icon('spark', 'w-5 h-5 mt-0.5 shrink-0')}<p>${esc(sc.tip)}</p></div>
+    ${contBtn("Let's practise")}`;
+  enter(['#head', '.item', '#tip']);
+}
+
+/* =========================================================
+   RECORDING
+   ========================================================= */
+function pickMime() {
+  const types = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus'];
+  if (!window.MediaRecorder || !MediaRecorder.isTypeSupported) return '';
+  return types.find(t => MediaRecorder.isTypeSupported(t)) || '';
+}
+const extFor = m => /mp4|aac/.test(m) ? 'm4a' : /ogg/.test(m) ? 'ogg' : 'webm';
+const recSupported = () => !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+const recFile = n => `${CONFIG.student.toLowerCase()}-recording-${n}.${R[n] ? R[n].ext : 'webm'}`;
+
+function renderRecord(sc) {
+  const story = sc.story, n = story.n;
+  const view = REC && REC.n === n ? 'recording' : (R[n] ? 'done' : (S.rec[n] && S.rec[n].fallback ? 'fallback' : 'idle'));
+  if (view === 'recording') return drawRecording(story);
+  if (view === 'done') return drawRecDone(story);
+  if (view === 'fallback') return drawRecFallback(story);
+  return drawRecIdle(story);
+}
+function recHeader(story, kicker) {
+  return `
+    ${stepper()}
+    <section class="mt-3" id="head">
+      <p class="label pinktext">${kicker}</p>
+      <h1 class="mt-1 font-serif text-[2rem] leading-tight">${esc(story.title)}</h1>
+    </section>`;
+}
+function drawRecIdle(story, msg) {
+  const n = story.n, prior = S.rec[n] && S.rec[n].saved && !R[n];
+  app.innerHTML = `
+    ${recHeader(story, 'Recording ' + n + ' of 2')}
+    <section class="card mt-4 p-6" id="rcard">
+      <p class="font-serif text-[1.25rem] leading-8">
+        ${n === 1 ? 'Speaking out loud is how English becomes yours. Today we start with just two minutes.' : 'One more time, and this one is in your own voice. Read the lines, and add your own words where it says so.'}
+      </p>
+      <ul class="mt-5 grid gap-3 text-[.98rem] leading-6">
+        ${['You will see one line at a time. Read it slowly, in your own voice.', 'Tap Next line when you are ready for the next one.', 'Try to keep going for two minutes. One minute is enough to move on.', 'Your recording stays on this phone until you download or share it. You choose what to send.'].map((t, k) => `
+          <li class="flex gap-3"><span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full text-xs font-semibold" style="background:rgba(246,166,204,.16);color:var(--pink)">${k + 1}</span><span>${t}</span></li>`).join('')}
+      </ul>
+      ${msg ? `<div class="fb fb-ans mt-5">${msg}</div>` : ''}
+      ${recSupported() ? `<button class="btn btn-primary mt-6 w-full" data-a="rec-start" data-n="${n}">${icon('mic')} Start recording</button>`
+        : `<div class="fb fb-ans mt-5">This browser cannot record here. You can record a voice note on WhatsApp instead and send it to ${CONFIG.teacher}.</div>`}
+      ${prior ? `<p class="mt-4 text-center text-sm text-mist">You already finished this one earlier. You can go on, or record it again.</p>` : ''}
+      <button class="btn btn-ghost mt-3 w-full" data-a="rec-fallback" data-n="${n}">I will send a voice note on WhatsApp instead</button>
+    </section>
+    <div id="contWrap">${recDone(n) ? contBtn(V.i === S.i ? 'Continue' : 'Next', true, 'btnRecNext') : ''}</div>`;
+  enter(['#head', '#rcard']);
+}
+function drawRecFallback(story) {
+  const n = story.n;
+  app.innerHTML = `
+    ${recHeader(story, 'Recording ' + n + ' of 2')}
+    <section class="card mt-4 p-6" id="rcard">
+      <p class="font-serif text-[1.25rem] leading-8">That is perfectly fine. Read the lines below aloud on WhatsApp, as a voice note, and send it to ${CONFIG.teacher}.</p>
+      <div class="mt-5 grid gap-3 font-serif text-[1.15rem] leading-7">${story.lines.map(l => `<p>${esc(l)}</p>`).join('')}</div>
+      <button class="btn btn-ghost mt-6 w-full" data-a="rec-retry" data-n="${n}">${icon('redo')} Try recording here instead</button>
+    </section>
+    ${contBtn('Continue', true, 'btnRecNext')}`;
+  enter(['#head', '#rcard']);
+}
+
+const RING = 2 * Math.PI * 96;
+function drawRecording(story) {
+  const n = story.n;
+  app.innerHTML = `
+    ${recHeader(story, 'Recording now')}
+    <section class="mt-4 flex flex-col items-center" id="rcard">
+      <div class="relative h-[230px] w-[230px]">
+        <svg viewBox="0 0 220 220" class="h-full w-full -rotate-90">
+          <circle cx="110" cy="110" r="96" fill="none" stroke="#2b1d31" stroke-width="10"/>
+          <circle id="ring" cx="110" cy="110" r="96" fill="none" stroke="#f472b6" stroke-width="10" stroke-linecap="round" stroke-dasharray="${RING}" stroke-dashoffset="${RING}"/>
+        </svg>
+        <div id="pulse" class="absolute inset-[34px] rounded-full" style="background:radial-gradient(circle,rgba(244,114,182,.35),rgba(244,114,182,.05) 70%)"></div>
+        <div class="absolute inset-0 grid place-items-center text-center">
+          <div><p id="clock" class="font-serif text-[2.6rem] leading-none">0:00</p><p class="mt-1 text-xs text-mist">of ${fmt(CONFIG.goalSeconds)}</p></div>
+        </div>
+      </div>
+      <p id="cheer" class="mt-4 min-h-[1.6rem] text-center text-[.98rem] pinktext">${esc(CHEER[0])}</p>
+    </section>
+
+    <section class="card mt-4 p-6 text-center" id="linecard">
+      <p id="lineinfo" class="label"></p>
+      <p id="line" class="mt-4 font-serif text-[1.7rem] leading-[2.4rem]"></p>
+    </section>
+
+    <div class="mt-5 grid grid-cols-[1fr_auto] gap-3">
+      <button class="btn btn-primary" data-a="line-next" id="btnLine">Next line ${icon('next')}</button>
+      <button class="btn btn-ghost" data-a="rec-stop">${icon('stop')} Stop</button>
+    </div>
+    <p id="goalmsg" class="mt-4 text-center text-sm text-mist">Keep going as long as you like. You can stop whenever you want.</p>`;
+  setLine(story);
+  enter(['#head', '#rcard', '#linecard']);
+  if (hasGsap()) gsap.to('#pulse', { scale: 1.12, opacity: .7, duration: 1.2, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+}
+function setLine(story, animate) {
+  const total = story.lines.length, idx = REC.line % total, round = Math.floor(REC.line / total) + 1;
+  $('#line').textContent = story.lines[idx];
+  $('#lineinfo').textContent = `Line ${idx + 1} of ${total}` + (round > 1 ? ` · Round ${round}` : '');
+  $('#btnLine').innerHTML = (idx === total - 1 ? 'Read it again' : 'Next line') + ' ' + icon('next');
+  if (animate && hasGsap()) gsap.fromTo('#line', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .45, ease: 'power2.out' });
+}
+async function startRecording(n) {
+  const story = SCREENS[V.i].story;
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } });
+    const mime = pickMime();
+    const mr = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined);
+    REC = { n, mr, stream, chunks: [], start: Date.now(), line: 0, cheer: 0, mime: mime || mr.mimeType || 'audio/webm', timer: null, wl: null, goalShown: false };
+    const rec = REC;
+    mr.ondataavailable = e => { if (e.data && e.data.size) rec.chunks.push(e.data); };
+    mr.onstop = () => finalizeRecording(rec);
+    mr.start(1000);
+    try { if (navigator.wakeLock) REC.wl = await navigator.wakeLock.request('screen'); } catch (e) {}
+    drawRecording(story);
+    REC.timer = setInterval(tickRecording, 250);
+    REC.cheerTimer = setInterval(rotateCheer, 11000);
+  } catch (err) {
+    REC = null;
+    drawRecIdle(story, `We could not use the microphone. Please allow microphone access in your browser, then try again. If it still does not work, you can send a voice note on WhatsApp instead.`);
+  }
+}
+function tickRecording() {
+  if (!REC) return;
+  const el = (Date.now() - REC.start) / 1000;
+  const c = $('#clock'); if (!c) return;
+  c.textContent = fmt(el);
+  const ring = $('#ring'); if (ring) ring.setAttribute('stroke-dashoffset', String(RING * (1 - Math.min(1, el / CONFIG.goalSeconds))));
+  if (el >= CONFIG.goalSeconds && !REC.goalShown) {
+    REC.goalShown = true;
+    const g = $('#goalmsg'); if (g) { g.textContent = 'Two minutes! You did it. You can stop now, or keep going if you like.'; g.style.color = 'var(--pink)'; }
+    const ch = $('#cheer'); if (ch) ch.textContent = 'Two minutes of English out loud. I am so proud of you.';
+    if (hasGsap()) gsap.fromTo('#ring', { strokeWidth: 10 }, { strokeWidth: 16, duration: .5, yoyo: true, repeat: 1 });
+  }
+}
+function rotateCheer() {
+  if (!REC) return;
+  REC.cheer = (REC.cheer + 1) % CHEER.length;
+  const ch = $('#cheer'); if (!ch) return;
+  if (REC.goalShown && REC.cheer % 2 === 0) return;
+  if (hasGsap()) gsap.fromTo(ch, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: .5 });
+  ch.textContent = CHEER[REC.cheer];
+}
+function stopRecording() {
+  if (!REC) return;
+  const r = REC;
+  clearInterval(r.timer); clearInterval(r.cheerTimer);
+  r.seconds = (Date.now() - r.start) / 1000;
+  try { if (r.mr.state !== 'inactive') r.mr.stop(); } catch (e) {}
+  try { r.stream.getTracks().forEach(t => t.stop()); } catch (e) {}
+  try { if (r.wl) r.wl.release(); } catch (e) {}
+  REC = null;
+}
+function finalizeRecording(r) {
+  const blob = new Blob(r.chunks, { type: r.mime });
+  if (R[r.n] && R[r.n].url) { try { URL.revokeObjectURL(R[r.n].url); } catch (e) {} }
+  R[r.n] = { blob, url: URL.createObjectURL(blob), mime: r.mime, ext: extFor(r.mime), seconds: Math.round(r.seconds) };
+  S.rec[r.n] = { seconds: R[r.n].seconds, saved: false, mime: r.mime, fileName: recFile(r.n) };
+  save();
+  const sc = SCREENS[V.i];
+  if (sc.type === 'rec' && sc.story.n === r.n) drawRecDone(sc.story);
+}
+function drawRecDone(story) {
+  const n = story.n, r = R[n], secs = r.seconds, enough = secs >= CONFIG.minSeconds, saved = !!(S.rec[n] && S.rec[n].saved);
+  const canShare = !!(navigator.canShare && navigator.share);
+  app.innerHTML = `
+    ${recHeader(story, 'Recording ' + n + ' of 2')}
+    <section class="card mt-4 p-6" id="rcard">
+      <p class="font-serif text-[1.5rem] leading-snug">${enough ? 'You just spoke English out loud for ' + fmt(secs) + '.' : 'You recorded ' + fmt(secs) + '.'}</p>
+      <p class="mt-2 text-[.98rem] leading-7 text-mist">${enough ? 'Most people never try this. Listen to yourself, and be kind to that voice. It is brave.' : 'A good start! To move on, try once more and reach at least one minute. Read the lines again, a little slower.'}</p>
+      <audio class="mt-5" controls src="${r.url}"></audio>
+      <div class="mt-5 grid gap-3">
+        <button class="btn btn-primary" data-a="rec-download" data-n="${n}" ${enough ? '' : 'disabled'}>${icon('download')} Download my recording</button>
+        ${canShare ? `<button class="btn btn-ghost" data-a="rec-share" data-n="${n}" ${enough ? '' : 'disabled'}>${icon('send')} Share with ${CONFIG.teacher}</button>` : ''}
+        <button class="btn btn-ghost" data-a="rec-again" data-n="${n}">${icon('redo')} Record again</button>
+      </div>
+      <p id="savedmsg" class="mt-4 text-center text-sm ${saved ? 'pinktext' : 'text-mist'}">${saved ? 'Saved. You can continue.' : (enough ? 'Download or share your recording, then tap Continue.' : 'Record again to reach one minute.')}</p>
+      <p class="mt-2 text-center text-xs text-mist">If you do not like this one, record again and keep the one you like best.</p>
+    </section>
+    <div id="contWrap">${contBtn(V.i === S.i ? 'Continue' : 'Next', saved && enough, 'btnRecNext')}</div>`;
+  enter(['#head', '#rcard']);
+}
+function markSaved(n) {
+  if (!S.rec[n]) return;
+  S.rec[n].saved = true; save();
+  const m = $('#savedmsg'); if (m) { m.textContent = 'Saved. You can continue.'; m.className = 'mt-4 text-center text-sm pinktext'; }
+  const b = $('#btnRecNext'); if (b) b.disabled = false;
+}
+function triggerDownload(blob, name) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
+}
+function downloadRec(n) { if (!R[n]) return; triggerDownload(R[n].blob, recFile(n)); markSaved(n); }
+async function shareRec(n) {
+  if (!R[n]) return;
+  try {
+    const file = new File([R[n].blob], recFile(n), { type: R[n].mime });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: 'My English recording' }); markSaved(n); return; }
+  } catch (e) { if (e && e.name === 'AbortError') return; }
+  downloadRec(n);
+}
+
+/* ----- career ----- */
+function renderCareer() {
+  const cards = [
+    ['English is a skill, not a talent.', 'Nobody is born speaking it. Everyone who speaks it well started with one shy sentence, just like you did today.'],
+    ['Clear ideas beat perfect grammar.', 'In real workplaces, people with accents and small mistakes get hired, promoted and respected every day. What matters is that your ideas are clear and your effort is real.'],
+    ['Nobody\'s opinion decides your worth.', 'Whoever judges a learner forgets they were once a learner too. A learner is simply someone brave enough to begin.'],
+    ['Five minutes a day beats five hours on Sunday.', 'Small and steady is how fluency grows. You do not need a big plan, only a daily habit.']
+  ];
+  app.innerHTML = `
+    ${stepper()}
+    <section class="mt-3" id="head">
+      <p class="label pinktext">Take a breath</p>
+      <h1 class="mt-1 font-serif text-[2rem] leading-tight">English and your dreams</h1>
+      <p class="mt-2 text-[.98rem] leading-7 text-mist">A small rest between the two recordings. Read this slowly.</p>
+    </section>
+    <section class="mt-5 grid gap-3" id="items">
+      ${cards.map((c, k) => `
+        <div class="card item p-5">
+          <div class="flex gap-4">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full pinktext" style="background:rgba(246,166,204,.12)">${icon(k % 2 ? 'spark' : 'heart', 'w-5 h-5', k % 2 ? 'none' : 'currentColor')}</span>
+            <div><p class="font-serif text-[1.35rem] leading-snug">${esc(c[0])}</p><p class="mt-2 text-[.96rem] leading-7 text-mist">${esc(c[1])}</p></div>
+          </div>
+        </div>`).join('')}
+    </section>
+    <section class="card item mt-3 p-5" style="background:linear-gradient(160deg,#291a2e,#1c1220)">
+      <p class="label pinktext">Your small plan for this week</p>
+      <ul class="mt-3 grid gap-2.5 text-[.98rem] leading-6">
+        <li class="flex gap-3"><span class="pinktext">1</span><span>Read aloud for five minutes a day, any page you like.</span></li>
+        <li class="flex gap-3"><span class="pinktext">2</span><span>Learn three new words, and use them in a message.</span></li>
+        <li class="flex gap-3"><span class="pinktext">3</span><span>Write two sentences and send them to me.</span></li>
+      </ul>
+    </section>
+    <section class="card item mt-3 p-5">
+      <label class="block">
+        <span class="block font-serif text-[1.25rem] leading-snug">What is one dream you want English to help you reach?</span>
+        <span class="mt-1 block text-sm text-mist">Optional. It goes in the answers file you send me. Write in English or Hindi.</span>
+        <textarea id="dream" class="mt-3" placeholder="My dream is...">${esc(S.dream || '')}</textarea>
+      </label>
+    </section>
+    ${contBtn('Continue to recording two')}`;
+  enter(['#head', '.item']);
+}
+
+/* ----- closing ----- */
+function renderClosing() {
+  app.innerHTML = `
+    ${stepper()}
+    <section class="mt-2 text-center" id="hero">
+      <div id="bigheart" class="mx-auto h-16 w-16 pinktext" style="filter:drop-shadow(0 0 20px rgba(244,114,182,.5))">${icon('heart', 'w-full h-full', 'currentColor')}</div>
+      <h1 class="mt-4 font-serif text-[2rem] leading-tight">You did it, ${CONFIG.student}</h1>
+    </section>
+    <section class="card mt-5 p-6" id="letterCard" style="background:linear-gradient(160deg,#291a2e,#1c1220)">
+      <div class="letter grid gap-4">
+        <p class="para">Mahima,</p>
+        <p class="para">Aaj aapne ek nahi, do baar apni awaaz mein English bol kar record ki. Ye har kisi se nahi hota, aur aapne kar dikhaya.</p>
+        <p class="para">Mujhe aap par bahut garv hai. Aap jaisi ho, waisi hi mere liye bahut khaas ho. English ek raasta hai, aapki manzil nahi, aur us raaste par main aapke saath chalunga.</p>
+        <p class="para">I am so proud of you. One small step every day is all it takes.</p>
+        <p class="para italic text-mist">Roz thoda sa bolna, bas. Baaki hum saath mein seekhenge.</p>
+      </div>
+      <p class="script mt-5 text-[2.6rem] leading-tight pinktext">${CONFIG.teacher}</p>
+    </section>
+    ${contBtn('One last step')}`;
+  if (hasGsap()) {
+    gsap.fromTo('#bigheart', { scale: .6, opacity: 0 }, { scale: 1, opacity: 1, duration: .9, ease: 'back.out(1.8)' });
+    gsap.to('#bigheart', { scale: 1.08, duration: 1.1, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: .9 });
+    enter(['#hero h1', '#letterCard .para', '#letterCard .script'], { delay: .2, stagger: .12 });
+  }
+}
+
+/* ----- send ----- */
+function renderSend() {
+  if (!S.finishedAt) { S.finishedAt = new Date().toISOString(); save(); }
+  const canShare = !!(navigator.canShare && navigator.share);
+  const row = (label, ok, extra) => `<div class="flex items-center justify-between gap-3 rounded-2xl border px-4 py-3" style="border-color:var(--line);background:rgba(255,255,255,.02)">
+      <span class="text-[.98rem]">${label}</span>${extra}</div>`;
+  app.innerHTML = `
+    ${stepper()}
+    <section class="mt-3 text-center" id="head">
+      <div class="mx-auto grid h-16 w-16 place-items-center rounded-full pinktext" style="background:rgba(246,166,204,.12);border:1px solid rgba(246,166,204,.4)">${icon('check', 'w-8 h-8')}</div>
+      <h1 class="mt-4 font-serif text-[2rem] leading-tight">One last step</h1>
+      <p class="mt-2 text-[.98rem] leading-7 text-mist">Send ${CONFIG.teacher} your answers file and your two recordings, on WhatsApp. You choose what to send.</p>
+    </section>
+    <section class="card mt-5 grid gap-3 p-5" id="sendcard">
+      ${row('Your answers file', true, `<button class="btn btn-primary" style="min-height:44px;padding:0 1.1rem" data-a="dl-json">${icon('download', 'w-4 h-4')} Download</button>`)}
+      ${[1, 2].map(n => row('Recording ' + n + (S.rec[n] && S.rec[n].fallback ? ' (sent on WhatsApp)' : ''), true,
+        R[n] ? `<button class="btn btn-ghost" style="min-height:44px;padding:0 1.1rem" data-a="rec-download" data-n="${n}">${icon('download', 'w-4 h-4')} Download</button>`
+             : `<span class="text-sm text-mist">${S.rec[n] && S.rec[n].fallback ? 'Voice note' : 'Saved earlier'}</span>`)).join('')}
+      ${canShare ? `<button class="btn btn-primary mt-2" data-a="share-all">${icon('send')} Share everything with ${CONFIG.teacher}</button>` : `<p class="text-center text-sm text-mist">Download each file, then send them to ${CONFIG.teacher} on WhatsApp.</p>`}
+    </section>
+    <p class="mt-6 text-center text-sm text-mist">Come back tomorrow. We will keep going, softly and slowly.</p>`;
+  enter(['#head', '#sendcard']);
+}
+
+/* =========================================================
+   EXPORT (answers file for Abhinav)
+   ========================================================= */
+function buildExport() {
+  const questions = SCREENS.filter(s => s.type === 'mcq' || s.type === 'blank').map(s => {
+    const a = S.answers[s.id] || null;
+    return {
+      number: s.qn,
+      step: STEPDEFS[s.step].name,
+      type: s.type === 'mcq' ? 'multiple-choice' : 'fill-in-the-blank',
+      question: s.type === 'mcq' ? s.q : (s.before + ' ____ ' + s.after).trim(),
+      options: s.type === 'mcq' ? s.options : s.bank,
+      herAnswer: a ? a.pick : null,
+      correctAnswer: s.type === 'mcq' ? s.options[s.answer] : s.answer,
+      isCorrect: a ? a.isCorrect : null,
+      whyItWorks: s.why
+    };
+  });
+  const answered = questions.filter(q => q.herAnswer != null);
+  const byStep = {};
+  questions.forEach(q => { byStep[q.step] = byStep[q.step] || { total: 0, correct: 0 }; byStep[q.step].total++; if (q.isCorrect) byStep[q.step].correct++; });
+  return {
+    app: 'For Mahima - English, softly',
+    student: CONFIG.student,
+    startedAt: S.startedAt, finishedAt: S.finishedAt, exportedAt: new Date().toISOString(),
+    selfRating: { outOf10: S.rating, question: 'How much of the letter did you understand?' },
+    summary: { totalQuestions: questions.length, answered: answered.length, correct: questions.filter(q => q.isCorrect).length, byStep },
+    questions,
+    recordings: [1, 2].map(n => ({ number: n, title: (n === 1 ? REC1 : REC2).title, seconds: S.rec[n] ? S.rec[n].seconds || null : null, savedByHer: !!(S.rec[n] && S.rec[n].saved), sentOnWhatsAppInstead: !!(S.rec[n] && S.rec[n].fallback), fileName: S.rec[n] && S.rec[n].fileName || null })),
+    dream: S.dream || ''
+  };
+}
+const jsonName = () => CONFIG.student.toLowerCase() + '-answers.json';
+const jsonBlob = () => new Blob([JSON.stringify(buildExport(), null, 2)], { type: 'application/json' });
+async function shareAll() {
+  const files = [new File([jsonBlob()], jsonName(), { type: 'application/json' })];
+  [1, 2].forEach(n => { if (R[n]) files.push(new File([R[n].blob], recFile(n), { type: R[n].mime })); });
+  try {
+    if (navigator.canShare && navigator.canShare({ files })) { await navigator.share({ files, title: 'My English practice' }); S.sent = true; save(); return; }
+  } catch (e) { if (e && e.name === 'AbortError') return; }
+  triggerDownload(jsonBlob(), jsonName());
+}
+
+/* =========================================================
+   EVENTS
+   ========================================================= */
+app.addEventListener('click', e => {
+  const v = e.target.closest('.vocab');
+  if (v) { openSheet(VOCAB[+v.dataset.v]); return; }
+  const t = e.target.closest('[data-a]'); if (!t || t.disabled) return;
+  switch (t.dataset.a) {
+    case 'next': next(); break;
+    case 'goto-step': gotoStep(+t.dataset.s); break;
+    case 'say': say(t.dataset.t); break;
+    case 'pick': pickOption(+t.dataset.k); break;
+    case 'chip': pickChip(t.dataset.w); break;
+    case 'clear-slot': clearSlot(); break;
+    case 'check': checkAnswer(); break;
+    case 'rate-confirm': confirmRating(); break;
+    case 'rec-start': startRecording(+t.dataset.n); break;
+    case 'rec-stop': stopRecording(); break;
+    case 'line-next': REC.line++; setLine(SCREENS[V.i].story, true); break;
+    case 'rec-again': drawRecIdle(SCREENS[V.i].story); break;
+    case 'rec-download': downloadRec(+t.dataset.n); break;
+    case 'rec-share': shareRec(+t.dataset.n); break;
+    case 'rec-fallback': {
+      const n = +t.dataset.n; S.rec[n] = { fallback: true, saved: true }; save(); drawRecFallback(SCREENS[V.i].story); break;
+    }
+    case 'rec-retry': { const n = +t.dataset.n; delete S.rec[n]; save(); drawRecIdle(SCREENS[V.i].story); break; }
+    case 'dl-json': triggerDownload(jsonBlob(), jsonName()); S.sent = true; save(); break;
+    case 'share-all': shareAll(); break;
+  }
+});
+app.addEventListener('input', e => {
+  if (e.target.id === 'rslider') $('#rnum').textContent = e.target.value;
+  if (e.target.id === 'dream') { S.dream = e.target.value; save(); }
+});
+window.addEventListener('beforeunload', () => { if (REC) stopRecording(); });
+
+startPetals();
+render();
+</script>
+</body>
+</html>
